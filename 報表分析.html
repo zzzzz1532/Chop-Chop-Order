@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>報表分析</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <style>
+        #dataRange {
+            padding-top: 10%;
+        }
+
+        table {
+            table-layout: fixed;
+            text-align: center;
+        }
+
+        th {
+            font-size: 36px;
+        }
+
+        td {
+            font-size: 20px;
+            padding-top: 2%;
+        }
+
+        /* .custom-list {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: decimal;
+        }
+
+        .custom-list li {
+            flex-basis: 20%;
+            一行5個項目，每個項目佔20%的寬度
+            margin-top: 2%;
+            font-size: 20px;
+        } */
+    </style>
+
+
+</head>
+
+
+
+<body>
+
+    <!-- 按鈕 -->
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="dataRange">
+        <button class="btn btn-primary" type="button">日</button> &nbsp;
+        <button class="btn btn-primary me-md-2" type="button">週</button>&nbsp;
+        <button class="btn btn-primary me-md-2" type="button">月</button>
+    </div>
+
+    <hr class="my-4">
+
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <th>營業額</th>
+            <th>訂單量</th>
+        </tr>
+        <tr>
+            <td>54,321 元</td>
+            <td>87筆</td>
+        </tr>
+    </table>
+
+    <hr class="my-4">
+
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <th size>營業額變化圖</th>
+            <th>訂單變化圖</th>
+        </tr>
+        <tr>
+            <td>
+                <canvas id="myChart" width="400" height="400">
+                    <script>
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        var myChart = new Chart(ctx, {
+
+                            // 各式圖表的屬性設定
+                            type: 'bar',
+                            data: {
+                                labels: ['Mon', 'Tue', 'Wed', 'Thur', 'Friday', 'Sta', 'Sun'],
+                                datasets: [{
+                                    label: '營業額',
+                                    data: [12000, 19000, 13000, 15000, 21000, 13000, 15000],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(54, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(54, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+
+                        });
+
+                    </script>
+
+                </canvas>
+
+
+
+            </td>
+            <td>圖</td>
+        </tr>
+    </table>
+
+    <hr class="my-4">
+
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <th>外帶內用比例</th>
+            <th>類別銷量</th>
+        </tr>
+        <tr>
+            <td>圖</td>
+            <td>圖</td>
+        </tr>
+    </table>
+
+    <hr class="my-4">
+
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <th>熱賣餐點</th>
+        </tr>
+    </table>
+
+    <div class="table-responsive small">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">排名</th>
+              <th scope="col">品名</th>
+              <th scope="col">銷售數量</th>
+              <th scope="col">銷售金額</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>1</td>
+                <td>鮪魚蛋餅</td>
+                <td>100</td>
+                <td>4,000</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>大冰奶</td>
+                <td>90</td>
+                <td>2,700</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>培根蛋堡</td>
+                <td>85</td>
+                <td>3,400</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>鐵板麵</td>
+                <td>75</td>
+                <td>3,375</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>薯條</td>
+                <td>70</td>
+                <td>1,750</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+
+
+
+</body>
+
+</html>
+<!-- <ol class="custom-list">
+    <li>鮪魚蛋餅</li>
+    <li>大冰奶</li>
+    <li>培根蛋堡</li>
+    <li>花枝蛋堡</li>
+    <li>九層塔蛋餅</li>
+    <li>炒麵</li>
+    <li>鐵板麵</li>
+    <li>小肉豆</li>
+    <li>雞塊</li>
+    <li>薯條</li>
+</ol> -->
