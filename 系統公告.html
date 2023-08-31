@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系統公告</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #35424a;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .announcement {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .announcement-category {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .announcement-content {
+            margin-top: 10px;
+        }
+        .announcement-date {
+            color: #888;
+            margin-top: 10px;
+        }
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>系統公告</h1>
+    </header>
+    <div class="container">
+        <div class="announcement">
+            <div class="announcement-category">重要公告</div>
+            <div class="announcement-content">我們的系統將於下週進行升級，可能會導致一些暫時的服務中斷。</div>
+            <div class="announcement-date">發布日期：<script>document.write(new Date().toLocaleDateString())</script></div>
+        </div>
+        <div class="announcement">
+            <div class="announcement-category">假日辦公時間變更</div>
+            <div class="announcement-content">由於國定假日，本週辦公時間將有所調整。</div>
+            <div class="announcement-date">發布日期：<script>document.write(new Date().toLocaleDateString())</script></div>
+        </div>
+        <div class="pagination">
+            <a href="#">上一頁</a>
+            <span id="currentPage">目前頁數: </span>
+            <span id="totalPages">總頁數: </span>
+            <a href="#">下一頁</a>
+        </div>
+    </div>
+
+    <script>
+        const totalAnnouncements = 10;  
+        const announcementsPerPage = 5;  
+
+        const currentPageSpan = document.getElementById('currentPage');
+        const totalPagesSpan = document.getElementById('totalPages');
+
+        const totalPages = Math.ceil(totalAnnouncements / announcementsPerPage);
+        let currentPage = 1;  
+
+        currentPageSpan.textContent += currentPage;
+        totalPagesSpan.textContent += totalPages;
+    </script>
+</body>
+</html>

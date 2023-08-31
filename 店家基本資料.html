@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>店家基本資料</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #35424a;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .save-button, .cancel-button {
+            background-color: #35424a;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+        .change-password-button {
+            background-color: #6dc26d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .password-change-box {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .eye-icon {
+            background-color: #ccc;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>店家基本資料</h1>
+    </header>
+    <div class="container">
+        <table>
+            <tbody>
+                <tr>
+                    <th>帳號</th>
+                    <td>h61685</td>
+                </tr>
+                <tr id="passwordRow">
+                    <th>密碼</th>
+                    <td colspan="2">
+                        <div id="passwordDisplay">
+                            ******** 
+                            <button class="change-password-button" onclick="showChangePasswordBox()">變更密碼</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr id="newPasswordRow" style="display: none;">
+                    <th>新密碼</th>
+                    <td>
+                        <input type="password" id="newPassword" placeholder="新密碼">
+                        <button class="eye-icon" onmousedown="togglePasswordVisibilityOnMouseDown('newPassword')" onmouseup="togglePasswordVisibilityOnMouseUp()">👁️</button>
+                    </td>
+                </tr>
+                <tr id="confirmNewPasswordRow" style="display: none;">
+                    <th>確認新密碼</th>
+                    <td>
+                        <input type="password" id="confirmNewPassword" placeholder="確認新密碼">
+                        <button class="eye-icon" onmousedown="togglePasswordVisibilityOnMouseDown('confirmNewPassword')" onmouseup="togglePasswordVisibilityOnMouseUp()">👁️</button>
+                    </td>
+                </tr>
+                <tr id="passwordChangeButtonRow" style="display: none;">
+                    <td colspan="2">
+                        <button class="save-button" style="background-color: #6dc26d;" onclick="changePassword()">儲存新密碼</button>
+                        <button class="cancel-button" onclick="cancelPasswordChange()">取消</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>店家名稱</th>
+                    <td colspan="2"><input type="text" id="storeName" value="示例店家"></td>
+                </tr>
+                <tr>
+                    <th>地址</th>
+                    <td colspan="2"><input type="text" id="storeAddress" value="台灣示例市示例區示例路123號"></td>
+                </tr>
+                <tr>
+                    <th>電話號碼</th>
+                    <td colspan="2"><input type="text" id="storePhone" value="123-456-789"></td>
+                </tr>
+                <tr>
+                    <th>營業時間</th>
+                    <td colspan="2"><input type="text" id="storeHours" value="週一至週五 10:00 - 18:00"></td>
+                </tr>
+                <tr>
+                    <th>網址</th>
+                    <td colspan="2"><input type="text" id="storeUrl" value="https://www.example.com"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><button class="save-button" onclick="saveData()">儲存</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+       window.addEventListener('DOMContentLoaded', () => {
+            populateInputsFromLocalStorage();
+        });
+
+        function populateInputsFromLocalStorage() {
+            const storeNameInput = document.getElementById('storeName');
+            const storeAddressInput = document.getElementById('storeAddress');
+            const storePhoneInput = document.getElementById('storePhone');
+            const storeHoursInput = document.getElementById('storeHours');
+            const storeUrlInput = document.getElementById('storeUrl');
+
+            storeNameInput.value = localStorage.getItem('storeName') || '';
+            storeAddressInput.value = localStorage.getItem('storeAddress') || '';
+            storePhoneInput.value = localStorage.getItem('storePhone') || '';
+            storeHoursInput.value = localStorage.getItem('storeHours') || '';
+            storeUrlInput.value = localStorage.getItem('storeUrl') || '';
+        }
+
+        function saveData() {
+            const storeName = document.getElementById('storeName').value;
+            const storeAddress = document.getElementById('storeAddress').value;
+            const storePhone = document.getElementById('storePhone').value;
+            const storeHours = document.getElementById('storeHours').value;
+            const storeUrl = document.getElementById('storeUrl').value;
+
+           
+            localStorage.setItem('storeName', storeName);
+            localStorage.setItem('storeAddress', storeAddress);
+            localStorage.setItem('storePhone', storePhone);
+            localStorage.setItem('storeHours', storeHours);
+            localStorage.setItem('storeUrl', storeUrl);
+
+            
+            populateInputsFromLocalStorage();
+
+            
+            console.log('資料已儲存');
+        }
+
+        function updateDisplayedData() {
+           
+            const storeNameInput = document.getElementById('storeName');
+            const storeAddressInput = document.getElementById('storeAddress');
+            const storePhoneInput = document.getElementById('storePhone');
+            const storeHoursInput = document.getElementById('storeHours');
+            const storeUrlInput = document.getElementById('storeUrl');
+
+            const storeName = localStorage.getItem('storeName') || '';
+            const storeAddress = localStorage.getItem('storeAddress') || '';
+            const storePhone = localStorage.getItem('storePhone') || '';
+            const storeHours = localStorage.getItem('storeHours') || '';
+            const storeUrl = localStorage.getItem('storeUrl') || '';
+
+            storeNameInput.value = storeName;
+            storeAddressInput.value = storeAddress;
+            storePhoneInput.value = storePhone;
+            storeHoursInput.value = storeHours;
+            storeUrlInput.value = storeUrl;
+        }
+
+        function showChangePasswordBox() {
+            const newPasswordRow = document.getElementById('newPasswordRow');
+            const confirmNewPasswordRow = document.getElementById('confirmNewPasswordRow');
+            const passwordChangeButtonRow = document.getElementById('passwordChangeButtonRow');
+
+            newPasswordRow.style.display = 'table-row';
+            confirmNewPasswordRow.style.display = 'table-row';
+            passwordChangeButtonRow.style.display = 'table-row';
+        }
+
+        function cancelPasswordChange() {
+            const newPasswordRow = document.getElementById('newPasswordRow');
+            const confirmNewPasswordRow = document.getElementById('confirmNewPasswordRow');
+            const passwordChangeButtonRow = document.getElementById('passwordChangeButtonRow');
+
+            newPasswordRow.style.display = 'none';
+            confirmNewPasswordRow.style.display = 'none';
+            passwordChangeButtonRow.style.display = 'none';
+        }
+
+        function togglePasswordVisibilityOnMouseDown(inputId) {
+            const input = document.getElementById(inputId);
+            input.type = 'text';
+        }
+
+        function togglePasswordVisibilityOnMouseUp() {
+            const newPasswordInput = document.getElementById('newPassword');
+            const confirmNewPasswordInput = document.getElementById('confirmNewPassword');
+
+            if (!newPasswordInput.contains(document.activeElement) && !confirmNewPasswordInput.contains(document.activeElement)) {
+                newPasswordInput.type = 'password';
+                confirmNewPasswordInput.type = 'password';
+            }
+        }
+
+        function changePassword() {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+            if (newPassword !== confirmNewPassword) {
+                alert('新密碼與確認新密碼不相符');
+                return;
+            }
+
+            
+            console.log('密碼已變更');
+
+           
+            const newPasswordRow = document.getElementById('newPasswordRow');
+            const confirmNewPasswordRow = document.getElementById('confirmNewPasswordRow');
+            const passwordChangeButtonRow = document.getElementById('passwordChangeButtonRow');
+
+            newPasswordRow.style.display = 'none';
+            confirmNewPasswordRow.style.display = 'none';
+            passwordChangeButtonRow.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
