@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系統客服</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #35424a;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>公告發布系統</h1>
+    </header>
+    <div class="container">
+        <h2>公告發布</h2>
+        <form action="submit_form.php" method="POST">
+            <label for="name">發布標題：</label>
+            <input type="text" id="name" name="name" required><br><br>
+            <label for="category">類別：</label>
+            <select id="category" name="category" required>
+                <option value="選項1">選項1</option>
+                <option value="選項2">選項2</option>
+                <option value="選項3">選項3</option>
+            </select><br><br>
+            <label for="message">發布內容：</label><br>
+            <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+            <input type="submit" value="提交">
+            <button type="button" onclick="cancelForm()">取消</button>
+        </form>
+    </div>
+
+    <script>
+        function cancelForm() {
+            // 使用 JavaScript 來實現取消按鈕的行為
+            // 這裡可以添加取消後的操作，例如重置表單或導航回其他頁面
+            alert("表單已取消");
+            // 如果要重置表單，可以使用以下代碼
+            // document.getElementById("name").value = "";
+            // document.getElementById("category").selectedIndex = 0; // 重置選項為第一個選項
+            // document.getElementById("message").value = "";
+        }
+    </script>
+</body>
+</html>
