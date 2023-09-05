@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>訂單狀態</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #35424a;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .complete-button {
+            background-color: #6dc26d;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>訂單狀態</h1>
+    </header>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>單號</th>
+                    <th>項目</th>
+                    <th>數量</th>
+                    <th>單價</th>
+                    <th>總額</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2">001</td>
+                    <td>商品A</td>
+                    <td>3</td>
+                    <td>$20</td>
+                    <td rowspan="2">$120</td>
+                    <td rowspan="2">
+                        <button class="complete-button">修改</button>
+                        <button class="complete-button">完成</button>
+                        <button class="complete-button">刪除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>商品B</td>
+                    <td>2</td>
+                    <td>$30</td>
+                    <td></td> <!-- Empty cell to align with the rowspan above -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
