@@ -57,7 +57,6 @@
         .pending {
             background-color: white;
         }
-
         /* 調整"待處理訂單"表格欄位大小 */
         table.pending tbody td:nth-child(1),
         table.pending tbody th:nth-child(1) {
@@ -109,6 +108,18 @@
         table.completed tbody th:nth-child(5) {
             width: 10%;
         }
+        .button {
+            background-color: #6dc26d;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
     </style>
 </head>
 
@@ -126,8 +137,6 @@
                     <th>客戶送單時間</th>
                     <th>查看品項</th>
                     <th>操作</th>
-                    <th>修改</th>
-                    <th>刪除</th>
                 </tr>
             </thead>
             <tbody>
@@ -135,10 +144,8 @@
                     <td>001</td>
                     <td>$100</td>
                     <td>2023-09-05 13:30</td>
-                    <td><button>查看品項</button></td>
-                    <td><button>完成</button></td>
-                    <td><button>修改</button></td>
-                    <td><button>刪除</button></td>
+                    <td><button class="button">查看品項</button></td>
+                    <td><button class="button">完成</button></td>
                 </tr>
             </tbody>
         </table>
@@ -160,7 +167,7 @@
                     <td>已完成</td>
                     <td>$50</td>
                     <td id="orderTime2">2023-09-05 13:50</td>
-                    <td><button>修改</button></td>
+                    <td><button class="button">修改</button></td>
                 </tr>
             </tbody>
         </table>
