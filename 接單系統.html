@@ -47,6 +47,22 @@
         .pending {
             background-color: #ffded1;
         }
+        /* 調整表格欄位大小 */
+        table tbody td:nth-child(1),
+        table tbody th:nth-child(1),
+        table tbody td:nth-child(2),
+        table tbody th:nth-child(2),
+        table tbody td:nth-child(3),
+        table tbody th:nth-child(3),
+        table tbody td:nth-child(4),
+        table tbody th:nth-child(4) {
+            width: 20%;
+        }
+
+        table tbody td:nth-child(5),
+        table tbody th:nth-child(5) {
+            width: 15%;
+        }
     </style>
 </head>
 <body>
@@ -59,19 +75,17 @@
             <thead>
                 <tr>
                     <th>單號</th>
-                    <th>訂單狀態</th>
                     <th>總額</th>
-                    <th>送單時間</th>
+                    <th>客戶送單時間</th>
                     <th class="accept-button">操作</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>001</td>
-                    <td>待處理</td>
                     <td>$100</td>
-                    <td id="orderTime1">未送單</td>
-                    <td class="accept-button"><button onclick="acceptOrder(1)">送單</button></td>
+                    <td>2023-09-05 13:30</td>
+                    <td class="accept-button"><button>完成</button></td>
                 </tr>
                
             </tbody>
@@ -84,7 +98,8 @@
                     <th>單號</th>
                     <th>訂單狀態</th>
                     <th>總額</th>
-                    <th>送單時間</th>
+                    <th>完成時間</th>
+                    <th class="accept-button2">操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -92,19 +107,12 @@
                     <td>002</td>
                     <td>已完成</td>
                     <td>$50</td>
-                    <td id="orderTime2">未送單</td>
+                    <td id="orderTime2">2023-09-05 13:50</td>
+                    <td class="accept-button2"><button>修改</button></td>
                 </tr>
                
             </tbody>
         </table>
     </div>
-
-    <script>
-        function acceptOrder(orderNumber) {
-            const currentTime = new Date();
-            const orderTimeCell = document.getElementById('orderTime' + orderNumber);
-            orderTimeCell.textContent = currentTime.toLocaleString();
-        }
-    </script>
 </body>
 </html>
