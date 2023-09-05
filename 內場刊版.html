@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>訂單狀態</title>
+    <title>勘版系統</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,7 +18,7 @@
             text-align: center;
         }
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: auto;
             padding: 20px;
             background-color: white;
@@ -38,7 +38,7 @@
         th {
             background-color: #f4f4f4;
         }
-        .button {
+        .complete-button {
             background-color: #6dc26d;
             border: none;
             color: white;
@@ -47,15 +47,18 @@
             text-decoration: none;
             display: inline-block;
             font-size: 14px;
+            margin: auto;
             cursor: pointer;
             border-radius: 4px;
         }
-
+        .completed {
+            background-color: #d3d3d3;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>訂單狀態</h1>
+        <h1>勘版系統</h1>
     </header>
     <div class="container">
         <table>
@@ -65,8 +68,7 @@
                     <th>項目</th>
                     <th>數量</th>
                     <th>單價</th>
-                    <th>總額</th>
-                    <th>操作</th>
+                    <th>接單時間</th>                
                 </tr>
             </thead>
             <tbody>
@@ -75,18 +77,12 @@
                     <td>商品A</td>
                     <td>3</td>
                     <td>$20</td>
-                    <td rowspan="2">$120</td>
-                    <td rowspan="2">
-                        <button class="button">完成</button>
-                        <button class="button">刪除</button>
-                        <button class="button">回上一頁</button>
-                    </td>
+                    <td rowspan="2">2023.09.05 13:00 (時間排序)</td>
                 </tr>
                 <tr>
                     <td>商品B</td>
                     <td>2</td>
                     <td>$30</td>
-                    <td></td> <!-- Empty cell to align with the rowspan above -->
                 </tr>
             </tbody>
         </table>
