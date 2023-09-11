@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>支付及發票設定</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+
+</head>
+
+<script>
+  // 信用卡卡號、統編 =>只能填數字
+  window.onload = function() {
+    const ccNumInput = document.getElementById("ccNum");
+    const companyNumInput = document.getElementById("companyNum");
+
+    ccNumInput.addEventListener("keyup", function () {
+      const inputVal = ccNumInput.value.replace(/\s/g, ""); // 移除所有空格
+      const numericVal = inputVal.replace(/\D/g, ""); // 移除非數字字元
+      const formattedVal = formatCreditCardNumber(numericVal);
+      ccNumInput.value = formattedVal;
+    });
+
+    companyNumInput.addEventListener("keyup", function () {
+      companyNumInput.value = companyNumInput.value.replace(/\D/g, ''); //移除非數字字元
+  
+    });
+  
+  // 信用卡卡號 4 碼空一格
+  function formatCreditCardNumber(inputVal) {
+    const maxLength = 19; // 最大長度包括空格
+    const spaceInterval = 4;
+
+    let formattedVal = "";
+    for (let i = 0; i < inputVal.length; i++) {
+      if (i > 0 && i % spaceInterval === 0) {
+        formattedVal += " ";
+      }
+
+      const currentChar = inputVal[i];
+      if (currentChar !== " ") {
+        formattedVal += currentChar;
+      }
+    }
+
+    if (formattedVal.length > maxLength) {
+      formattedVal = formattedVal.slice(0, maxLength);
+    }
+
+    return formattedVal;
+  }
+}
+
+
+// 待後端資料建立後，再使用 Spring boot 框架自動帶入資料
+</script>
+
+
+
+<body>
+  <!-- 信用卡 -->
+  <form>
+    <h4 class="mb-3">支付設定</h4>
+
+    <div class="row gy-3">
+      <!-- 信用卡卡號 -->
+      <div class="col-md-4">
+        <label for="ccNum" class="form-label">信用卡卡號：</label>
+        <input type="text" class="form-control" id="ccNum" placeholder="**** **** **** ****" maxlength="19">
+      </div>
+
+      <br>
+      <!-- 有效月年 -->
+      <div class="col-md-4">
+        <label class="form-label">有效月年：</label><br>
+        <select class="form-select" id="ccMonth">
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+        /
+        <select class="form-select" id="ccYear">
+          <script>
+            const currentYear = new Date().getFullYear();
+            const futureYears = 10; // 可自行調整
+            for (let year = currentYear; year <= currentYear + futureYears; year++) {
+              document.write('<option value="' + year + '">' + year + '</option>');
+            }
+
+          </script>
+        </select>
+      </div>
+
+
+      <!-- 檢查碼 -->
+      <div class="col-md-3">
+        <label class="form-label">檢查碼：</label>
+        <input type="text" class="form-control" placeholder="***" maxlength="3">
+      </div>
+
+      <br>
+
+      <!-- 卡片名稱 -->
+      <div class="col-md-4">
+        <label class="form-label">卡片名稱：</label>
+        <input type="text" class="form-control" placeholder="例：趙大文的信用卡">
+      </div>
+    </div>
+
+    <br>
+
+    <hr class="my-4">
+    <button class="w-100 btn btn-primary btn-lg" type="submit">儲存</button>
+
+  </form>
+
+  <br><br>
+  
+  <!-- 發票 -->
+  <form>
+    <h4 class="mb-3">發票設定</h4>
+    <div class="row gy-3">
+      <div class="col-md-5">
+        <label class="form-label">公司抬頭：</label>
+        <input type="text" class="form-control" placeholder="請輸入公司抬頭">
+      </div>
+
+      <br>
+
+      <div class="col-md-4">
+        <label class="form-label">統編：</label>
+        <input type="text" class="form-control" id="companyNum" placeholder="請輸入 8 位數字" maxlength="8">
+      </div>
+    </div>
+
+
+    <hr class="my-4">
+    <button class="w-100 btn btn-primary btn-lg" type="submit" >儲存</button>
+  </form>
+
+</body>
+
+</html>
