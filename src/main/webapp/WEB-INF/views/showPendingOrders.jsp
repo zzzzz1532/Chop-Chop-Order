@@ -6,6 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>刊版系統</title>
     <style>
  		body { 
@@ -40,23 +42,6 @@
 			background-color: #f4f4f4; 
  		} 
 		
- 		.complete-button { 
- 			background-color: #6dc26d; 
-			border: none; 
-			color: white; 
- 			padding: 8px 16px; 
-			text-align: center; 
-			text-decoration: none; 
- 			display: inline-block; 
- 			font-size: 14px; 
- 			margin: auto; 
- 			cursor: pointer; 
-			border-radius: 4px; 
- 		} 
-		
- 		.completed { 
- 			background-color: #d3d3d3; 
- 		} 
 	</style>
 	<script type="text/javascript"
 	src="<c:url value='/webjars/jquery/3.5.1/jquery.js' />"></script>
