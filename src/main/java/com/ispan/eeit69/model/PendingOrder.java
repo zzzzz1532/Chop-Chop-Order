@@ -25,7 +25,7 @@ public class PendingOrder implements Serializable{
 	private Integer foodQuantity; // 數量
 	private Integer orderPrice; //訂單總額
 	private Timestamp created_at; // 生成時間
-	
+	//上方屬性可能會再修改，依最終暫存訂單資料表為準
 	
 	public PendingOrder()  {
 		
