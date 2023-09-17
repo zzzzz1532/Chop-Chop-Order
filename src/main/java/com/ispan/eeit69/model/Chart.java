@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name="PendingOrder")
-public class PendingOrder implements Serializable{
+@Table(name="Complete_Order")
+public class Chart implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	// Model 版本號 => 1
@@ -28,15 +28,18 @@ public class PendingOrder implements Serializable{
 	private Integer orderPrice; //訂單總額
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Timestamp created_at; // 生成時間
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+	private Timestamp complete_at; // 完成時間
 	//上方屬性可能會再修改，依最終暫存訂單資料表為準
 	
-	public PendingOrder()  {
+	
+	public Chart() {
 		
 	}
 
 
-	public PendingOrder(Integer orderId, Integer orderNo, String diningLocation, String foodName, Integer foodQuantity,
-			Integer orderPrice, Timestamp created_at) {
+	public Chart(Integer orderId, Integer orderNo, String diningLocation, String foodName, Integer foodQuantity,
+			Integer orderPrice, Timestamp created_at, Timestamp complete_at) {
 		super();
 		this.orderId = orderId;
 		this.orderNo = orderNo;
@@ -45,6 +48,7 @@ public class PendingOrder implements Serializable{
 		this.foodQuantity = foodQuantity;
 		this.orderPrice = orderPrice;
 		this.created_at = created_at;
+		this.complete_at = complete_at;
 	}
 
 
@@ -118,7 +122,18 @@ public class PendingOrder implements Serializable{
 	}
 
 
+	public Timestamp getComplete_at() {
+		return complete_at;
+	}
+
+
+	public void setComplete_at(Timestamp complete_at) {
+		this.complete_at = complete_at;
+	}
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 }
