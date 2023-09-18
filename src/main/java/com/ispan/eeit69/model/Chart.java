@@ -24,6 +24,7 @@ public class Chart implements Serializable {
 	private Integer orderNo; // 訂單號
 	private String diningLocation; //內用外帶
 	private String foodName; // 品名
+	private String categoryName; //類別名稱 
 	private Integer foodQuantity; // 數量
 	private Integer orderPrice; //訂單總額
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
@@ -38,13 +39,14 @@ public class Chart implements Serializable {
 	}
 
 
-	public Chart(Integer orderId, Integer orderNo, String diningLocation, String foodName, Integer foodQuantity,
+	public Chart(Integer orderId, Integer orderNo, String diningLocation, String foodName, String categoryName, Integer foodQuantity,
 			Integer orderPrice, Timestamp created_at, Timestamp complete_at) {
 		super();
 		this.orderId = orderId;
 		this.orderNo = orderNo;
 		this.diningLocation = diningLocation;
 		this.foodName = foodName;
+		this.categoryName = categoryName;		
 		this.foodQuantity = foodQuantity;
 		this.orderPrice = orderPrice;
 		this.created_at = created_at;
@@ -89,6 +91,16 @@ public class Chart implements Serializable {
 
 	public void setFoodName(String foodName) {
 		this.foodName = foodName;
+	}
+
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 
