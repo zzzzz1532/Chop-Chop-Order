@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,6 +56,7 @@
         .pending {
             background-color: white;
         }
+
         /* 調整"待處理訂單"表格欄位大小 */
         table.pending tbody td:nth-child(1),
         table.pending tbody th:nth-child(1) {
@@ -108,6 +108,7 @@
         table.completed tbody th:nth-child(5) {
             width: 10%;
         }
+
         .button {
             background-color: #6dc26d;
             border: none;
@@ -122,7 +123,6 @@
         }
     </style>
 </head>
-
 <body>
     <header>
         <h1>接單系統</h1>
@@ -143,10 +143,46 @@
                     <td>001</td>
                     <td>$100</td>
                     <td>2023-09-05 13:30</td>
-                    <td><button class="button">查看品項</button></td>
+                    <td><button class="button" onclick="showBox()">查看品項</button></td>
                 </tr>
             </tbody>
         </table>
+
+        <!-- 新增一个用于显示网页2内容的div，初始时设置为隐藏 -->
+        <div id="webpage2" style="display: none;">
+            <h2></h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>單號</th>
+                        <th>項目</th>
+                        <th>數量</th>
+                        <th>單價</th>
+                        <th>總額</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2">001</td>
+                        <td>商品A</td>
+                        <td>3</td>
+                        <td>$20</td>
+                        <td rowspan="2">$120</td>
+                        <td rowspan="2">
+                            <button class="button">完成</button>
+                            <button class="button">刪除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>商品B</td>
+                        <td>2</td>
+                        <td>$30</td>
+                        <td></td> 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <h2>已完成訂單</h2>
         <table class="completed">
@@ -170,6 +206,17 @@
             </tbody>
         </table>
     </div>
+
+    <script>
+        function showBox() {
+            const webpage2 = document.getElementById('webpage2');
+            if (webpage2.style.display === 'none') {
+                webpage2.style.display = 'block';
+            } else {
+                webpage2.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 
 </html>
