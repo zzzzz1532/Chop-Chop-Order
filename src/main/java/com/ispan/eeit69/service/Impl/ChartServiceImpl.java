@@ -129,6 +129,7 @@ public class ChartServiceImpl implements ChartService {
 		return monthlyHotProduct;
 	}
 
+	//營業額&訂單量分析圖
 	
 
 	

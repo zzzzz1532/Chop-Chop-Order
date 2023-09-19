@@ -23,4 +23,5 @@ public interface ChartService {
 	 List<Object[]> weeklyHotProduct();
 	 List<Object[]> monthlyHotProduct();
 	 
+	 
 }
