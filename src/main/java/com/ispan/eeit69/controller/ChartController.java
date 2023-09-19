@@ -25,7 +25,7 @@ public class ChartController {
 		return chartService.calDailyTotalRevenue();
 	}
 
-	//近 7 七天營業總額
+	//近 7 天營業總額
 	@GetMapping("/weeklyTotalRevenue")
 	public @ResponseBody Integer calWeeklyTotalRevenue() {
 		return chartService.calWeeklyTotalRevenue();
@@ -43,7 +43,7 @@ public class ChartController {
 		return chartService.countDailyOrders();
 	}
 
-	//近 7 七天總訂單
+	//近 7 天總訂單
 	@GetMapping("/weeklyOrders")
 	public @ResponseBody Integer countWeeklyOrders() {
 		return chartService.countWeeklyOrders();
@@ -61,7 +61,7 @@ public class ChartController {
 		return chartService.countDailyDiningLocation();
 	}
 	
-	//近 7 七天外帶內用比例
+	//近 7 天外帶內用比例
 	@GetMapping("/weeklyDingingLocation")
 	public @ResponseBody List<Object[]> countWeeklyDiningLocation() {
 		return chartService.countWeeklyDiningLocation();
@@ -79,7 +79,7 @@ public class ChartController {
 		return chartService.countDailyFoodCategory();
 	}
 	
-	//近 7 七天產品類別比例
+	//近 7 天產品類別比例
 	@GetMapping("/weeklyFoodCategory")
 	public @ResponseBody List<Object[]> countWeeklyFoodCategory() {
 		return chartService.countWeeklyFoodCategory();
@@ -130,7 +130,7 @@ public class ChartController {
 	}
 	
 	
-	//近 7 七天熱賣產品排行
+	//近 7 天熱賣產品排行
 	@GetMapping("/weeklyHotProduct")
 	public @ResponseBody List<Map<String, Object>> weeklyHotProduct() {
 	    List<Object[]> weeklyData = chartService.weeklyHotProduct();
@@ -167,8 +167,30 @@ public class ChartController {
 	
 	// 測試查詢原始資料
 //	@GetMapping("/testOriginData")
-//	public @ResponseBody List<Chart> findOriginData(){
-//		return chartService.findAll();	
+//	public @ResponseBody List<Object[]> findOriginData(){
+//		return chartService.findDailyData();	
 //	}
+	
+	
+	
+	// 日營業額訂單量每小時數據
+	@GetMapping("/dailyChart")
+	public @ResponseBody List<List<Object>> findDailyData(){
+		return chartService.findDailyData();
+	}
+	
+	// 近 7 天營業額訂單量每日數據
+	@GetMapping("/weeklyChart")
+	public @ResponseBody List<List<Object>> findWeeklyData(){
+		return chartService.findWeeklyData();
+	}
+	
+	// 近 30 天營業額訂單量每日數據
+	@GetMapping("/monthlyChart")
+	public @ResponseBody List<List<Object>> findMonthlyData(){
+		return chartService.findMonthlyData();
+	}
+	
+	
 	
 }

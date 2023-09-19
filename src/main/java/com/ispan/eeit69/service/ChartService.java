@@ -26,9 +26,10 @@ public interface ChartService {
 	 List<Object[]> weeklyHotProduct();
 	 List<Object[]> monthlyHotProduct();
 	 
-//	 List<Chart> findAll();
+	 List<List<Object>> findDailyData();
+	 List<List<Object>> findWeeklyData();
+	 List<List<Object>> findMonthlyData();
 	 
-	 ChartData getChartData();
 	 
 	 
 	 
