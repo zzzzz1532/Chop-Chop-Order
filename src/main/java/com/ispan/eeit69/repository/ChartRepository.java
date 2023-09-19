@@ -31,5 +31,11 @@ public interface ChartRepository extends JpaRepository<Chart, Integer> {
 	@Query("SELECT Complete_Order.foodName, SUM(Complete_Order.foodQuantity), SUM(Complete_Order.orderPrice) FROM Chart Complete_Order WHERE Complete_Order.complete_at BETWEEN :startDate AND :endDate GROUP BY Complete_Order.foodName ORDER BY SUM(Complete_Order.foodQuantity) DESC")
 	List<Object[]> hotProduct(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
+	@Query("SELECT c FROM Chart c WHERE c.complete_at BETWEEN :startDate AND :endDate")
+	List<Chart> findAll(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+	
+	
 
+
+	
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ispan.eeit69.model.Chart;
 import com.ispan.eeit69.service.ChartService;
 
 @Controller
@@ -164,6 +165,10 @@ public class ChartController {
 	    return monthlyHotProduct;
 	}
 	
-	
+	// 測試查詢原始資料
+//	@GetMapping("/testOriginData")
+//	public @ResponseBody List<Chart> findOriginData(){
+//		return chartService.findAll();	
+//	}
 	
 }

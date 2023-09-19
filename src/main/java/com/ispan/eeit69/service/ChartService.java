@@ -2,6 +2,9 @@ package com.ispan.eeit69.service;
 
 import java.util.List;
 
+import com.ispan.eeit69.model.Chart;
+import com.ispan.eeit69.model.ChartData;
+
 public interface ChartService {
 	 Integer calDailyTotalRevenue();
 	 Integer calWeeklyTotalRevenue();
@@ -22,6 +25,11 @@ public interface ChartService {
 	 List<Object[]> dailyHotProduct();
 	 List<Object[]> weeklyHotProduct();
 	 List<Object[]> monthlyHotProduct();
+	 
+//	 List<Chart> findAll();
+	 
+	 ChartData getChartData();
+	 
 	 
 	 
 }
