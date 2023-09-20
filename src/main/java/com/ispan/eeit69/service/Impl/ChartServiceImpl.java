@@ -3,6 +3,7 @@ package com.ispan.eeit69.service.Impl;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -50,7 +51,12 @@ public class ChartServiceImpl implements ChartService {
 	// 用戶指定範圍營業總額
 	@Override
 	public Integer calCustomTotalRevenue(Date startDate, Date endDate) {
-		Integer customRevenue = chartRp.calRevenue(startDate, endDate);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(endDate);
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		Date nextDay = calendar.getTime();
+
+		Integer customRevenue = chartRp.calRevenue(startDate, nextDay);
 
 		return customRevenue;
 	}
@@ -86,7 +92,13 @@ public class ChartServiceImpl implements ChartService {
 	// 用戶指定日期範圍訂單數
 	@Override
 	public Integer countCustomOrders(Date startDate, Date endDate) {
-		Integer customOrders = chartRp.countOrders(startDate, endDate);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(endDate);
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		Date nextDay = calendar.getTime();
+		
+		
+		Integer customOrders = chartRp.countOrders(startDate, nextDay);
 
 		return customOrders;
 	}
@@ -119,10 +131,17 @@ public class ChartServiceImpl implements ChartService {
 
 		return monthDiningLocation;
 	}
-
+	
+	// 用戶指定日期範圍外帶內用比例
 	@Override
 	public List<Object[]> countCustomDiningLocation(Date startDate, Date endDate) {
-		List<Object[]> customDiningLocation = chartRp.countDiningLocation(startDate, endDate);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(endDate);
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		Date nextDay = calendar.getTime();
+		
+		
+		List<Object[]> customDiningLocation = chartRp.countDiningLocation(startDate, nextDay);
 
 		return customDiningLocation;
 	}
@@ -159,13 +178,18 @@ public class ChartServiceImpl implements ChartService {
 	// 用戶指定日期範圍產品類別比例
 	@Override
 	public List<Object[]> countCustomFoodCategory(Date startDate, Date endDate) {
-		List<Object[]> customFoodCategory = chartRp.countFoodCategory(startDate, endDate);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(endDate);
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		Date nextDay = calendar.getTime();
+		
+		List<Object[]> customFoodCategory = chartRp.countFoodCategory(startDate, nextDay);
 
 		return customFoodCategory;
 	}
 
 	// -----------------------------------------------------------------
-	
+
 	// 日熱賣產品排行
 	@Override
 	public List<Object[]> dailyHotProduct() {
@@ -194,13 +218,17 @@ public class ChartServiceImpl implements ChartService {
 	// 用戶指定日期範圍熱賣產品排行
 	@Override
 	public List<Object[]> customHotProduct(Date startDate, Date endDate) {
-		List<Object[]> customHotProduct = chartRp.hotProduct(startDate, endDate);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(endDate);
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		Date nextDay = calendar.getTime();
+		
+		List<Object[]> customHotProduct = chartRp.hotProduct(startDate, nextDay);
 		return customHotProduct;
 	}
-	
+
 	// -----------------------------------------------------------------
-	
-	
+
 	// 營業額&訂單量分析圖
 
 	// 測試查詢分析圖原始資料
@@ -308,7 +336,13 @@ public class ChartServiceImpl implements ChartService {
 	// 用戶指定日期範圍營業額及訂單量
 	@Override
 	public List<List<Object>> findCustomData(Date startDate, Date endDate) {
-		List<Object[]> originDatas = chartRp.findDailyData(startDate, endDate);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(endDate);
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		Date nextDay = calendar.getTime();
+		
+		
+		List<Object[]> originDatas = chartRp.findDailyData(startDate, nextDay);
 
 		List<Object> dates = new ArrayList<>();
 		List<Object> orders = new ArrayList<>();
