@@ -40,6 +40,6 @@ public interface ChartRepository extends JpaRepository<Chart, Integer> {
 	// 查詢當日每小時營業額及訂單量
 	@Query("SELECT DATE_FORMAT(c.complete_at, '%Y/%m/%d %H:00') AS formattedDate, SUM(c.orderPrice) AS revenue, COUNT(DISTINCT c.orderNo) AS orderQuan FROM Chart c WHERE c.complete_at BETWEEN :startDate AND :endDate GROUP BY formattedDate ORDER BY formattedDate")
 	List<Object[]> findHourData(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
-
+	
 	
 }

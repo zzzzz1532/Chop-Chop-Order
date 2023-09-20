@@ -128,7 +128,7 @@ td {
 	<div class="container">
 		<!-- 選擇日期 -->
 			<div class="form-container">
-			    <form action="/queryData" method="post" class="right-form">
+			    <form action="/queryDataStandard" method="post" class="right-form">
 			        <label for="dateRange">選擇日期：</label>
 					 <select id="dateRange" name="dateRange" required>
 				       	<option value="today">今天</option>
@@ -138,7 +138,7 @@ td {
 				    <input type="submit" value="查詢">
 			    </form>
 			
-			    <form action="/queryData" method="post" class="left-form">
+			    <form action="/queryDataCustom" method="post" class="left-form">
 			       <label for="startDate">開始日期：</label>
 					<input type="date" id="startDate" name="startDate" required>
 					<label for="endDate">結束日期：</label>
