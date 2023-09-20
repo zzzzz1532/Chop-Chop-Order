@@ -1,5 +1,4 @@
-package com.model;
-
+package com.ispan.eeit69.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
