@@ -11,14 +11,14 @@
             padding: 0;
             background-color: #f4f4f4;
         }
-
+    
         header {
             background-color: #35424a;
             color: white;
             padding: 10px;
             text-align: center;
         }
-
+    
         .container {
             max-width: 900px;
             margin: auto;
@@ -28,87 +28,82 @@
             border-radius: 5px;
             margin-top: 20px;
         }
-
+    
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
+    
         th,
         td {
             padding: 10px;
             text-align: center;
             border-bottom: 1px solid #ddd;
         }
-
+    
         th {
             background-color: #f4f4f4;
         }
-
+    
         .accept-button {
             text-align: center;
         }
-
+    
         .completed {
             background-color: #d1ffd8;
         }
-
+    
         .pending {
             background-color: white;
         }
-
+    
         /* 調整"待處理訂單"表格欄位大小 */
         table.pending tbody td:nth-child(1),
         table.pending tbody th:nth-child(1) {
             width: 10%;
         }
-
+    
         table.pending tbody td:nth-child(2),
         table.pending tbody th:nth-child(2) {
-            width: 15%;
+            width: 20%; /* 调整總額的比例 */
         }
-
+    
         table.pending tbody td:nth-child(3),
         table.pending tbody th:nth-child(3) {
-            width: 20%;
+            width: 30%; /* 调整客戶送單時間的比例 */
         }
-
+    
         table.pending tbody td:nth-child(4),
         table.pending tbody th:nth-child(4) {
-            width: 15%;
+            width: 40%; /* 调整操作的比例 */
         }
-
-        table.pending tbody td:nth-child(5),
-        table.pending tbody th:nth-child(5) {
-            width: 10%;
-        }
-
+    
         /* 調整"已完成訂單"表格欄位大小 */
         table.completed tbody td:nth-child(1),
         table.completed tbody th:nth-child(1) {
             width: 10%;
         }
-
+    
         table.completed tbody td:nth-child(2),
         table.completed tbody th:nth-child(2) {
-            width: 15%;
+            width: 20%; /* 调整總額的比例 */
         }
-
+    
         table.completed tbody td:nth-child(3),
         table.completed tbody th:nth-child(3) {
-            width: 15%;
+            width: 20%; /* 调整完成时间的比例 */
         }
-
+    
         table.completed tbody td:nth-child(4),
         table.completed tbody th:nth-child(4) {
-            width: 20%;
+            width: 50%; /* 调整操作的比例 */
         }
-
-        table.completed tbody td:nth-child(5),
-        table.completed tbody th:nth-child(5) {
-            width: 10%;
+    
+        .button-group {
+            display: flex;
+            justify-content: center;
         }
-
+    
         .button {
             background-color: #6dc26d;
             border: none;
@@ -120,8 +115,18 @@
             font-size: 14px;
             cursor: pointer;
             border-radius: 4px;
+            margin-right: 10px; /* 調整按鈕之間的右邊距 */
+        }
+    
+        .complete-button {
+            background-color: #3498db;
+        }
+    
+        .delete-button {
+            background-color: #e74c3c;
         }
     </style>
+    
 </head>
 <body>
     <header>
@@ -140,10 +145,14 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>001</td>
-                    <td>$100</td>
-                    <td>2023-09-05 13:30</td>
-                    <td><button class="button" onclick="showBox()">查看品項</button></td>
+                    <td rowspan="3">001</td>
+                    <td rowspan="3">$100</td>
+                    <td rowspan="3">2023-09-05 13:30</td>
+                    <td rowspan="3">
+                        <button class="button" onclick="showBox()">查看品項</button>
+                        <button class="button">完成</button>
+                        <button class="button">刪除</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -154,55 +163,25 @@
             <table>
                 <thead>
                     <tr>
-                        <th>單號</th>
                         <th>項目</th>
                         <th>數量</th>
                         <th>單價</th>
-                        <th>總額</th>
-                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td rowspan="2">001</td>
                         <td>商品A</td>
                         <td>3</td>
                         <td>$20</td>
-                        <td rowspan="2">$120</td>
-                        <td rowspan="2">
-                            <button class="button">完成</button>
-                            <button class="button">刪除</button>
-                        </td>
                     </tr>
                     <tr>
                         <td>商品B</td>
                         <td>2</td>
                         <td>$30</td>
-                        <td></td> 
                     </tr>
                 </tbody>
             </table>
         </div>
-
-        <h2>已完成訂單</h2>
-        <table class="completed">
-            <thead>
-                <tr>
-                    <th>單號</th>
-                    <th>訂單狀態</th>
-                    <th>總額</th>
-                    <th>完成時間</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>002</td>
-                    <td>已完成</td>
-                    <td>$50</td>
-                    <td id="orderTime2">2023-09-05 13:50</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 
     <script>
@@ -216,5 +195,4 @@
         }
     </script>
 </body>
-
 </html>
