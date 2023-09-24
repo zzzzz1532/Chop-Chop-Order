@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.List"%>
+<%@ page isELIgnored="false"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,8 +61,8 @@ html, body {
 	position: sticky;
 	top: 0;
 	background-color: white;
-	padding: 10px;
-	font-size: 20px;
+	padding: 15px;
+	font-size: 15px;
 	z-index: 1000;
 }
 
@@ -79,14 +82,14 @@ html, body {
 
 a.button-like {
 	display: inline-block;
-	padding: 5px 10px;
+	padding: 15px 25px;
 	background-color: #717172;
 	color: #ffffff;
 	text-decoration: none;
 	border-radius: 10px;
 	border: none;
 	cursor: pointer;
-	font-size: 10px;
+	font-size: 12px;
 }
 
 a.button-like:hover {
@@ -145,6 +148,7 @@ a.button-like:active {
 
 <body>
 
+
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-10 col-lg-8 col-xl-7 mx-auto">
@@ -165,204 +169,56 @@ a.button-like:active {
 						</details>
 
 					</div>
+					<c:out value="${categories}" />
 					<div class="divsticky">
-
-						<a class="nav-link button-like" href="#scrollspyHeading1">蛋餅</a> <a
-							class="nav-link button-like" href="#scrollspyHeading2">漢堡</a> <a
-							class="nav-link button-like" href="#scrollspyHeading2">漢堡</a> <a
-							class="nav-link button-like" href="#scrollspyHeading2">漢堡</a> <a
-							class="nav-link button-like" href="#scrollspyHeading2">漢堡</a> <a
-							class="nav-link button-like" href="#scrollspyHeading2">漢堡</a> <a
-							class="nav-link button-like" href="#scrollspyHeading2">漢堡</a> <a
-							class="nav-link button-like" href="#scrollspyHeading2">漢堡</a>
-
+						<c:forEach items="${categories}" var="category" varStatus="loop">
+							<a class="nav-link button-like"
+								href="#scrollspyHeading${loop.index + 1}">
+								${category.categoryName} </a>
+						</c:forEach>
 					</div>
+
+					<c:forEach items="${categories}" var="category">
+						<p>${category.categoryName}</p>
+					</c:forEach>
+
+
+
 					<div class="cardbody">
-						<h1 id="scrollspyHeading1">蛋餅</h1>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
+						<c:set var="previousCategory" value="" />
+						<c:forEach items="${products}" var="product">
+							<c:if
+								test="${!product.category.categoryName.equals(previousCategory)}">
+								<h1 id="scrollspyHeading${product.id}">${product.category.categoryName}</h1>
+								<c:set var="previousCategory"
+									value="${product.category.categoryName}" />
+							</c:if>
+							<div class="productitem">
+								<div style="display: flex; align-items: center;">
+									<img src="${product.image}">
+									<div style="margin-left: 10px;">
+										<h6>${product.productName}</h6>
+										<div>
+											NT$<span>${product.productPrice}</span>
+										</div>
 									</div>
 								</div>
+								<span>1</span>
 							</div>
-							<span>1</span>
-						</div>
-						<hr>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
-									</div>
-								</div>
-							</div>
-							<span>1</span>
-						</div>
-						<hr>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
-									</div>
-								</div>
-							</div>
-							<span>1</span>
-						</div>
-						<hr>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
-									</div>
-								</div>
-							</div>
-							<span>1</span>
-						</div>
-						<hr>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
-									</div>
-								</div>
-							</div>
-							<span>1</span>
-						</div>
-						<hr>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
-									</div>
-								</div>
-							</div>
-							<span>1</span>
-						</div>
-						<hr>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
-									</div>
-								</div>
-							</div>
-							<span>1</span>
-						</div>
-						<hr>
-						<h1 id="scrollspyHeading2">漢堡</h1>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
-									</div>
-								</div>
-							</div>
-							<span>1</span>
-						</div>
-						<hr>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
-									</div>
-								</div>
-							</div>
-							<span>1</span>
-						</div>
-						<hr>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
-									</div>
-								</div>
-							</div>
-							<span>1</span>
-						</div>
-						<hr>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
-									</div>
-								</div>
-							</div>
-							<span>1</span>
-						</div>
-						<hr>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
-									</div>
-								</div>
-							</div>
-							<span>1</span>
-						</div>
-						<hr>
-						<div id="productitem" class="productitem">
-							<div style="display: flex; align-items: center;">
-								<img src="./img/eggcake.jpg">
-								<div style="margin-left: 10px;">
-									<h6>原味蛋餅</h6>
-									<div>
-										NT$<span>30</span>
-									</div>
-								</div>
-							</div>
-							<span>1</span>
-						</div>
-						<hr>
+							<hr>
+						</c:forEach>
 					</div>
+
 					<div class="footer1 footersticky">
 						<div>查看購物車</div>
 						<span>NT$100</span>
 					</div>
 				</div>
-
 			</div>
-
 		</div>
-
 	</div>
 
-	</div>
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -371,63 +227,6 @@ a.button-like:active {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
 		integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
 		crossorigin="anonymous"></script>
-	<script>
-		// 獲取存儲在localStorage中的遊客登入編號
-		const visitorID = localStorage.getItem('visitorID');
-
-		// 創建購物車數據，這只是一個示例
-		const shoppingCart = [ {
-			product : 'Product 1',
-			quantity : 2,
-			price : 10.99
-		}, {
-			product : 'Product 2',
-			quantity : 1,
-			price : 5.99
-		},
-		// 其他購物車項目
-		];
-
-		// 創建包含遊客登入編號和購物車數據的物件
-		const dataToSend = {
-			visitorID : visitorID,
-			shoppingCart : shoppingCart
-		};
-
-		// 使用Ajax將數據發送到後端
-		$.ajax({
-			url : 'your_backend_url', // 替換為後端接收數據的URL
-			method : 'POST', // 或其他HTTP方法，視需求而定
-			data : JSON.stringify(dataToSend), // 將物件轉換為JSON字符串
-			contentType : 'application/json', // 設置請求標頭以指定JSON數據
-			success : function(response) {
-				// 在成功回調中處理後端的回應
-				console.log('後端回應：', response);
-			},
-			error : function(error) {
-				console.error('發生錯誤：', error);
-			}
-		});
-	</script>
-	
-	
-	<h1>Product List</h1>
-    <table>
-        <tr>
-            <th>產品類別</th>
-            <th>產品名稱</th>
-            <th>價錢</th>
-            <!-- 添加其他要顯示的欄位 -->
-        </tr>
-        <c:forEach items="${products}" var="product">
-            <tr>
-                <td>${product.category.categoryName}</td>
-                <td>${product.productName}</td>
-                <td>${product.productPrice}</td>
-                <!-- 添加其他要顯示的欄位 -->
-            </tr>
-        </c:forEach>
-    </table>
 
 </body>
 

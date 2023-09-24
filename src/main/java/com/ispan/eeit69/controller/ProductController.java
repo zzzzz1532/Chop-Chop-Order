@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ispan.eeit69.model.Product;
 import com.ispan.eeit69.service.ProductService;
+import com.ispan.eeit69.repository.ProductRepository;
 
 import java.util.List;
 
@@ -37,4 +38,9 @@ public class ProductController {
     public void deleteProduct(@PathVariable Integer id) {
         productService.deleteProduct(id);
     }
+    @GetMapping("/getAllProductsWithCategoryAndLabels")
+    public List<Product> getAllProductsWithCategoryAndLabels() {
+       return productService.getAllProductsWithCategoryAndLabels();
+    }
+   
 }

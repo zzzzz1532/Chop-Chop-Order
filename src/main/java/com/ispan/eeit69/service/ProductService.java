@@ -34,6 +34,9 @@ public class ProductService {
     public void deleteProduct(Integer id) {
         productRepository.deleteById(id);
     }
+    public List<Product> getAllProductsWithCategoryAndLabels() {
+        return productRepository.findAllWithCategoryAndLabels();
+    }
     @Autowired
     private CategoryRepository categoryRepository; // 假设你有一个 CategoryRepository
 
