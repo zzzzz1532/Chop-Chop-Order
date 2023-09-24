@@ -177,7 +177,6 @@ a.button-like:active {
 								${category.categoryName} </a>
 						</c:forEach>
 					</div>
-
 					<c:forEach items="${categories}" var="category">
 						<p>${category.categoryName}</p>
 					</c:forEach>
