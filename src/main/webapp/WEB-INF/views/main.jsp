@@ -421,7 +421,7 @@ a.button-like:active {
         </tr>
         <c:forEach items="${products}" var="product">
             <tr>
-                <td>${product.category}</td>
+                <td>${product.category.categoryName}</td>
                 <td>${product.productName}</td>
                 <td>${product.productPrice}</td>
                 <!-- 添加其他要顯示的欄位 -->

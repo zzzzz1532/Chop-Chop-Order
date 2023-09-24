@@ -103,6 +103,13 @@ public class Product implements Serializable {
 		return SystemService.clobToString(picture);
 	}
 	
+	public String getCategoryName() {
+	    if (category != null) {
+	        return category.getCategoryName();
+	    }
+	    return null;
+	}
+
 	public Integer getId() {
 		return id;
 	}

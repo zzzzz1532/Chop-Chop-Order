@@ -3,7 +3,9 @@ package com.ispan.eeit69.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ispan.eeit69.model.Category;
 import com.ispan.eeit69.model.Product;
+import com.ispan.eeit69.repository.CategoryRepository;
 import com.ispan.eeit69.repository.ProductRepository;
 
 import java.util.List;
@@ -32,4 +34,19 @@ public class ProductService {
     public void deleteProduct(Integer id) {
         productRepository.deleteById(id);
     }
+    @Autowired
+    private CategoryRepository categoryRepository; // 假设你有一个 CategoryRepository
+
+    public List<Product> getAllProductsWithCategory() {
+        List<Product> products = productRepository.findAll();
+        for (Product product : products) {
+            Integer categoryId = product.getCategory().getId();
+            Category category = categoryRepository.findById(categoryId).orElse(null);
+            if (category != null) {
+                product.getCategory().setCategoryName(category.getCategoryName());
+            }
+        }
+        return products;
+    }
 }
+
