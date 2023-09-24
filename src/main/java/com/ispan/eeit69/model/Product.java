@@ -23,56 +23,53 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ispan.eeit69.utils.SystemService;
 
 @Entity
-@Table(name="Product_Table")
+@Table(name = "Product_Table")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	/** 商品ID (0)*/
+
+	/** 商品ID (0) */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	/** 商品編號 (1)*/
+	/** 商品編號 (1) */
 	private String productId;
-    /** 商品名稱 (2)*/
-    private String productName;
-    /** 商品圖片 (3) */
-    @JsonIgnore
-    private Clob picture;    
-    @Transient
-    private String image;
-    @Transient
-    private String fileName;
-    
-    /** 類別名稱  (4)*/
+	/** 商品名稱 (2) */
+	private String productName;
+	/** 商品圖片 (3) */
+	@JsonIgnore
+	private Clob picture;
+	@Transient
+	private String image;
+	@Transient
+	private String fileName;
+
+	/** 類別名稱 (4) */
 //    Lazy（懶加載）：僅在需要時加載相關實體。當獲取主實體時，相關實體只有在需要訪問時才會被加載
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
-    
-    /** 商品介紹  (5)*/
-    private String productDescription;
-    /** 商品價格 (6)*/
-    private BigDecimal productPrice;    
-    /** 商品份量 (7)*/
-    private String productPortion;
-    /** 商品庫存 (8)*/
-    private Integer productStock;    
-    /** 商品上架時間 (9)*/
-    private Timestamp created_at;
-    
-    /** 商品標籤 (10)*/
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id")
+	private Category category;
+
+	/** 商品介紹 (5) */
+	private String productDescription;
+	/** 商品價格 (6) */
+	private BigDecimal productPrice;
+	/** 商品份量 (7) */
+	private String productPortion;
+	/** 商品庫存 (8) */
+	private Integer productStock;
+	/** 商品上架時間 (9) */
+	private Timestamp created_at;
+
+	/** 商品標籤 (10) */
 //    Eager（急加載）：立即加載相關實體。當獲取主實體時，相關實體也會被立即加載。
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "product_labels",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "label_id")
-    )
-    private Set<Label> labels = new HashSet<>();
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "product_labels", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "label_id"))
+	private Set<Label> labels = new HashSet<>();
 
 	public Product() {
 		super();
 	}
+
 	public Product(Integer id, String productId, String productName, Clob picture, String image, String fileName,
 			Category category, String productDescription, BigDecimal productPrice, String productPortion,
 			Integer productStock, Timestamp created_at, Set<Label> labels) {
@@ -91,6 +88,7 @@ public class Product implements Serializable {
 		this.created_at = created_at;
 		this.labels = labels;
 	}
+
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", productId=" + productId + ", productName=" + productName + ", picture="
@@ -99,15 +97,16 @@ public class Product implements Serializable {
 				+ productPortion + ", productStock=" + productStock + ", created_at=" + created_at + ", labels="
 				+ labels + "]";
 	}
+
 	public String getDataUri() throws Exception {
 		return SystemService.clobToString(picture);
 	}
-	
+
 	public String getCategoryName() {
-	    if (category != null) {
-	        return category.getCategoryName();
-	    }
-	    return null;
+		if (category != null) {
+			return category.getCategoryName();
+		}
+		return null;
 	}
 
 	public Integer getId() {
@@ -216,5 +215,19 @@ public class Product implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}	
+	}
+
+	@Transient
+	private String imageDataUrl;
+
+	// 其他方法...
+
+	public String getImageDataUrl() {
+		return imageDataUrl;
+	}
+
+	public void setImageDataUrl(String imageDataUrl) {
+		this.imageDataUrl = imageDataUrl;
+	}
+
 }

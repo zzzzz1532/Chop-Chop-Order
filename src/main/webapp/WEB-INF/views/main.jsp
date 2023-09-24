@@ -194,7 +194,7 @@ a.button-like:active {
 							</c:if>
 							<div class="productitem">
 								<div style="display: flex; align-items: center;">
-									<img src="${product.image}">
+									<img src="${product.imageDataUrl}" alt="Product Image">
 									<div style="margin-left: 10px;">
 										<h6>${product.productName}</h6>
 										<div>
