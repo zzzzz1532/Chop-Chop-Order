@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.utils.SystemService;
+import com.ispan.eeit69.utils.SystemService;
 
 @Entity
 @Table(name="Product_Table")
@@ -35,7 +35,6 @@ public class Product implements Serializable {
 	private String productId;
     /** 商品名稱 (2)*/
     private String productName;
-    
     /** 商品圖片 (3) */
     @JsonIgnore
     private Clob picture;    

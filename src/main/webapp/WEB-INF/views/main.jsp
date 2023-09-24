@@ -409,6 +409,25 @@ a.button-like:active {
 			}
 		});
 	</script>
+	
+	
+	<h1>Product List</h1>
+    <table>
+        <tr>
+            <th>產品類別</th>
+            <th>產品名稱</th>
+            <th>價錢</th>
+            <!-- 添加其他要顯示的欄位 -->
+        </tr>
+        <c:forEach items="${products}" var="product">
+            <tr>
+                <td>${product.category}</td>
+                <td>${product.productName}</td>
+                <td>${product.productPrice}</td>
+                <!-- 添加其他要顯示的欄位 -->
+            </tr>
+        </c:forEach>
+    </table>
 
 </body>
 
