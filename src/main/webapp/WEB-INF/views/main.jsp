@@ -1,3 +1,5 @@
+<%@ page import="java.util.HashSet"%>
+<%@ page import="java.util.Set"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
@@ -169,17 +171,24 @@ a.button-like:active {
 						</details>
 
 					</div>
-					<c:out value="${categories}" />
+
+
+
 					<div class="divsticky">
-						<c:forEach items="${categories}" var="category" varStatus="loop">
-							<a class="nav-link button-like"
-								href="#scrollspyHeading${loop.index + 1}">
-								${category.categoryName} </a>
+						<c:set var="previousCategory" value="" />
+						<c:forEach items="${products}" var="product" varStatus="loop">
+							<c:if
+								test="${!product.category.categoryName.equals(previousCategory)}">
+								<a class="nav-link button-like"
+									href="#scrollspyHeading${loop.index + 1}">
+									${product.category.categoryName} </a>
+								<c:set var="previousCategory"
+									value="${product.category.categoryName}" />
+							</c:if>
 						</c:forEach>
 					</div>
-					<c:forEach items="${categories}" var="category">
-						<p>${category.categoryName}</p>
-					</c:forEach>
+
+
 
 
 
@@ -194,7 +203,7 @@ a.button-like:active {
 							</c:if>
 							<div class="productitem">
 								<div style="display: flex; align-items: center;">
-									<img src="${product.imageDataUrl}" alt="Product Image">
+									<img src="${product.imageDataUrl}" alt="">
 									<div style="margin-left: 10px;">
 										<h6>${product.productName}</h6>
 										<div>
