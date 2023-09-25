@@ -117,7 +117,7 @@
             </div>
             <div class="pageContainer pageWrapper">
                 <h2>請留下您的聯絡資訊，我們將盡快安排專業顧問與您一對一諮詢，謝謝您！</h2>
-                <form action="" method="post" target="_self">
+                <form action="/contactForm" method="post" target="_self">
                     <p>品牌名稱＊</p>
                     <input type="text" name="account" value="" placeholder="">
                     <p>公司名稱</p>
