@@ -39,6 +39,14 @@ public class DateUtils {
     }
     
     
+    public static Date plusDate(Date currentDate) {
+    	Calendar calendar = Calendar.getInstance();
+		calendar.setTime(currentDate);
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		return calendar.getTime();
+    }
+    
+    
 
     private static void setToBeginningOfDay(Calendar calendar) {
         calendar.set(Calendar.HOUR_OF_DAY, 0);

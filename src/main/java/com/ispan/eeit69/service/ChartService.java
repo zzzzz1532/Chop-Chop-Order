@@ -2,6 +2,7 @@ package com.ispan.eeit69.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface ChartService {
 	
@@ -30,10 +31,10 @@ public interface ChartService {
 	 List<Object[]> countCustomFoodCategory(Date startDate, Date endDate);
 	 
 //	 熱賣商品排行
-	 List<Object[]> dailyHotProduct();
-	 List<Object[]> weeklyHotProduct();
-	 List<Object[]> monthlyHotProduct();
-	 List<Object[]> customHotProduct(Date startDate, Date endDate);
+	 List<Map<String, Object>> dailyHotProduct();
+	 List<Map<String, Object>> weeklyHotProduct();
+	 List<Map<String, Object>> monthlyHotProduct();
+	 List<Map<String, Object>> customHotProduct(Date startDate, Date endDate);
 	 
 //	 營業額 & 訂單數分析圖
 	 List<List<Object>> findDailyData();

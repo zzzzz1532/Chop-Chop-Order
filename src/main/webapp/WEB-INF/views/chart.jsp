@@ -50,16 +50,15 @@ td {
 	height: 400px;
 }
 
-.container { 
- 			max-width: 800px; 
- 			margin: auto; 
-			padding: 20px; 
-			background-color: white; 
- 			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
- 			border-radius: 5px; 
- 			margin-top: 20px; 
- 		} 
-		
+.container {
+	max-width: 800px;
+	margin: auto;
+	padding: 20px;
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	margin-top: 20px;
+}
 
 .highcharts-data-table table {
 	font-family: Verdana, sans-serif;
@@ -97,20 +96,18 @@ td {
 }
 
 .form-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
 }
 
 .right-form {
-    float: right;
+	float: right;
 }
 
 .left-form {
-    float: left;
+	float: left;
 }
-
-
 </style>
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -127,27 +124,26 @@ td {
 	<!-- 報表分析子容器 -->
 	<div class="container">
 		<!-- 選擇日期 -->
-			<div class="form-container">
-			    <form action="/queryDataStandard" method="post" class="right-form">
-			        <label for="dateRange">選擇日期：</label>
-					 <select id="dateRange" name="dateRange" required>
-				       	<option value="today">今天</option>
-				        <option value="last7days">過去 7 天</option>
-				        <option value="last30days">過去 30 天</option>
-				    </select>
-				    <input type="submit" value="查詢">
-			    </form>
-			
-			    <form action="/queryDataCustom" method="post" class="left-form">
-			       <label for="startDate">開始日期：</label>
-					<input type="date" id="startDate" name="startDate" required>
-					<label for="endDate">結束日期：</label>
-					<input type="date" id="endDate" name="endDate" required>
-					<input style="float:right" type="submit" value="查詢">
-			    </form>
-			</div>
-			
-			<hr class="my-4">
+		<div class="form-container">
+			<form action="/queryDataStandard" method="post" class="right-form">
+				<label for="dateRange">選擇日期：</label> <select id="dateRange"
+					name="dateRange" required>
+					<option value="today">今天</option>
+					<option value="last7days">過去 7 天</option>
+					<option value="last30days">過去 30 天</option>
+				</select> <input type="submit" value="查詢">
+			</form>
+
+			<form action="/queryDataCustom" method="post" class="left-form">
+				<label for="startDate">開始日期：</label> <input type="date"
+					id="startDate" name="startDate" required> <label
+					for="endDate">結束日期：</label> <input type="date" id="endDate"
+					name="endDate" required> <input style="float: right"
+					type="submit" value="查詢">
+			</form>
+		</div>
+
+		<hr class="my-4">
 
 		<!-- 營業額訂單欄 -->
 		<table style="width: 100%; border-collapse: collapse;">
@@ -267,12 +263,8 @@ td {
 		},
 
 		xAxis : [ {
-			categories : [
-		        "2023/09/20 <br> 03:00",
-		        "2023/09/20 <br> 07:00",
-		        "2023/09/20 <br> 12:00",
-		        "2023/09/20 <br> 17:00"
-		    ],
+			categories : [ "2023/09/20 <br> 03:00", "2023/09/20 <br> 07:00",
+					"2023/09/20 <br> 12:00", "2023/09/20 <br> 17:00" ],
 			crosshair : true
 		} ],
 		yAxis : [ { // Primary yAxis
@@ -320,12 +312,7 @@ td {
 			name : '訂單數',
 			type : 'column',
 			yAxis : 1,
-			data : [
-		        2,
-		        1,
-		        1,
-		        1
-		    ],
+			data : [ 2, 1, 1, 1 ],
 			tooltip : {
 				valueSuffix : ' 筆'
 			}
@@ -333,12 +320,7 @@ td {
 		}, {
 			name : '營業額',
 			type : 'spline',
-			data : [
-		        850,
-		        500,
-		        500,
-		        210
-		    ],
+			data : [ 850, 500, 500, 210 ],
 			tooltip : {
 				valueSuffix : ' 元'
 			}

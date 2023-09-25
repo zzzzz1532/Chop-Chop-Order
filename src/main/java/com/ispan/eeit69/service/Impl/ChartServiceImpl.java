@@ -1,11 +1,11 @@
 package com.ispan.eeit69.service.Impl;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,39 +30,6 @@ public class ChartServiceImpl implements ChartService {
 		return dailyRevenue;
 	}
 
-	// 近 7 天營業總額
-	@Override
-	public Integer calWeeklyTotalRevenue() {
-		Integer weekRevenue = chartRp.calRevenue(DateUtils.getStartDateForLastSevenDays(currentDate),
-				DateUtils.endOfDay(currentDate));
-
-		return weekRevenue;
-	}
-
-	// 近 30 天營業總額
-	@Override
-	public Integer calMonthlyTotalRevenue() {
-		Integer monthRevenue = chartRp.calRevenue(DateUtils.getStartDateForLastThirtyDays(currentDate),
-				DateUtils.endOfDay(currentDate));
-
-		return monthRevenue;
-	}
-
-	// 用戶指定範圍營業總額
-	@Override
-	public Integer calCustomTotalRevenue(Date startDate, Date endDate) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(endDate);
-		calendar.add(Calendar.DAY_OF_MONTH, 1);
-		Date nextDay = calendar.getTime();
-
-		Integer customRevenue = chartRp.calRevenue(startDate, nextDay);
-
-		return customRevenue;
-	}
-
-//	-----------------------------------------------------------------
-
 	// 日總訂單數
 	@Override
 	public Integer countDailyOrders() {
@@ -70,40 +37,6 @@ public class ChartServiceImpl implements ChartService {
 
 		return dailyOrders;
 	}
-
-	// 近 7 天總訂單數
-	@Override
-	public Integer countWeeklyOrders() {
-		Integer weekOrders = chartRp.countOrders(DateUtils.getStartDateForLastSevenDays(currentDate),
-				DateUtils.endOfDay(currentDate));
-
-		return weekOrders;
-	}
-
-	// 近 30 天總訂單數
-	@Override
-	public Integer countMonthlyOrders() {
-		Integer monthOrders = chartRp.countOrders(DateUtils.getStartDateForLastThirtyDays(currentDate),
-				DateUtils.endOfDay(currentDate));
-
-		return monthOrders;
-	}
-
-	// 用戶指定日期範圍訂單數
-	@Override
-	public Integer countCustomOrders(Date startDate, Date endDate) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(endDate);
-		calendar.add(Calendar.DAY_OF_MONTH, 1);
-		Date nextDay = calendar.getTime();
-		
-		
-		Integer customOrders = chartRp.countOrders(startDate, nextDay);
-
-		return customOrders;
-	}
-
-//	-----------------------------------------------------------------
 
 	// 日外帶內用比例
 	@Override
@@ -114,40 +47,6 @@ public class ChartServiceImpl implements ChartService {
 		return dailyDiningLocation;
 	}
 
-	// 近 7 天外帶內用比例
-	@Override
-	public List<Object[]> countWeeklyDiningLocation() {
-		List<Object[]> weekDiningLocation = chartRp.countDiningLocation(
-				DateUtils.getStartDateForLastSevenDays(currentDate), DateUtils.endOfDay(currentDate));
-
-		return weekDiningLocation;
-	}
-
-	// 近 30 天外帶內用比例
-	@Override
-	public List<Object[]> countMonthlyDiningLocation() {
-		List<Object[]> monthDiningLocation = chartRp.countDiningLocation(
-				DateUtils.getStartDateForLastThirtyDays(currentDate), DateUtils.endOfDay(currentDate));
-
-		return monthDiningLocation;
-	}
-	
-	// 用戶指定日期範圍外帶內用比例
-	@Override
-	public List<Object[]> countCustomDiningLocation(Date startDate, Date endDate) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(endDate);
-		calendar.add(Calendar.DAY_OF_MONTH, 1);
-		Date nextDay = calendar.getTime();
-		
-		
-		List<Object[]> customDiningLocation = chartRp.countDiningLocation(startDate, nextDay);
-
-		return customDiningLocation;
-	}
-
-//	-----------------------------------------------------------------
-
 	// 日產品類別比例
 	@Override
 	public List<Object[]> countDailyFoodCategory() {
@@ -156,88 +55,28 @@ public class ChartServiceImpl implements ChartService {
 
 		return dailyFoodCategory;
 	}
-
-	// 近 7 天產品類別比例
-	@Override
-	public List<Object[]> countWeeklyFoodCategory() {
-		List<Object[]> weeklyFoodCategory = chartRp.countFoodCategory(
-				DateUtils.getStartDateForLastSevenDays(currentDate), DateUtils.endOfDay(currentDate));
-
-		return weeklyFoodCategory;
-	}
-
-	// 近 30 天產品類別比例
-	@Override
-	public List<Object[]> countMonthlyFoodCategory() {
-		List<Object[]> monthlyFoodCategory = chartRp.countFoodCategory(
-				DateUtils.getStartDateForLastThirtyDays(currentDate), DateUtils.endOfDay(currentDate));
-
-		return monthlyFoodCategory;
-	}
-
-	// 用戶指定日期範圍產品類別比例
-	@Override
-	public List<Object[]> countCustomFoodCategory(Date startDate, Date endDate) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(endDate);
-		calendar.add(Calendar.DAY_OF_MONTH, 1);
-		Date nextDay = calendar.getTime();
-		
-		List<Object[]> customFoodCategory = chartRp.countFoodCategory(startDate, nextDay);
-
-		return customFoodCategory;
-	}
-
-	// -----------------------------------------------------------------
-
+	
 	// 日熱賣產品排行
 	@Override
-	public List<Object[]> dailyHotProduct() {
-		List<Object[]> dailyHotProduct = chartRp.hotProduct(DateUtils.startOfDay(currentDate),
+	public List<Map<String, Object>> dailyHotProduct() {
+		List<Object[]> dailyData = chartRp.hotProduct(DateUtils.startOfDay(currentDate),
 				DateUtils.endOfDay(currentDate));
-		return dailyHotProduct;
-	}
-
-	// 近 7 天熱賣產品排行
-	@Override
-	public List<Object[]> weeklyHotProduct() {
-		List<Object[]> weeklyHotProduct = chartRp.hotProduct(DateUtils.getStartDateForLastSevenDays(currentDate),
-				DateUtils.endOfDay(currentDate));
-		return weeklyHotProduct;
-	}
-
-	// 近 30 天熱賣產品排行
-	@Override
-	public List<Object[]> monthlyHotProduct() {
-		List<Object[]> monthlyHotProduct = chartRp.hotProduct(DateUtils.getStartDateForLastThirtyDays(currentDate),
-				DateUtils.endOfDay(currentDate));
-		return monthlyHotProduct;
-
-	}
-
-	// 用戶指定日期範圍熱賣產品排行
-	@Override
-	public List<Object[]> customHotProduct(Date startDate, Date endDate) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(endDate);
-		calendar.add(Calendar.DAY_OF_MONTH, 1);
-		Date nextDay = calendar.getTime();
 		
-		List<Object[]> customHotProduct = chartRp.hotProduct(startDate, nextDay);
-		return customHotProduct;
+		List<Map<String, Object>> dailyHotProduct = new ArrayList<>();
+
+		for (Object[] item : dailyData) {
+			Map<String, Object> data = new HashMap<>();
+			data.put("productName", item[0]);
+			data.put("productQuantity", item[1]);
+			data.put("productPrice", item[2]);
+			dailyHotProduct.add(data);
+		}
+		
+		return dailyHotProduct;
+		
 	}
-
-	// -----------------------------------------------------------------
-
-	// 營業額&訂單量分析圖
-
-	// 測試查詢分析圖原始資料
-//	public List<Object[]> findDailyData() {
-//		List<Object[]> originData = chartRp.findDailyData(DateUtils.getStartDateForLastSevenDays(currentDate),
-//				DateUtils.endOfDay(currentDate));
-//		return originData;
-//	}
-
+	
+	
 	// 日營業額訂單量數據
 	public List<List<Object>> findDailyData() {
 		List<Object[]> originDatas = chartRp.findHourData(DateUtils.startOfDay(currentDate),
@@ -267,6 +106,63 @@ public class ChartServiceImpl implements ChartService {
 
 		return result;
 
+	}
+
+//	-----------------------------------------------------------------	
+
+	// 近 7 天營業總額
+	@Override
+	public Integer calWeeklyTotalRevenue() {
+		Integer weekRevenue = chartRp.calRevenue(DateUtils.getStartDateForLastSevenDays(currentDate),
+				DateUtils.endOfDay(currentDate));
+
+		return weekRevenue;
+	}
+
+	// 近 7 天總訂單數
+	@Override
+	public Integer countWeeklyOrders() {
+		Integer weekOrders = chartRp.countOrders(DateUtils.getStartDateForLastSevenDays(currentDate),
+				DateUtils.endOfDay(currentDate));
+
+		return weekOrders;
+	}
+
+	// 近 7 天外帶內用比例
+	@Override
+	public List<Object[]> countWeeklyDiningLocation() {
+		List<Object[]> weekDiningLocation = chartRp.countDiningLocation(
+				DateUtils.getStartDateForLastSevenDays(currentDate), DateUtils.endOfDay(currentDate));
+
+		return weekDiningLocation;
+	}
+
+	// 近 7 天產品類別比例
+	@Override
+	public List<Object[]> countWeeklyFoodCategory() {
+		List<Object[]> weeklyFoodCategory = chartRp.countFoodCategory(
+				DateUtils.getStartDateForLastSevenDays(currentDate), DateUtils.endOfDay(currentDate));
+
+		return weeklyFoodCategory;
+	}
+
+	// 近 7 天熱賣產品排行
+	@Override
+	public List<Map<String, Object>> weeklyHotProduct() {
+		List<Object[]> weeklyData = chartRp.hotProduct(DateUtils.getStartDateForLastSevenDays(currentDate),
+				DateUtils.endOfDay(currentDate));
+		
+		List<Map<String, Object>> weeklyHotProduct = new ArrayList<>();
+
+		for (Object[] item : weeklyData) {
+			Map<String, Object> data = new HashMap<>();
+			data.put("productName", item[0]);
+			data.put("productQuantity", item[1]);
+			data.put("productPrice", item[2]);
+			weeklyHotProduct.add(data);
+		}
+		
+		return weeklyHotProduct;
 	}
 
 	// 近 7 天營業額訂單量每日數據
@@ -301,6 +197,64 @@ public class ChartServiceImpl implements ChartService {
 		return result;
 	}
 
+//	-----------------------------------------------------------------
+
+	// 近 30 天營業總額
+	@Override
+	public Integer calMonthlyTotalRevenue() {
+		Integer monthRevenue = chartRp.calRevenue(DateUtils.getStartDateForLastThirtyDays(currentDate),
+				DateUtils.endOfDay(currentDate));
+
+		return monthRevenue;
+	}
+
+	// 近 30 天總訂單數
+	@Override
+	public Integer countMonthlyOrders() {
+		Integer monthOrders = chartRp.countOrders(DateUtils.getStartDateForLastThirtyDays(currentDate),
+				DateUtils.endOfDay(currentDate));
+
+		return monthOrders;
+	}
+
+	// 近 30 天外帶內用比例
+	@Override
+	public List<Object[]> countMonthlyDiningLocation() {
+		List<Object[]> monthDiningLocation = chartRp.countDiningLocation(
+				DateUtils.getStartDateForLastThirtyDays(currentDate), DateUtils.endOfDay(currentDate));
+
+		return monthDiningLocation;
+	}
+
+	// 近 30 天產品類別比例
+	@Override
+	public List<Object[]> countMonthlyFoodCategory() {
+		List<Object[]> monthlyFoodCategory = chartRp.countFoodCategory(
+				DateUtils.getStartDateForLastThirtyDays(currentDate), DateUtils.endOfDay(currentDate));
+
+		return monthlyFoodCategory;
+	}
+
+	// 近 30 天熱賣產品排行
+	@Override
+	public List<Map<String, Object>> monthlyHotProduct() {
+		List<Object[]> monthlyData = chartRp.hotProduct(DateUtils.getStartDateForLastThirtyDays(currentDate),
+				DateUtils.endOfDay(currentDate));
+		
+		List<Map<String, Object>> monthlyHotProduct = new ArrayList<>();
+
+		for (Object[] item : monthlyData) {
+			Map<String, Object> data = new HashMap<>();
+			data.put("productName", item[0]);
+			data.put("productQuantity", item[1]);
+			data.put("productPrice", item[2]);
+			monthlyHotProduct.add(data);
+		}
+		
+		return monthlyHotProduct;
+
+	}
+
 	// 近 30 天營業額訂單量每日數據
 	@Override
 	public List<List<Object>> findMonthlyData() {
@@ -333,16 +287,61 @@ public class ChartServiceImpl implements ChartService {
 		return result;
 	}
 
+//		-----------------------------------------------------------------
+	// 用戶指定範圍營業總額
+	@Override
+	public Integer calCustomTotalRevenue(Date startDate, Date endDate) {
+		Integer customRevenue = chartRp.calRevenue(startDate, DateUtils.plusDate(endDate));
+
+		return customRevenue;
+	}
+
+	// 用戶指定日期範圍訂單數
+	@Override
+	public Integer countCustomOrders(Date startDate, Date endDate) {
+		Integer customOrders = chartRp.countOrders(startDate, DateUtils.plusDate(endDate));
+
+		return customOrders;
+	}
+
+	// 用戶指定日期範圍外帶內用比例
+	@Override
+	public List<Object[]> countCustomDiningLocation(Date startDate, Date endDate) {
+		List<Object[]> customDiningLocation = chartRp.countDiningLocation(startDate, DateUtils.plusDate(endDate));
+
+		return customDiningLocation;
+	}
+
+	// 用戶指定日期範圍產品類別比例
+	@Override
+	public List<Object[]> countCustomFoodCategory(Date startDate, Date endDate) {
+		List<Object[]> customFoodCategory = chartRp.countFoodCategory(startDate, DateUtils.plusDate(endDate));
+
+		return customFoodCategory;
+	}
+
+	// 用戶指定日期範圍熱賣產品排行
+	@Override
+	public List<Map<String, Object>> customHotProduct(Date startDate, Date endDate) {
+		List<Object[]> customData = chartRp.hotProduct(startDate, DateUtils.plusDate(endDate));
+		
+		List<Map<String, Object>> customHotProduct = new ArrayList<>();
+
+		for (Object[] item : customData) {
+			Map<String, Object> data = new HashMap<>();
+			data.put("productName", item[0]);
+			data.put("productQuantity", item[1]);
+			data.put("productPrice", item[2]);
+			customHotProduct.add(data);
+		}
+		
+		return customHotProduct;
+	}
+
 	// 用戶指定日期範圍營業額及訂單量
 	@Override
 	public List<List<Object>> findCustomData(Date startDate, Date endDate) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(endDate);
-		calendar.add(Calendar.DAY_OF_MONTH, 1);
-		Date nextDay = calendar.getTime();
-		
-		
-		List<Object[]> originDatas = chartRp.findDailyData(startDate, nextDay);
+		List<Object[]> originDatas = chartRp.findDailyData(startDate, DateUtils.plusDate(endDate));
 
 		List<Object> dates = new ArrayList<>();
 		List<Object> orders = new ArrayList<>();
@@ -369,5 +368,16 @@ public class ChartServiceImpl implements ChartService {
 
 		return result;
 	}
+	
+	// -----------------------------------------------------------------
+
+		// 營業額&訂單量分析圖
+
+		// 測試查詢分析圖原始資料
+//		public List<Object[]> findDailyData() {
+//			List<Object[]> originData = chartRp.findDailyData(DateUtils.getStartDateForLastSevenDays(currentDate),
+//					DateUtils.endOfDay(currentDate));
+//			return originData;
+//		}
 
 }
