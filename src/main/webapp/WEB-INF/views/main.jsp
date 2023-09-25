@@ -67,12 +67,7 @@ html, body {
 	z-index: 1000;
 }
 
-.footersticky {
-	position: -webkit-sticky;
-	position: sticky;
-	bottom: 0;
-	z-index: 1000;
-}
+
 
 .footersticky {
 	position: -webkit-sticky;
@@ -138,10 +133,10 @@ a.button-like:active {
 <script>
 	$(document).ready(function() {
 		$('.productitem').click(function() {
-			window.location.href = 'product.html';
+			window.location.href = '/product';
 		});
 		$('.footer1').click(function() {
-			window.location.href = 'cart.html';
+			window.location.href = '/cart';
 		});
 	});
 </script>
