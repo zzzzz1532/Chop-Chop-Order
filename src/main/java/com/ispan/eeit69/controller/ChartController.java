@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ispan.eeit69.model.ChartData;
 import com.ispan.eeit69.service.ChartService;
 
 @Controller
@@ -19,6 +20,77 @@ public class ChartController {
 	@Autowired
 	ChartService chartService;
 
+
+	@GetMapping("/chart")
+	public String chart() {
+		return "chart";
+	}
+	
+	
+	// 整合日級別數據
+    @GetMapping("/todayData")
+    public @ResponseBody ChartData getTodayData() {
+        ChartData todayData = new ChartData();
+
+        todayData.setTotalRevenue(chartService.calDailyTotalRevenue());
+        todayData.setTotalOrders(chartService.countDailyOrders());
+        todayData.setDiningLocation(chartService.countDailyDiningLocation());
+        todayData.setFoodCategory(chartService.countDailyFoodCategory());
+        todayData.setHotProducts(chartService.dailyHotProduct());
+        todayData.setChartData(chartService.findDailyData());
+
+        return todayData;
+    }
+// 整合近 7 日數據
+    @GetMapping("/weeklyData")
+    public @ResponseBody ChartData getWeeklyData() {
+        ChartData weeklyData = new ChartData();
+
+        weeklyData.setTotalRevenue(chartService.calWeeklyTotalRevenue());
+        weeklyData.setTotalOrders(chartService.countWeeklyOrders());
+        weeklyData.setDiningLocation(chartService.countWeeklyDiningLocation());
+        weeklyData.setFoodCategory(chartService.countWeeklyFoodCategory());
+        weeklyData.setHotProducts(chartService.weeklyHotProduct());
+        weeklyData.setChartData(chartService.findWeeklyData());
+
+        return weeklyData;
+    }
+// 整合近 30 日數據
+    @GetMapping("/monthlyData")
+    public @ResponseBody ChartData getMonthlyData() {
+        ChartData monthlyData = new ChartData();
+
+        monthlyData.setTotalRevenue(chartService.calMonthlyTotalRevenue());
+        monthlyData.setTotalOrders(chartService.countMonthlyOrders());
+        monthlyData.setDiningLocation(chartService.countMonthlyDiningLocation());
+        monthlyData.setFoodCategory(chartService.countMonthlyFoodCategory());
+        monthlyData.setHotProducts(chartService.monthlyHotProduct());
+        monthlyData.setChartData(chartService.findMonthlyData());
+
+        return monthlyData;
+    }
+// 整合用戶指定範圍數據
+    @GetMapping("/customData")
+    public @ResponseBody ChartData getCustomData(
+            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+        ChartData customData = new ChartData();
+
+        customData.setTotalRevenue(chartService.calCustomTotalRevenue(startDate, endDate));
+        customData.setTotalOrders(chartService.countCustomOrders(startDate, endDate));
+        customData.setDiningLocation(chartService.countCustomDiningLocation(startDate, endDate));
+        customData.setFoodCategory(chartService.countCustomFoodCategory(startDate, endDate));
+        customData.setHotProducts(chartService.customHotProduct(startDate, endDate));
+        customData.setChartData(chartService.findCustomData(startDate, endDate));
+
+        return customData;
+    }
+	
+	
+//	-----------------------------------------------------------------
+	
+	// 測試用
+	
 	// 日營業總額
 	@GetMapping("/dailyTotalRevenue")
 	public @ResponseBody Integer calDailyTotalRevenue() {

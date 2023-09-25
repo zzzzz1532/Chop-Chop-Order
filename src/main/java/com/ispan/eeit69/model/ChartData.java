@@ -1,48 +1,80 @@
 package com.ispan.eeit69.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class ChartData {
 
-	private List<Integer> revenue; //營業額
-	private List<Integer> orders; // 訂單量
-	private List<String> categories; // 時間週期
-	
-	public ChartData(List<Integer> revenue, List<Integer> orders, List<String> categories) {
-		super();
-		this.revenue = revenue;
-		this.orders = orders;
-		this.categories = categories;
-	}
+	private Integer totalRevenue;
+	private Integer totalOrders;
+	private List<Object[]> diningLocation;
+	private List<Object[]> foodCategory;
+	private List<Map<String, Object>> hotProducts;
+	private List<List<Object>> chartData;
 
 	public ChartData() {
-		
+		super();
 	}
 
-	public List<Integer> getRevenue() {
-		return revenue;
+	public ChartData(Integer totalRevenue, Integer totalOrders, List<Object[]> diningLocation,
+			List<Object[]> foodCategory, List<Map<String, Object>> hotProducts, List<List<Object>> chartData) {
+		super();
+		this.totalRevenue = totalRevenue;
+		this.totalOrders = totalOrders;
+		this.diningLocation = diningLocation;
+		this.foodCategory = foodCategory;
+		this.hotProducts = hotProducts;
+		this.chartData = chartData;
 	}
 
-	public void setRevenue(List<Integer> revenue) {
-		this.revenue = revenue;
+	public Integer getTotalRevenue() {
+		return totalRevenue;
 	}
 
-	public List<Integer> getOrders() {
-		return orders;
+	public void setTotalRevenue(Integer totalRevenue) {
+		this.totalRevenue = totalRevenue;
 	}
 
-	public void setOrders(List<Integer> orders) {
-		this.orders = orders;
+	public Integer getTotalOrders() {
+		return totalOrders;
 	}
 
-	public List<String> getCategories() {
-		return categories;
+	public void setTotalOrders(Integer totalOrders) {
+		this.totalOrders = totalOrders;
 	}
 
-	public void setCategories(List<String> categories) {
-		this.categories = categories;
+	public List<Object[]> getDiningLocation() {
+		return diningLocation;
 	}
+
+	public void setDiningLocation(List<Object[]> diningLocation) {
+		this.diningLocation = diningLocation;
+	}
+
+	public List<Object[]> getFoodCategory() {
+		return foodCategory;
+	}
+
+	public void setFoodCategory(List<Object[]> foodCategory) {
+		this.foodCategory = foodCategory;
+	}
+
+	public List<Map<String, Object>> getHotProducts() {
+		return hotProducts;
+	}
+
+	public void setHotProducts(List<Map<String, Object>> hotProducts) {
+		this.hotProducts = hotProducts;
+	}
+
+	public List<List<Object>> getChartData() {
+		return chartData;
+	}
+
+	public void setChartData(List<List<Object>> chartData) {
+		this.chartData = chartData;
+	}
+
 	
 	
-
 }

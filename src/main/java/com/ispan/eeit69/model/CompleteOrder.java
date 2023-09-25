@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="Complete_Order")
-public class Chart implements Serializable {
+public class CompleteOrder implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	// Model 版本號 => 1
@@ -32,15 +32,17 @@ public class Chart implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Timestamp complete_at; // 完成時間
 	//上方屬性可能會再修改，依最終暫存訂單資料表為準
+	private String labelName;
+	private String foodNote;
 	
 	
-	public Chart() {
+	public CompleteOrder() {
 		
 	}
 
 
-	public Chart(Integer orderId, Integer orderNo, String diningLocation, String foodName, String categoryName, Integer foodQuantity,
-			Integer orderPrice, Timestamp created_at, Timestamp complete_at) {
+	public CompleteOrder(Integer orderId, Integer orderNo, String diningLocation, String foodName, String categoryName, Integer foodQuantity,
+			Integer orderPrice, Timestamp created_at, Timestamp complete_at, String labelName, String foodNote) {
 		super();
 		this.orderId = orderId;
 		this.orderNo = orderNo;
@@ -50,7 +52,8 @@ public class Chart implements Serializable {
 		this.foodQuantity = foodQuantity;
 		this.orderPrice = orderPrice;
 		this.created_at = created_at;
-		this.complete_at = complete_at;
+		this.labelName = labelName;
+		this.foodNote = foodNote;
 	}
 
 
@@ -147,5 +150,26 @@ public class Chart implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+
+	public String getLabelName() {
+		return labelName;
+	}
+
+
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
+	}
+
+
+	public String getFoodNote() {
+		return foodNote;
+	}
+
+
+	public void setFoodNote(String foodNote) {
+		this.foodNote = foodNote;
+	}
+
 
 }

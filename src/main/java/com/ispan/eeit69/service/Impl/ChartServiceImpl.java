@@ -2,6 +2,7 @@ package com.ispan.eeit69.service.Impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ispan.eeit69.repository.ChartRepository;
+import com.ispan.eeit69.repository.CompleteOrderRepository;
 import com.ispan.eeit69.service.ChartService;
 import com.ispan.eeit69.utils.DateUtils;
 
@@ -18,7 +19,7 @@ import com.ispan.eeit69.utils.DateUtils;
 public class ChartServiceImpl implements ChartService {
 
 	@Autowired
-	ChartRepository chartRp;
+	CompleteOrderRepository chartRp;
 
 	Date currentDate = new Date();
 
@@ -59,22 +60,22 @@ public class ChartServiceImpl implements ChartService {
 	// 日熱賣產品排行
 	@Override
 	public List<Map<String, Object>> dailyHotProduct() {
-		List<Object[]> dailyData = chartRp.hotProduct(DateUtils.startOfDay(currentDate),
-				DateUtils.endOfDay(currentDate));
-		
-		List<Map<String, Object>> dailyHotProduct = new ArrayList<>();
+        List<Object[]> dailyData = chartRp.hotProduct(DateUtils.startOfDay(currentDate),
+                DateUtils.endOfDay(currentDate));
+        List<Map<String, Object>> dailyHotProduct = new ArrayList<>();
+        int ranking = 1;
 
-		for (Object[] item : dailyData) {
-			Map<String, Object> data = new HashMap<>();
-			data.put("productName", item[0]);
-			data.put("productQuantity", item[1]);
-			data.put("productPrice", item[2]);
-			dailyHotProduct.add(data);
-		}
-		
-		return dailyHotProduct;
-		
-	}
+        for (Object[] item : dailyData) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("productName", item[0]);
+            data.put("productQuantity", item[1]);
+            data.put("productPrice", item[2]);
+            data.put("ranking", ranking);
+            dailyHotProduct.add(data);
+            ranking++;
+        }
+        return dailyHotProduct;
+    }
 	
 	
 	// 日營業額訂單量數據
@@ -149,21 +150,24 @@ public class ChartServiceImpl implements ChartService {
 	// 近 7 天熱賣產品排行
 	@Override
 	public List<Map<String, Object>> weeklyHotProduct() {
-		List<Object[]> weeklyData = chartRp.hotProduct(DateUtils.getStartDateForLastSevenDays(currentDate),
-				DateUtils.endOfDay(currentDate));
-		
-		List<Map<String, Object>> weeklyHotProduct = new ArrayList<>();
+        List<Object[]> weeklyData = chartRp.hotProduct(DateUtils.getStartDateForLastSevenDays(currentDate),
+            DateUtils.endOfDay(currentDate));
 
-		for (Object[] item : weeklyData) {
-			Map<String, Object> data = new HashMap<>();
-			data.put("productName", item[0]);
-			data.put("productQuantity", item[1]);
-			data.put("productPrice", item[2]);
-			weeklyHotProduct.add(data);
-		}
-		
-		return weeklyHotProduct;
-	}
+        List<Map<String, Object>> weeklyHotProduct = new ArrayList<>();
+        int ranking = 1;
+
+        for (Object[] item : weeklyData) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("productName", item[0]);
+            data.put("productQuantity", item[1]);
+            data.put("productPrice", item[2]);
+            data.put("ranking", ranking); // 添加排名變數
+            weeklyHotProduct.add(data);
+            ranking++; // 增加排名
+        }
+
+        return weeklyHotProduct;
+    }
 
 	// 近 7 天營業額訂單量每日數據
 	@Override
@@ -238,22 +242,25 @@ public class ChartServiceImpl implements ChartService {
 	// 近 30 天熱賣產品排行
 	@Override
 	public List<Map<String, Object>> monthlyHotProduct() {
-		List<Object[]> monthlyData = chartRp.hotProduct(DateUtils.getStartDateForLastThirtyDays(currentDate),
-				DateUtils.endOfDay(currentDate));
-		
-		List<Map<String, Object>> monthlyHotProduct = new ArrayList<>();
+        List<Object[]> monthlyData = chartRp.hotProduct(DateUtils.getStartDateForLastThirtyDays(currentDate),
+                DateUtils.endOfDay(currentDate));
 
-		for (Object[] item : monthlyData) {
-			Map<String, Object> data = new HashMap<>();
-			data.put("productName", item[0]);
-			data.put("productQuantity", item[1]);
-			data.put("productPrice", item[2]);
-			monthlyHotProduct.add(data);
-		}
-		
-		return monthlyHotProduct;
+        List<Map<String, Object>> monthlyHotProduct = new ArrayList<>();
+        int ranking = 1;
 
-	}
+        for (Object[] item : monthlyData) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("productName", item[0]);
+            data.put("productQuantity", item[1]);
+            data.put("productPrice", item[2]);
+            data.put("ranking", ranking);
+            monthlyHotProduct.add(data);
+            ranking++;
+        }
+
+        return monthlyHotProduct;
+
+    }
 
 	// 近 30 天營業額訂單量每日數據
 	@Override
@@ -320,23 +327,29 @@ public class ChartServiceImpl implements ChartService {
 		return customFoodCategory;
 	}
 
-	// 用戶指定日期範圍熱賣產品排行
-	@Override
 	public List<Map<String, Object>> customHotProduct(Date startDate, Date endDate) {
-		List<Object[]> customData = chartRp.hotProduct(startDate, DateUtils.plusDate(endDate));
-		
-		List<Map<String, Object>> customHotProduct = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(endDate);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        Date nextDay = calendar.getTime();
 
-		for (Object[] item : customData) {
-			Map<String, Object> data = new HashMap<>();
-			data.put("productName", item[0]);
-			data.put("productQuantity", item[1]);
-			data.put("productPrice", item[2]);
-			customHotProduct.add(data);
-		}
-		
-		return customHotProduct;
-	}
+        List<Object[]> customData = chartRp.hotProduct(startDate, nextDay);
+
+        List<Map<String, Object>> customHotProduct = new ArrayList<>();
+        int ranking = 1;
+
+        for (Object[] item : customData) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("productName", item[0]);
+            data.put("productQuantity", item[1]);
+            data.put("productPrice", item[2]);
+            data.put("ranking", ranking);
+            customHotProduct.add(data);
+            ranking++;
+        }
+
+        return customHotProduct;
+    }
 
 	// 用戶指定日期範圍營業額及訂單量
 	@Override

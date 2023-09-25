@@ -20,6 +20,9 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script type="text/javascript" src="/js/back-end.js"></script>
+<link rel="stylesheet" href="./css/back-end.css">
+
 <style>
 #dataRange {
 	padding-top: 10%;
@@ -28,10 +31,15 @@
 table {
 	table-layout: fixed;
 	text-align: center;
+	width: 100%;
+	border-collapse: collapse;
 }
 
 th {
 	font-size: 36px;
+	background-color: #f4f4f4;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
 }
 
 td {
@@ -46,18 +54,15 @@ td {
 	margin: 1em auto;
 }
 
-#container {
-	height: 400px;
-}
-
 .container {
-	max-width: 800px;
+	max-width: 1300px;
 	margin: auto;
 	padding: 20px;
 	background-color: white;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 	border-radius: 5px;
-	margin-top: 20px;
+	margin-top: 100px;
+	z-index: 0;
 }
 
 .highcharts-data-table table {
@@ -97,17 +102,51 @@ td {
 
 .form-container {
 	display: flex;
-	justify-content: space-between;
 	align-items: flex-end;
 }
 
-.right-form {
-	float: right;
+.btn {
+	margin-right: 10px;
+	/* 添加按钮之间的间距 */
 }
 
-.left-form {
-	float: left;
+.date-range-form {
+	flex-grow: 1;
+	/* 填充剩余可用空间，将日期范围表单推向最右侧 */
+	display: flex;
+	justify-content: flex-end;
+	/* 将表单元素靠右对齐 */
+	align-items: flex-end;
 }
+
+.date-range-form label, .date-range-form input[type="date"],
+	.date-range-form input[type="submit"] {
+	margin: 0;
+	/* 移除所有外边距 */
+}
+
+.date-range-form label {
+	margin-right: 10px;
+	/* 为日期标签添加一些右侧间距，根据需要进行调整 */
+	display: block;
+	margin-bottom: 5px;
+	/* 调整标签底部外边距以控制与日期选择器的对齐 */
+	font-size: large;
+}
+
+.date-range-form input[type="date"] {
+	margin-right: 20px;
+	/* 为日期选择器添加一些左侧间距，根据需要进行调整 */
+	display: block;
+}
+
+/* .right-form {
+            float: right;
+        }
+
+        .left-form {
+            float: left;
+        } */
 </style>
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -121,30 +160,45 @@ td {
 
 
 <body>
+	<header>
+		<div class="openButton"></div>
+		<h1>店家基本資料</h1>
+		<ul class="menuBox">
+			<div class="menu-top">
+				<div class="closeButton"></div>
+			</div>
+			<li><a class="click1" href="#">第一層</a> <!-- 看自已要不要加 --> <!-- <ul>     
+                        <li><a href="#">第二層</a></li>
+                        <li><a href="#">第二層</a></li>
+                        <li><a href="#">第二層</a></li>
+                    </ul> -->
+			<li><a class="click2" href="#">第一層</a>
+			<li><a class="click3" href="#">第一層</a>
+		</ul>
+	</header>
 	<!-- 報表分析子容器 -->
 	<div class="container">
 		<!-- 選擇日期 -->
-		<div class="form-container">
-			<form action="/queryDataStandard" method="post" class="right-form">
-				<label for="dateRange">選擇日期：</label> <select id="dateRange"
-					name="dateRange" required>
-					<option value="today">今天</option>
-					<option value="last7days">過去 7 天</option>
-					<option value="last30days">過去 30 天</option>
-				</select> <input type="submit" value="查詢">
-			</form>
-
-			<form action="/queryDataCustom" method="post" class="left-form">
-				<label for="startDate">開始日期：</label> <input type="date"
-					id="startDate" name="startDate" required> <label
-					for="endDate">結束日期：</label> <input type="date" id="endDate"
-					name="endDate" required> <input style="float: right"
-					type="submit" value="查詢">
-			</form>
-		</div>
+	<div class="form-container">
+			<div id="defaultButton">
+			<button class="btn btn-primary" id="todayButton"
+				data-date-range="today" data-url="/todayData">今天</button>
+			<button class="btn btn-primary" id="weekButton"
+				data-date-range="week" data-url="/weeklyData">過去 7 天</button>
+			<button class="btn btn-primary" id="monthButton"
+				data-date-range="month" data-url="/monthlyData">過去 30 天</button>
+			</div>
+			<div class="date-range-form" id="customButton">
+				<label for="startDate">開始日期：</label>
+				<input class="input-group-text" type="date" id="startDate" required>
+				<label for="endDate">結束日期：</label>
+				<input class="input-group-text" type="date" id="endDate" required>
+				<button id="customDateButton" class="btn btn-info">查詢</button>
+			</div>
+	 </div>
 
 		<hr class="my-4">
-
+		<span style="color: #1c7288cc; font-size: medium;">報表數據每 90 分鐘更新一次</span>
 		<!-- 營業額訂單欄 -->
 		<table style="width: 100%; border-collapse: collapse;">
 			<tr>
@@ -152,8 +206,8 @@ td {
 				<th>訂單量</th>
 			</tr>
 			<tr>
-				<td>54,321 元</td>
-				<td>87筆</td>
+				<td id="totalRevenue"></td>
+				<td id="totalOrders"></td>
 			</tr>
 		</table>
 
@@ -203,202 +257,260 @@ td {
 		</table>
 
 		<!-- 熱賣餐點排行 -->
-		<div class="table-responsive small" style="padding-top: 3%;">
-			<table class="table table-striped table-sm">
-				<thead>
-					<tr>
-						<th scope="col">排名</th>
-						<th scope="col">品名</th>
-						<th scope="col">銷售數量</th>
-						<th scope="col">銷售金額</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>鮪魚蛋餅</td>
-						<td>100</td>
-						<td>4,000</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>大冰奶</td>
-						<td>90</td>
-						<td>2,700</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>培根蛋堡</td>
-						<td>85</td>
-						<td>3,400</td>
-					</tr>
-					<tr>
-						<td>4</td>
-						<td>鐵板麵</td>
-						<td>75</td>
-						<td>3,375</td>
-					</tr>
-					<tr>
-						<td>5</td>
-						<td>薯條</td>
-						<td>70</td>
-						<td>1,750</td>
-					</tr>
+		<div id="hotProduct"></div>
 
-				</tbody>
-			</table>
-		</div>
 	</div>
 </body>
 
 <script>
-	//營業額 & 訂單圖
-	Highcharts.chart('soChart', {
-		chart : {
-			zoomType : 'xy'
-		},
-		title : {
-			text : 'OO早餐店週營業額 & 訂單變化',
-			align : 'center'
-		},
+    $(() => {
+    	// 頁面載入時請求預設數據
+    	var currentUrl = "/monthlyData";
+        requestData(currentUrl);
 
-		xAxis : [ {
-			categories : [ "2023/09/20 <br> 03:00", "2023/09/20 <br> 07:00",
-					"2023/09/20 <br> 12:00", "2023/09/20 <br> 17:00" ],
-			crosshair : true
-		} ],
-		yAxis : [ { // Primary yAxis
-			labels : {
-				format : '{value} 元',
-				style : {
-					color : Highcharts.getOptions().colors[1]
-				}
-			},
-			title : {
-				text : '營業額',
-				style : {
-					color : Highcharts.getOptions().colors[1]
-				}
-			}
-		}, { // Secondary yAxis
-			title : {
-				text : '訂單數',
-				style : {
-					color : Highcharts.getOptions().colors[0]
-				}
-			},
-			labels : {
-				format : '{value} 筆',
-				style : {
-					color : Highcharts.getOptions().colors[0]
-				}
-			},
-			opposite : true
-		} ],
-		tooltip : {
-			shared : true
-		},
-		legend : {
-			align : 'left',
-			x : 80,
-			verticalAlign : 'top',
-			y : 60,
-			floating : true,
-			backgroundColor : Highcharts.defaultOptions.legend.backgroundColor
-					|| // theme
-					'rgba(255,255,255,0.25)'
-		},
-		series : [ {
-			name : '訂單數',
-			type : 'column',
-			yAxis : 1,
-			data : [ 2, 1, 1, 1 ],
-			tooltip : {
-				valueSuffix : ' 筆'
-			}
+        // 按鈕點擊事件
+        $(".btn-primary").click(function () {
+        currentUrl = $(this).data("url");
+        requestData(currentUrl);
+    }); 
 
-		}, {
-			name : '營業額',
-			type : 'spline',
-			data : [ 850, 500, 500, 210 ],
-			tooltip : {
-				valueSuffix : ' 元'
-			}
-		} ]
-	});
+        // 自訂日期按鈕點擊事件
+          
+        $("#customDateButton").click(function() {
+            var startDate = $("#startDate").val();
+            var endDate = $("#endDate").val();
+            currentUrl = "/customData"
+            requestData("/customData", startDate, endDate);
+        console.log("TESTING");
+        });
+        
+        
+//         	setInterval(function() {
+//                 requestData(currentUrl);
+//             }, 5000);
+        
+        setInterval(function() {
+            if (currentUrl === "/customData") {
+                var startDate = $("#startDate").val();
+                var endDate = $("#endDate").val();
+                requestData("/customData", startDate, endDate);
+            } else {
+                requestData(currentUrl);
+            }
+        }, 5400000);
+        
+        
+    });
+    
+    function requestData(url, startDate, endDate) {
+    	console.log(startDate, endDate, url)
+        $.ajax({
+            type: "GET",
+            url: url,
+           
+            data: {
+                startDate: startDate,
+                endDate: endDate
+            },
+            success: function(data) {
+            	console.log(data);
+            	updatePage(data);
+                
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+    
+    
+    function updatePage(data) {
+        // 在這個函數中更新頁面上的資料和圖表
+        var totalRevenue = data.totalRevenue !== undefined && data.totalRevenue !== null ? data.totalRevenue.toLocaleString() : 0;
+        var totalOrders = data.totalOrders !== undefined && data.totalOrders !== null ? data.totalOrders.toLocaleString() : 0;
+        var diningLocation = data.diningLocation;
+        var categorySales = data.foodCategory;
+        var hotProducts = data.hotProducts;
+        var chartData = data.chartData;
 
-	//外帶內用圖
-	Highcharts.chart('tdChart', {
-		chart : {
-			plotBackgroundColor : null,
-			plotBorderWidth : 0,
-			plotShadow : false
-		},
-		title : {
-			text : '外帶內用比例',
-			align : 'center',
-			verticalAlign : 'middle',
-			y : 60
-		},
-		tooltip : {
-			pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
-		},
-		accessibility : {
-			point : {
-				valueSuffix : '%'
-			}
-		},
-		plotOptions : {
-			pie : {
-				dataLabels : {
-					enabled : true,
-					distance : -50,
-					style : {
-						fontWeight : 'bold',
-						color : 'white'
-					}
-				},
-				startAngle : -90,
-				endAngle : 90,
-				center : [ '50%', '75%' ],
-				size : '110%'
-			}
-		},
-		series : [ {
-			type : 'pie',
-			name : '比例',
-			innerSize : '50%',
-			data : [ [ '外帶', 523 ], [ '內用', 383 ],
+        // 更新總營業額和訂單數
+        $("#totalRevenue").text(totalRevenue + " 元");
+        $("#totalOrders").text(totalOrders + " 筆");
+		
+        var dates = chartData[0];
+        var revenue = chartData[1];
+        var orders = chartData[2];
+        
+        // 初始化圖表
+        initializeChart(dates, revenue, orders, diningLocation, categorySales);
 
-			]
-		} ]
-	});
+        // 製作熱賣商品排行
+        var tableHtml = '<div class="table-responsive small"><table class="table table-striped table-sm"><thead><tr><th scope="col">排名</th><th scope="col">品名</th><th scope="col">銷售數量</th><th scope="col">銷售金額</th></tr></thead><tbody>';
 
-	// 類別銷量圖
-	Highcharts.chart('cateChart', {
-		chart : {
-			type : 'pie',
-			options3d : {
-				enabled : true,
-				alpha : 45
-			}
-		},
-		title : {
-			text : '月類別銷量',
-			align : 'center'
-		},
-		plotOptions : {
-			pie : {
-				innerSize : 100,
-				depth : 45
-			}
-		},
-		series : [ {
-			name : '銷量',
-			data : [ [ '漢堡', 160 ], [ '吐司', 102 ], [ '蛋餅', 80 ], [ '果醬', 84 ],
-					[ '麵類', 88 ], [ '點心', 56 ], [ '飲料', 172 ], ]
-		} ]
-	});
+        $.each(hotProducts, function(index, product) {
+            tableHtml += '<tr>';
+            tableHtml += '<td>' + product.ranking + '</td>';
+            tableHtml += '<td>' + product.productName + '</td>';
+            tableHtml += '<td>' + product.productQuantity.toLocaleString() + '</td>';
+            tableHtml += '<td>' + product.productPrice.toLocaleString() + " 元" + '</td>';
+            tableHtml += '</tr>';
+        });
+
+        tableHtml += '</tbody></table></div>';
+
+        // 將表格 HTML 插入到指定的<div>中
+        $('#hotProduct').html(tableHtml);
+    }
+    
+    
+    function initializeChart(dates, revenue, orders, diningLocation, categorySales) {
+        //營業額 & 訂單圖
+        Highcharts.chart('soChart', {
+            chart: {
+                zoomType: 'xy'
+            },
+            title: {
+                text: '',
+                align: 'center'
+            },
+
+            xAxis: [{
+                categories: dates,
+                crosshair: true
+            }],
+            yAxis: [{ // Primary yAxis
+                labels: {
+                    format: '{value} 元',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                title: {
+                    text: '營業額',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                }
+            }, { // Secondary yAxis
+                title: {
+                    text: '訂單數',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                },
+                labels: {
+                    format: '{value} 筆',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                },
+                opposite: true
+            }],
+            tooltip: {
+                shared: true
+            },
+            legend: {
+                align: 'left',
+                x: 80,
+                verticalAlign: 'top',
+                y: 60,
+                floating: true,
+                backgroundColor: Highcharts.defaultOptions.legend.backgroundColor
+                    || // theme
+                    'rgba(255,255,255,0.25)'
+            },
+            series: [{
+                name: '訂單數',
+                type: 'column',
+                yAxis: 1,
+                data: orders,
+                tooltip: {
+                    valueSuffix: ' 筆'
+                }
+
+            }, {
+                name: '營業額',
+                type: 'spline',
+                data: revenue,
+                tooltip: {
+                    valueSuffix: ' 元'
+                }
+            }]
+        });
+
+
+
+        // 外帶內用圖
+        Highcharts.chart('tdChart', {
+
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+            title: {
+                text: '外帶內用比例',
+                align: 'center',
+                verticalAlign: 'middle',
+                y: 60
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: true,
+                        distance: -50,
+                        style: {
+                            fontWeight: 'bold',
+                            color: 'white'
+                        }
+                    },
+                    startAngle: -90,
+                    endAngle: 90,
+                    center: ['50%', '75%'],
+                    size: '110%'
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '比例',
+                innerSize: '50%',
+                data: diningLocation 
+            }]
+        });
+
+        // 類別銷量圖
+        Highcharts.chart('cateChart', {
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45
+                }
+            },
+            title: {
+                text: '月類別銷量',
+                align: 'center'
+            },
+            plotOptions: {
+                pie: {
+                    innerSize: 100,
+                    depth: 45
+                }
+            },
+            series: [{
+                name: '銷量',
+                data: categorySales
+            }]
+        });
+    }
 </script>
 
 

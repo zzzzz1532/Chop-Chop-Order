@@ -28,8 +28,4 @@ public class FindPendingOrderController {
 		return "showPendingOrders";
 	}
 
-	@GetMapping("/test")
-	public String test() {
-		return "chart";
-	}
 }

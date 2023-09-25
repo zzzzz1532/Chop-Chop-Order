@@ -55,7 +55,7 @@
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					var content = "<table>";
 					content += "<tr><th colspan='7'>刊版系統</th></tr>";
-					content += "<tr ><th>單號</th><th>內用外帶</th><th>總額</th>"
+					content += "<tr ><th>單號</th><th>內用外帶</th>"
 							+ "<th>品名</th><th>數量</th>"
 							+ "<th>接單時間</th></tr>";
 					console.log(xhr.responseText);
@@ -70,9 +70,6 @@
 								+ "<td>"
 								+ orders[i].diningLocation
 								+ "</td>"
-								+ "<td>"
-								+ orders[i].orderPrice
-								+ "&nbsp;</td>"
 								+ "<td>"
 								+ orders[i].foodName
 								+ "</td>"

@@ -30,6 +30,10 @@ public class PendingOrder implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Timestamp created_at; // 生成時間
 	//上方屬性可能會再修改，依最終暫存訂單資料表為準
+	private String labelName;
+	private String foodNote;
+	private String orderNote;
+	
 	
 	public PendingOrder()  {
 		
@@ -37,7 +41,7 @@ public class PendingOrder implements Serializable{
 
 
 	public PendingOrder(Integer orderId, Integer orderNo, String diningLocation, String foodName, String categoryName, Integer foodQuantity,
-			Integer orderPrice, Timestamp created_at) {
+			Integer orderPrice, Timestamp created_at, String labelName, String foodNote, String orderNote) {
 		super();
 		this.orderId = orderId;
 		this.orderNo = orderNo;
@@ -47,6 +51,9 @@ public class PendingOrder implements Serializable{
 		this.foodQuantity = foodQuantity;
 		this.orderPrice = orderPrice;
 		this.created_at = created_at;
+		this.labelName = labelName;
+		this.foodNote = foodNote;
+		this.orderNote = orderNote;
 	}
 
 
@@ -133,4 +140,34 @@ public class PendingOrder implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+
+	public String getLabelName() {
+		return labelName;
+	}
+
+
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
+	}
+
+
+	public String getFoodNote() {
+		return foodNote;
+	}
+
+
+	public void setFoodNote(String foodNote) {
+		this.foodNote = foodNote;
+	}
+
+
+	public String getOrderNote() {
+		return orderNote;
+	}
+
+	public void setOrderNote(String orderNote) {
+		this.orderNote = orderNote;
+	}
+	
 }
