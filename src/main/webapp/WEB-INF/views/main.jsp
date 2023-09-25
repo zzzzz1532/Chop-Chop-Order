@@ -40,19 +40,23 @@
 html, body {
 	height: 100%;
 }
+
 .cardheader {
 	border-bottom: 2px solid #39c0ed;
 }
+
 .productitem {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	cursor: pointer;
 }
+
 #productitem img {
 	max-height: 100%;
 	max-width: 100%;
 }
+
 .divsticky {
 	position: -webkit-sticky;
 	position: sticky;
@@ -62,18 +66,21 @@ html, body {
 	font-size: 15px;
 	z-index: 1000;
 }
+
 .footersticky {
 	position: -webkit-sticky;
 	position: sticky;
 	bottom: 0;
 	z-index: 1000;
 }
+
 .footersticky {
 	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
 	z-index: 1000;
 }
+
 a.button-like {
 	display: inline-block;
 	padding: 15px 25px;
@@ -85,12 +92,15 @@ a.button-like {
 	cursor: pointer;
 	font-size: 12px;
 }
+
 a.button-like:hover {
 	background-color: #0056b3;
 }
+
 a.button-like:active {
 	background-color: #003c6b;
 }
+
 .footer1 {
 	left: 0;
 	bottom: 0;
@@ -153,6 +163,14 @@ a.button-like:active {
 							</div>
 						</details>
 					</div>
+					<!-- 模态框内容 -->
+					<div id="orderChoiceModal" class="modal">
+						<div class="modal-content">
+							<h2>請選擇內用或外帶</h2>
+							<button id="dineInButton">内用</button>
+							<button id="takeOutButton">外带</button>
+						</div>
+					</div>
 					<div class="divsticky">
 						<c:set var="previousCategory" value="" />
 						<c:forEach items="${products}" var="product" varStatus="loop">
@@ -207,6 +225,27 @@ a.button-like:active {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
 		integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
 		crossorigin="anonymous"></script>
+	<script>
+    // 页面加载完毕后显示模态框
+    $(document).ready(function() {
+        $('#orderChoiceModal').show();
+    });
+ // 处理内用按钮点击事件
+    dineInButton.addEventListener('click', () => {
+        // 将选择记录在localStorage中
+        localStorage.setItem('orderChoice', '内用');
+        // 关闭弹出窗口
+        orderChoiceModal.style.display = 'none';
+    });
+
+    // 处理外带按钮点击事件
+    takeOutButton.addEventListener('click', () => {
+        // 将选择记录在localStorage中
+        localStorage.setItem('orderChoice', '外带');
+        // 关闭弹出窗口
+        orderChoiceModal.style.display = 'none';
+    });
+</script>
 </body>
 
 </html>
