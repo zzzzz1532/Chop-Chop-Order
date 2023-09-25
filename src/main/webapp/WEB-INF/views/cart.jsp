@@ -171,9 +171,58 @@ h2, h4 {
 			window.location.href = 'main.html';
 		});
 		$('.footer1').click(function() {
-			window.location.href = 'finish.html';
-		});
+			// 创建一个空的OrderData对象
+			var orderData = {
+				items : [],
+				orderPrice : 0,
+			};
 
+			// 获取购物车中的商品数据
+			var cartItems = loadedCartData.items;
+			for (var i = 0; i < cartItems.length; i++) {
+				var cartItem = cartItems[i];
+				// 创建购物车商品对象，将前端数据映射到OrderData中的items数组中
+				var orderItem = {
+					id : cartItem.id,
+					foodname : cartItem.name,
+					productprice : cartItem.price,
+					foodquantity : cartItem.quantity,
+				};
+				// 添加购物车商品到OrderData的items数组
+				orderData.items.push(orderItem);
+				// 计算订单总价格
+				orderData.orderPrice += cartItem.price * cartItem.quantity;
+			}
+
+			// 将备注信息添加到OrderData对象
+			var remark = $('#remark input').val();
+			orderData.remark = remark;
+
+			// 获取用户选择的付款方式
+			var selectedPayment = $("input[name='label']:checked").val();
+			orderData.paymentMethod = selectedPayment;
+
+			// 将OrderData对象转换为JSON字符串
+			var orderDataJson = JSON.stringify(orderData);
+
+			// 发送HTTP请求到后端的Controller
+			$.ajax({
+				url : '/your-backend-endpoint', // 后端接口的URL
+				type : 'POST',
+				contentType : 'application/json',
+				data : orderDataJson,
+				success : function(response) {
+					// 处理后端的响应
+					console.log('Order submitted successfully.');
+					// 可以在成功提交后执行其他操作，例如跳转到订单完成页面
+					window.location.href = 'finish.html';
+				},
+				error : function(error) {
+					console.error('Error submitting order:', error);
+					// 处理错误情况，例如显示错误消息给用户
+				}
+			});
+		});
 	});
 </script>
 
@@ -273,6 +322,35 @@ h2, h4 {
 		crossorigin="anonymous"></script>
 	<script src="https://kit.fontawesome.com/ed6fd4cc97.js"
 		crossorigin="anonymous"></script>
+
+	<script>
+		// 模拟购物车数据
+		var cartData = {
+			items : [ {
+				id : 1,
+				foodname : 'Product 1',
+				productprice : 10.99,
+				foodquantity : 2
+			}, {
+				id : 2,
+				foodname : 'Product 2',
+				productprice : 19.99,
+				foodquantity : 1
+			}, ],
+			orderPrice : 41.97,
+		};
+
+		// 存储购物车数据到localStorage
+		localStorage.setItem('cartData', JSON.stringify(cartData));
+
+		// 从localStorage中加载购物车数据
+		var savedCartData = localStorage.getItem('cartData');
+		var loadedCartData = JSON.parse(savedCartData);
+
+		// 输出购物车内容和总金额
+		console.log(loadedCartData.items);
+		console.log('Total: $' + loadedCartData.total.toFixed(2));
+	</script>
 </body>
 
 </html>

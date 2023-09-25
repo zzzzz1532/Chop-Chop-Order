@@ -9,4 +9,5 @@ import com.ispan.eeit69.model.PendingOrder;
 public interface PendingOrderService {
 	
 	List<PendingOrder> findAll(); 
+	void save(PendingOrder pendingOrder);
 }
