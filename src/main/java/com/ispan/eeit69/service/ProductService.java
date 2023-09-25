@@ -51,7 +51,7 @@ public class ProductService {
         for (Product product : products) {
             try {
                 String imageDataUrl = clobToImageDataUrl(product.getPicture());
-                product.setImageDataUrl(imageDataUrl);
+                product.setImage(imageDataUrl); // 设置image属性为图像数据URI
             } catch (Exception e) {
                 // 处理异常
                 e.printStackTrace();

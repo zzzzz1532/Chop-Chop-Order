@@ -29,7 +29,6 @@
 		}
 		return randomID;
 	}
-
 	// 檢查是否已經存在編號，如果不存在則生成一個並存儲在 localStorage 中
 	if (!localStorage.getItem('visitorID')) {
 		const randomID = generateRandomID(8); // 在此指定所需的長度
@@ -41,23 +40,19 @@
 html, body {
 	height: 100%;
 }
-
 .cardheader {
 	border-bottom: 2px solid #39c0ed;
 }
-
 .productitem {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	cursor: pointer;
 }
-
 #productitem img {
 	max-height: 100%;
 	max-width: 100%;
 }
-
 .divsticky {
 	position: -webkit-sticky;
 	position: sticky;
@@ -67,21 +62,18 @@ html, body {
 	font-size: 15px;
 	z-index: 1000;
 }
-
 .footersticky {
 	position: -webkit-sticky;
 	position: sticky;
 	bottom: 0;
 	z-index: 1000;
 }
-
 .footersticky {
 	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
 	z-index: 1000;
 }
-
 a.button-like {
 	display: inline-block;
 	padding: 15px 25px;
@@ -93,15 +85,12 @@ a.button-like {
 	cursor: pointer;
 	font-size: 12px;
 }
-
 a.button-like:hover {
 	background-color: #0056b3;
 }
-
 a.button-like:active {
 	background-color: #003c6b;
 }
-
 .footer1 {
 	left: 0;
 	bottom: 0;
@@ -144,13 +133,9 @@ a.button-like:active {
 		$('.footer1').click(function() {
 			window.location.href = 'cart.html';
 		});
-
 	});
 </script>
-
 <body>
-
-
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-10 col-lg-8 col-xl-7 mx-auto">
@@ -158,10 +143,8 @@ a.button-like:active {
 					<div style="margin: 10px;">
 						<h1>CCO早餐店</h1>
 					</div>
-
 					<img src="./img/點餐頁面.jpeg" style="width: 100%;">
 					<div class="cardheader">
-
 						<details open>
 							<summary style="margin: 20px 0px;">公告</summary>
 							<div class="answer">
@@ -169,11 +152,7 @@ a.button-like:active {
 									用餐時間一小時、每週一公休、謝謝！</p>
 							</div>
 						</details>
-
 					</div>
-
-
-
 					<div class="divsticky">
 						<c:set var="previousCategory" value="" />
 						<c:forEach items="${products}" var="product" varStatus="loop">
@@ -187,11 +166,6 @@ a.button-like:active {
 							</c:if>
 						</c:forEach>
 					</div>
-
-
-
-
-
 					<div class="cardbody">
 						<c:set var="previousCategory" value="" />
 						<c:forEach items="${products}" var="product">
@@ -203,7 +177,8 @@ a.button-like:active {
 							</c:if>
 							<div class="productitem">
 								<div style="display: flex; align-items: center;">
-									<img src="${product.imageDataUrl}" alt="">
+									<img src="${product.imageDataUrl}" alt="${product.productName}"
+										style="max-width: 100px; max-height: 100px;">
 									<div style="margin-left: 10px;">
 										<h6>${product.productName}</h6>
 										<div>
@@ -216,7 +191,6 @@ a.button-like:active {
 							<hr>
 						</c:forEach>
 					</div>
-
 					<div class="footer1 footersticky">
 						<div>查看購物車</div>
 						<span>NT$100</span>
@@ -225,8 +199,6 @@ a.button-like:active {
 			</div>
 		</div>
 	</div>
-
-
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -235,7 +207,6 @@ a.button-like:active {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
 		integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
 		crossorigin="anonymous"></script>
-
 </body>
 
 </html>

@@ -6,6 +6,7 @@ import java.sql.Clob;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
+import java.sql.SQLException;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -216,18 +217,21 @@ public class Product implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-	@Transient
-	private String imageDataUrl;
-
-	// 其他方法...
-
+	
 	public String getImageDataUrl() {
-		return imageDataUrl;
+	    try {
+	        String imageData = SystemService.clobToString(picture);
+	        if (!imageData.isEmpty()) {
+	            return "data:image/jpg;base64," + imageData;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return ""; // Return an empty string or a placeholder image URL if no image data is available.
 	}
 
-	public void setImageDataUrl(String imageDataUrl) {
-		this.imageDataUrl = imageDataUrl;
-	}
+	
+
+	
 
 }
