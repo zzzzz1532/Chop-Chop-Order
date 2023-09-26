@@ -76,7 +76,7 @@
             <tr>
                 <td>${Orders.orderNo}</td>
                 <td>${Orders.diningLocation}</td>
-                <td>${Orders.foodName}</td>
+                <td>${Orders.ProductName}</td>
                 <td>${Orders.foodQuantity}</td>
                 <td>${Orders.created_at}</td>
             </tr>

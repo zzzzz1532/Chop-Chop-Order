@@ -47,6 +47,26 @@
 	src="<c:url value='/webjars/jquery/3.5.1/jquery.js' />"></script>
 	<script>
 	window.onload = function() {
+	var stompClient = null;
+
+	function connect() {
+	    var socket = new SockJS('/websocket');
+	    stompClient = Stomp.over(socket);
+	    stompClient.connect({}, function(frame) {
+	        console.log('Connected: ' + frame);
+	        stompClient.subscribe('/topic/pendingOrders', function(data) {
+	            var receivedData = JSON.parse(data.body);
+	            // 在這裡處理收到的 JSON 資料
+	            console.log('Received Data:', receivedData);
+	        });
+	    });
+	}
+
+	connect();
+	
+	
+	
+	
 		function fetchData() {	
 			var xhr = new XMLHttpRequest(); //AJAX Engine
 			xhr.open("Get", "<c:url value='/pendingOrder'/>", true);
@@ -71,7 +91,7 @@
 								+ orders[i].diningLocation
 								+ "</td>"
 								+ "<td>"
-								+ orders[i].productName
+								+ orders[i].foodName
 								+ "</td>"
 								+ "<td>"
 								+ orders[i].foodQuantity

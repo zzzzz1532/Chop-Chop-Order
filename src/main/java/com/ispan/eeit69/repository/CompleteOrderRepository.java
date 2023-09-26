@@ -28,7 +28,7 @@ public interface CompleteOrderRepository extends JpaRepository<CompleteOrder, In
 	List<Object[]> countFoodCategory(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 	// 熱門商品排行
-	@Query("SELECT Complete_Order.foodName, SUM(Complete_Order.foodQuantity), SUM(Complete_Order.orderPrice) FROM CompleteOrder Complete_Order WHERE Complete_Order.complete_at BETWEEN :startDate AND :endDate GROUP BY Complete_Order.foodName ORDER BY SUM(Complete_Order.foodQuantity) DESC")
+	@Query("SELECT Complete_Order.productName, SUM(Complete_Order.foodQuantity), SUM(Complete_Order.orderPrice) FROM CompleteOrder Complete_Order WHERE Complete_Order.complete_at BETWEEN :startDate AND :endDate GROUP BY Complete_Order.productName ORDER BY SUM(Complete_Order.foodQuantity) DESC")
 	List<Object[]> hotProduct(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
 	// 查詢每日營業額及訂單量

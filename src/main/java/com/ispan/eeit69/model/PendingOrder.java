@@ -23,7 +23,7 @@ public class PendingOrder implements Serializable{
 	private Integer orderId; //編號
 	private Integer orderNo; // 訂單號
 	private String diningLocation; //內用外帶
-	private String foodName; // 品名
+	private String productName; // 品名
 	private String categoryName; //類別名稱
 	private Integer foodQuantity; // 數量
 	private Integer orderPrice; //訂單總額
@@ -40,13 +40,13 @@ public class PendingOrder implements Serializable{
 	}
 
 
-	public PendingOrder(Integer orderId, Integer orderNo, String diningLocation, String foodName, String categoryName, Integer foodQuantity,
+	public PendingOrder(Integer orderId, Integer orderNo, String diningLocation, String productName, String categoryName, Integer foodQuantity,
 			Integer orderPrice, Timestamp created_at, String labelName, String foodNote, String orderNote) {
 		super();
 		this.orderId = orderId;
 		this.orderNo = orderNo;
 		this.diningLocation = diningLocation;
-		this.foodName = foodName;
+		this.productName = productName;
 		this.categoryName = categoryName;
 		this.foodQuantity = foodQuantity;
 		this.orderPrice = orderPrice;
@@ -84,16 +84,6 @@ public class PendingOrder implements Serializable{
 
 	public void setDiningLocation(String diningLocation) {
 		this.diningLocation = diningLocation;
-	}
-
-
-	public String getFoodName() {
-		return foodName;
-	}
-
-
-	public void setFoodName(String foodName) {
-		this.foodName = foodName;
 	}
 
 
@@ -169,5 +159,18 @@ public class PendingOrder implements Serializable{
 	public void setOrderNote(String orderNote) {
 		this.orderNote = orderNote;
 	}
+
+
+	public String getProductName() {
+		return productName;
+	}
+
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+
+	
 	
 }
