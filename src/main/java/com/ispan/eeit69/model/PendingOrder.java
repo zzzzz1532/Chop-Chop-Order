@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name="PendingOrder")
+@Table(name="pendingorder")
 public class PendingOrder implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -23,7 +23,7 @@ public class PendingOrder implements Serializable{
 	private Integer orderId; //編號
 	private Integer orderNo; // 訂單號
 	private String diningLocation; //內用外帶
-	private String foodName; // 品名
+	private String ProductName; // 品名
 	private String categoryName; //類別名稱
 	private Integer foodQuantity; // 數量
 	private Integer orderPrice; //訂單總額
@@ -36,13 +36,13 @@ public class PendingOrder implements Serializable{
 	}
 
 
-	public PendingOrder(Integer orderId, Integer orderNo, String diningLocation, String foodName, String categoryName, Integer foodQuantity,
+	public PendingOrder(Integer orderId, Integer orderNo, String diningLocation, String ProductName, String categoryName, Integer foodQuantity,
 			Integer orderPrice, Timestamp created_at) {
 		super();
 		this.orderId = orderId;
 		this.orderNo = orderNo;
 		this.diningLocation = diningLocation;
-		this.foodName = foodName;
+		this.ProductName = ProductName;
 		this.categoryName = categoryName;
 		this.foodQuantity = foodQuantity;
 		this.orderPrice = orderPrice;
@@ -80,13 +80,13 @@ public class PendingOrder implements Serializable{
 	}
 
 
-	public String getFoodName() {
-		return foodName;
+	public String getProductName() {
+		return ProductName;
 	}
 
 
-	public void setFoodName(String foodName) {
-		this.foodName = foodName;
+	public void setProductName(String ProductName) {
+		this.ProductName = ProductName;
 	}
 
 
