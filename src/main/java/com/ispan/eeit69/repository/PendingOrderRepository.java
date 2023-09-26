@@ -7,3 +7,6 @@ import com.ispan.eeit69.model.PendingOrder;
 public interface PendingOrderRepository extends JpaRepository<PendingOrder, Integer> {
 
 }
+
+
+

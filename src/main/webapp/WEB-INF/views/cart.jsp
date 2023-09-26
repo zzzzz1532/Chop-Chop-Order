@@ -165,67 +165,6 @@ h2, h4 {
 }
 </style>
 </head>
-<script>
-	$(document).ready(function() {
-		$('.fa-angle-left').click(function() {
-			window.location.href = 'main.html';
-		});
-		$('.footer1').click(function() {
-			// 创建一个空的OrderData对象
-			var orderData = {
-				items : [],
-				orderPrice : 0,
-			};
-
-			// 获取购物车中的商品数据
-			var cartItems = loadedCartData.items;
-			for (var i = 0; i < cartItems.length; i++) {
-				var cartItem = cartItems[i];
-				// 创建购物车商品对象，将前端数据映射到OrderData中的items数组中
-				var orderItem = {
-					id : cartItem.id,
-					foodname : cartItem.name,
-					productprice : cartItem.price,
-					foodquantity : cartItem.quantity,
-				};
-				// 添加购物车商品到OrderData的items数组
-				orderData.items.push(orderItem);
-				// 计算订单总价格
-				orderData.orderPrice += cartItem.price * cartItem.quantity;
-			}
-
-			// 将备注信息添加到OrderData对象
-			var remark = $('#remark input').val();
-			orderData.remark = remark;
-
-			// 获取用户选择的付款方式
-			var selectedPayment = $("input[name='label']:checked").val();
-			orderData.paymentMethod = selectedPayment;
-
-			// 将OrderData对象转换为JSON字符串
-			var orderDataJson = JSON.stringify(orderData);
-
-			// 发送HTTP请求到后端的Controller
-			$.ajax({
-				url : '/your-backend-endpoint', // 后端接口的URL
-				type : 'POST',
-				contentType : 'application/json',
-				data : orderDataJson,
-				success : function(response) {
-					// 处理后端的响应
-					console.log('Order submitted successfully.');
-					// 可以在成功提交后执行其他操作，例如跳转到订单完成页面
-					window.location.href = 'finish.html';
-				},
-				error : function(error) {
-					console.error('Error submitting order:', error);
-					// 处理错误情况，例如显示错误消息给用户
-				}
-			});
-		});
-	});
-</script>
-
 <body>
 
 	<div class="container">
@@ -299,7 +238,7 @@ h2, h4 {
 					</label>
 
 				</div>
-				<div class="footer1 footersticky">
+				<div class="footer1 footersticky" id="submitOrderButton">
 					<div>送出訂單</div>
 					<span>NT$100</span>
 				</div>
@@ -309,9 +248,7 @@ h2, h4 {
 
 	</div>
 
-	</div>
 
-	</div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -323,34 +260,71 @@ h2, h4 {
 	<script src="https://kit.fontawesome.com/ed6fd4cc97.js"
 		crossorigin="anonymous"></script>
 
+	
 	<script>
-		// 模拟购物车数据
-		var cartData = {
-			items : [ {
-				id : 1,
-				foodname : 'Product 1',
-				productprice : 10.99,
-				foodquantity : 2
-			}, {
-				id : 2,
-				foodname : 'Product 2',
-				productprice : 19.99,
-				foodquantity : 1
-			}, ],
-			orderPrice : 41.97,
-		};
+		// 定義一個函式，用於處理送出訂單的 AJAX 呼叫
+		function submitOrder() {
+			// 從 Local Storage 中擷取資料
+			var data = localStorage.getItem('pendingOrder'); // 替換'myData'為您儲存在 Local Storage 中的資料的鍵
 
-		// 存储购物车数据到localStorage
-		localStorage.setItem('cartData', JSON.stringify(cartData));
+			// 使用 AJAX 將資料發送到後端 Controller
+			$.ajax({
+				url : '/cart/savePendingOrder', // 替換為後端 Controller 的 URL 端點
+				method : 'POST',
+				contentType : 'application/json',
+				data : JSON.stringify(data), // 將資料轉換為 JSON 格式
+				success : function(response) {
+					console.log(response);
+					// 在此處處理後端的回應
+				},
+				error : function(error) {
+					console.error('Error:', error);
+					// 處理錯誤
+				}
+			});
+		}
 
-		// 从localStorage中加载购物车数据
-		var savedCartData = localStorage.getItem('cartData');
-		var loadedCartData = JSON.parse(savedCartData);
-
-		// 输出购物车内容和总金额
-		console.log(loadedCartData.items);
-		console.log('Total: $' + loadedCartData.total.toFixed(2));
+		// 監聽送出訂單按鈕的點擊事件
+		document.getElementById('submitOrderButton').addEventListener('click',
+				function() {
+					// 呼叫 submitOrder 函式來觸發 AJAX 呼叫
+					submitOrder();
+				});
 	</script>
+	<script>
+	var cartData = {
+			  items: [
+			    {
+			      id: 1,
+			      foodName: "原味蛋餅",
+			      labelname: "不醬",
+			      price: 80,
+			      foodQuantity: 2
+			    },
+			    {
+			      id: 2,
+			      foodName: "培根蛋餅",
+			      labelName: "加起司",
+			      price: 90,
+			      foodQuantity: 1
+			    }
+			  ],
+			  orderPrice: 250
+			};
+
+			// 將購物車數據轉換為 JSON 格式
+			var cartDataJSON = JSON.stringify(cartData);
+
+			// 將購物車數據存儲在 Local Storage 中
+			localStorage.setItem('pendingOrder', cartDataJSON);
+
+			console.log('購物車數據已存儲在 Local Storage 中');
+	
+	</script>
+	
+
+
+
 </body>
 
 </html>

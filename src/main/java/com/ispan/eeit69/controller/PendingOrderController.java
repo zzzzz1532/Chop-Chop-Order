@@ -1,36 +1,42 @@
 package com.ispan.eeit69.controller;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ispan.eeit69.model.PendingOrder;
 import com.ispan.eeit69.service.PendingOrderService;
-@RestController
-@RequestMapping("/api/order")
+
+@Controller
+@RequestMapping("/cart") // 設定您的端點路徑
 public class PendingOrderController {
-	
+
+    @Autowired
+    private PendingOrderService pendingOrderService;
+
+    @PostMapping("/savePendingOrder")
+    @ResponseBody
+    public String savePendingOrder(@RequestBody String data) {
+        // 您可以在這裡對收到的data進行處理，然後將其轉換為PendingOrder模型（根據需要）
+        // 假設您的data是JSON格式的字符串，您可以使用Jackson或其他JSON處理庫將其轉換為PendingOrder對象
+
+        // 處理data，轉換為PendingOrder對象
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            PendingOrder pendingOrder = objectMapper.readValue(data, PendingOrder.class);
+            // 執行資料庫操作，將資料存入資料表
+            pendingOrderService.saveOrder(pendingOrder);
+            return "PendingOrder saved successfully";
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "Error processing data";
+        }
+    }
 
 
-	    @Autowired
-	    private PendingOrderService pendingOrderService;
-
-	    @PostMapping("/submit")
-	    public ResponseEntity<String> submitOrder(@RequestBody OrderData orderData) {
-	        try {
-	            // 创建PendingOrder对象并设置相应属性
-	            PendingOrder pendingOrder = new PendingOrder();
-	            pendingOrder.setDiningLocation(orderData.getOrderChoice()); // 设置内用外带选项
-	            // 设置其他订单属性，例如订单号、产品名称、数量、总额等
-	            // ...
-
-	            // 调用PendingOrderService保存订单
-	            pendingOrderService.save(pendingOrder);
-
-	            return new ResponseEntity<>("Order submitted successfully", HttpStatus.OK);
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            return new ResponseEntity<>("Failed to submit order", HttpStatus.INTERNAL_SERVER_ERROR);
-	        }
-	    }
-	}
+}

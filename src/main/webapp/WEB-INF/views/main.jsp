@@ -225,19 +225,19 @@ a.button-like:active {
     $(document).ready(function() {
         $('#orderChoiceModal').show();
     });
- // 处理内用按钮点击事件
+ // 處理內用按鈕點擊事件
     dineInButton.addEventListener('click', () => {
-        // 将选择记录在localStorage中
-        localStorage.setItem('orderChoice', '内用');
-        // 关闭弹出窗口
+        // 將選擇紀錄在localStorage中
+        localStorage.setItem('diningLocation', '内用');
+        // 關閉彈出窗口
         orderChoiceModal.style.display = 'none';
     });
 
-    // 处理外带按钮点击事件
+    // 處理外帶按鈕點擊事件
     takeOutButton.addEventListener('click', () => {
-        // 将选择记录在localStorage中
-        localStorage.setItem('orderChoice', '外带');
-        // 关闭弹出窗口
+        // 將選擇紀錄在localStorage中
+        localStorage.setItem('diningLocation', '外带');
+        // 關閉彈出窗口
         orderChoiceModal.style.display = 'none';
     });
 </script>
