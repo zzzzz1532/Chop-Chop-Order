@@ -17,19 +17,23 @@ public class FindPendingOrderController {
 	PendingOrderService pendingOrderService;
 
 	// 查詢所有暫存訂單 - RESTful 風格
-	@GetMapping("/pendingOrder")
+	@GetMapping("/pendingorder")
 	public @ResponseBody List<PendingOrder> findAllpendingOrder() {
 		return pendingOrderService.findAll();
 	}
 
 	
-	@GetMapping("/showPendingOrders")
+	@GetMapping("/showOrderSystem")
 	public String pendingOrders() {
-		return "showPendingOrders";
+		return "showOrderSystem";
 	}
 
 	@GetMapping("/test")
 	public String test() {
 		return "chart";
+	}
+	@GetMapping("/index")
+	public String index() {
+		return "/";
 	}
 }
