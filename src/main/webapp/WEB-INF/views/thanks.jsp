@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>聯絡我們</title>
+<title>表單完成</title>
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link rel="stylesheet" href="./css/style.css">
@@ -19,16 +19,23 @@ body {
 	overflow-x: hidden;
 }
 
-.pageContainer h2 {
+.pageWrapper {
+    width: auto;
+    margin: auto;
+}
+
+.pageContainer h1 {
 	text-align: center;
 	color: aliceblue;
-	margin-top: 50px;
-	font-size: 25px;
+	margin-top: 450px;
+	font-size: 70px;
 }
 
 .pageContainer p {
-	color: white;
-	margin: 0 0 5px 0;
+	text-align: center;
+	color: aliceblue;
+	margin-top: 100px;
+	font-size: 40px;
 }
 
 .pageContainer input {
@@ -116,40 +123,8 @@ input.form__input {
 				</div>
 			</div>
 			<div class="pageContainer pageWrapper">
-				<h2>請留下您的聯絡資訊，我們將盡快安排專業顧問與您一對一諮詢，謝謝您！</h2>
-				<form action="/contactForm" method="POST" target="_self">
-					<p>品牌名稱＊</p>
-					<input type="text" name="brandName">
-					<p>公司名稱</p>
-					<input type="text" name="companyName">
-					<p>店家／品牌總部所在縣市＊：</p>
-					<input type="text" name="city">
-					<p>想了解的服務＊可複選</p>
-					<div class="checkbox__list">
-						<label class="checkbox__item"> 
-							<input type="checkbox" name="services" value="客製介紹" class="form__input"> 
-							<span class="checkbox__label">客製介紹</span>
-						</label> 
-						<label class="checkbox__item"> 
-							<input type="checkbox" name="services" value="接單系統" class="form__input">
-							<span class="checkbox__label">接單系統</span>
-						</label>
-						<label class="checkbox__item">
-							<input type="checkbox" name="services" value="報表分析" class="form__input">
-							<span class="checkbox__label">報表分析</span>
-						</label>
-					</div>
-					<p>聯絡人＊</p>
-					<input type="text" name="contactName">
-					<p>聯絡電話＊</p>
-					<input type="text" name="contactPhone">
-					<p>Email＊</p>
-					<input type="text" name="contactEmail">
-					<p>其他備註說明</p>
-					<input type="text" name="comments">
-					<input class="pageButton" type="submit" value="送出 >">
-				</form>
-
+				<h1>感謝填寫！</h1>
+				<p>我們將盡速與您聯繫，期待為您服務！</p>
 			</div>
 		</div>
 	</div>
