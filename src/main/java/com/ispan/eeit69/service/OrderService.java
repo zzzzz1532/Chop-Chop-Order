@@ -1,5 +1,8 @@
 package com.ispan.eeit69.service;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,30 +29,31 @@ public class OrderService {
 	@Autowired
 	private PendingOrderRepository pendingOrderRepository;
 
-	public PendingOrder createOrder(PendingOrder pendingOrder) {
-		// 在這裡實現購物車資料的驗證邏輯
-
-		Product product = productRepository.findByProductName(pendingOrder.getProductName());
-		if (product == null) {
-			throw new IllegalArgumentException("Invalid productName: " + pendingOrder.getProductName());
-		}
-		// 驗證 categoryName 是否存在於資料庫中
-		Category category = categoryRepository.findByCategoryName(pendingOrder.getCategoryName());
-		if (category == null) {
-			throw new IllegalArgumentException("Invalid categoryName: " + pendingOrder.getCategoryName());
-		}
-		// 驗證 labelName 是否存在於資料庫中
-		Label label = labelRepository.findByLabelName(pendingOrder.getLabelName());
-		if (label == null) {
-			throw new IllegalArgumentException("Invalid labelName: " + pendingOrder.getLabelName());
-		}
-
-		// 驗證通過後，生成新的訂單編號
+	public void createOrders(List<PendingOrder> pendingOrders) {
+		// 生成新的訂單號碼
 		Integer newOrderNo = generateNewOrderNumber();
-		pendingOrder.setOrderNo(newOrderNo);
+		for (PendingOrder pendingOrder : pendingOrders) {
+			 pendingOrder.setCreated_at(new Timestamp(System.currentTimeMillis()));
 
-		// 將購物車資料寫入資料庫
-		return pendingOrderRepository.save(pendingOrder);
+			Product product = productRepository.findByProductName(pendingOrder.getProductName());
+			if (product == null) {
+				throw new IllegalArgumentException("Invalid productName: " + pendingOrder.getProductName());
+			}
+			// 驗證 categoryName 是否存在於資料庫中
+			Category category = categoryRepository.findByCategoryName(pendingOrder.getCategoryName());
+			if (category == null) {
+				throw new IllegalArgumentException("Invalid categoryName: " + pendingOrder.getCategoryName());
+			}
+			// 驗證 labelName 是否存在於資料庫中
+			Label label = labelRepository.findByLabelName(pendingOrder.getLabelName());
+			if (label == null) {
+				throw new IllegalArgumentException("Invalid labelName: " + pendingOrder.getLabelName());
+			}
+			// 驗證通過後，生成新的訂單編號
+			pendingOrder.setOrderNo(newOrderNo);
+			// 將購物車資料寫入資料庫
+			pendingOrderRepository.save(pendingOrder);
+		}
 	}
 
 	private Integer generateNewOrderNumber() {

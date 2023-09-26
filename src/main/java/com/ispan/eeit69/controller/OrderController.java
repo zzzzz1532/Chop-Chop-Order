@@ -1,5 +1,7 @@
 package com.ispan.eeit69.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +21,11 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createOrder(@RequestBody PendingOrder pendingOrder) {
+    public ResponseEntity<?> createOrders(@RequestBody List<PendingOrder> pendingOrders) {
         try {
             // 呼叫 OrderService 創建訂單
-            PendingOrder createdOrder = orderService.createOrder(pendingOrder);
-            return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
+            orderService.createOrders(pendingOrders);
+            return new ResponseEntity<>("訂單創建成功", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("無法創建訂單：" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }

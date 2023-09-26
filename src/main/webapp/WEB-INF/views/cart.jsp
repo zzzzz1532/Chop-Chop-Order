@@ -269,7 +269,7 @@ h2, h4 {
 
 			// 使用 AJAX 將資料發送到後端 Controller
 			$.ajax({
-				url : '/cart/savePendingOrder', // 替換為後端 Controller 的 URL 端點
+				url : '/api/orders/create', // 替換為後端 Controller 的 URL 端點
 				method : 'POST',
 				contentType : 'application/json',
 				data : JSON.stringify(data), // 將資料轉換為 JSON 格式
@@ -295,18 +295,18 @@ h2, h4 {
 	var cartData = {
 			  items: [
 			    {
-			      id: 1,
-			      foodName: "原味蛋餅",
-			      labelname: "不醬",
+			      
+			      foodName: "薯餅蛋餅",
+			      labelname: "加辣",
 			      price: 80,
 			      foodQuantity: 2
 			    },
 			    {
-			      id: 2,
-			      foodName: "培根蛋餅",
-			      labelName: "加起司",
+			      
+			      foodName: "鮮奶茶",
+			      labelName: "去冰",
 			      price: 90,
-			      foodQuantity: 1
+			      foodQuantity: 2
 			    }
 			  ],
 			  orderPrice: 250
