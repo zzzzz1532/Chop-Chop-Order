@@ -221,26 +221,44 @@ a.button-like:active {
 		integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
 		crossorigin="anonymous"></script>
 	<script>
-    // 页面加载完毕后显示模态框
+    // 頁面加載完畢後顯示模態框
     $(document).ready(function() {
         $('#orderChoiceModal').show();
     });
- // 處理內用按鈕點擊事件
+
+    // 處理內用按鈕點擊事件
     dineInButton.addEventListener('click', () => {
-        // 將選擇紀錄在localStorage中
-        localStorage.setItem('diningLocation', '内用');
+        // 創建新的 pendingorder
+        var pendingOrder = {
+            diningLocation: '内用',
+            items: [],
+            orderPrice: 0
+        };
+
+        // 將新的 pendingorder 存儲到 Local Storage 中
+        localStorage.setItem('pendingOrder', JSON.stringify(pendingOrder));
+
         // 關閉彈出窗口
         orderChoiceModal.style.display = 'none';
     });
 
     // 處理外帶按鈕點擊事件
     takeOutButton.addEventListener('click', () => {
-        // 將選擇紀錄在localStorage中
-        localStorage.setItem('diningLocation', '外带');
+        // 創建新的 pendingorder
+        var pendingOrder = {
+            diningLocation: '外帶',
+            items: [],
+            orderPrice: 0
+        };
+
+        // 將新的 pendingorder 存儲到 Local Storage 中
+        localStorage.setItem('pendingOrder', JSON.stringify(pendingOrder));
+
         // 關閉彈出窗口
         orderChoiceModal.style.display = 'none';
     });
 </script>
+
 </body>
 
 </html>
