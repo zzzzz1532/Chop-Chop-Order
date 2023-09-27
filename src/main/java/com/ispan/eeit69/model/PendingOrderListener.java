@@ -1,6 +1,5 @@
 package com.ispan.eeit69.model;
 
-import javax.persistence.EntityListeners;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
 import javax.persistence.PostUpdate;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
 import com.ispan.eeit69.controller.WebSocketMessageHandler;
 
 @Component
-//@EntityListeners(PendingOrderListener.class)
 public class PendingOrderListener {
 	
 	@Autowired
@@ -22,6 +20,8 @@ public class PendingOrderListener {
 	public void handlePostPersist(PendingOrder pendingOrder) {
 		try {
 			System.out.println("INSERT COMPLETE!!");
+			System.out.println(wsmh);
+			
 			wsmh.sendPendingOrders();			
 		}
 		catch(Exception e) {

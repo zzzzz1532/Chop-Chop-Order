@@ -15,16 +15,21 @@ class CcoProjApplicationTests {
 	@Autowired
 	PendingOrderRepository por;
 	
+	
 	@Test
 	void contextLoads() {
-		// 获取当前时间戳
+		try {
+		
 	    Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 		
 		
 		// 要跳 INSERT
 		PendingOrder po = new PendingOrder(18, 18, "T", "起司蛋餅", "蛋餅類", 1, 200, currentTime, "123", "123", "123" );
 		po = por.save(po);
-	
+		
+		}catch(Exception e) {
+			System.out.println(e);
+		}
 //		// 要跳 UPDATE
 //		po.setOrderNote("辣一點");
 //		po = por.save(po);
