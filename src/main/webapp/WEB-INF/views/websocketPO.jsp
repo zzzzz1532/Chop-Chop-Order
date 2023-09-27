@@ -43,8 +43,10 @@
  		} 
 		
 	</style>
-	<script type="text/javascript"
-	src="<c:url value='/webjars/jquery/3.5.1/jquery.js' />"></script>
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+	
 	<script>
 	window.onload = function() {
 	var stompClient = null;
@@ -53,62 +55,48 @@
 	    var socket = new SockJS('/websocket');
 	    stompClient = Stomp.over(socket);
 	    stompClient.connect({}, function(frame) {
-	        console.log('Connected: ' + frame);
+	        console.log('Connected TEST1: ' + frame); 
 	        stompClient.subscribe('/topic/pendingOrders', function(data) {
-	            var receivedData = JSON.parse(data.body);
-	            // 在這裡處理收到的 JSON 資料
-	            console.log('Received Data:', receivedData);
+	            console.log("成功訂閱");
+	        	var orders = JSON.parse(data.body);
+	            console.log('Received Data TEST 2:', orders);
+	            var content = "<table>";
+				content += "<tr><th colspan='7'>刊版系統</th></tr>";
+				content += "<tr ><th>單號</th><th>內用外帶</th>"
+						+ "<th>品名</th><th>數量</th>"
+						+ "<th>接單時間</th></tr>";
+				for (var i = 0; i < orders.length; i++) {
+
+					content += "<tr>"
+							+ "<td>"
+							+ orders[i].orderNo
+							+ "</td>"
+							+ "<td>"
+							+ orders[i].diningLocation
+							+ "</td>"
+							+ "<td>"
+							+ orders[i].productName
+							+ "</td>"
+							+ "<td>"
+							+ orders[i].foodQuantity
+							+ "</td>"
+							+ "<td>"
+							+ orders[i].created_at
+							+ "</td>"
+							+ "</tr>";
+				}
+				content += "</table>";
+				var divs = document.getElementById("somedivS");
+				divs.innerHTML = content;
+	            console.log("DONE 123");
+	            
 	        });
+	        // 在連線成功後自動觸發訂閱操作
+	        stompClient.send("/app/sendMessage", {}, "");
 	    });
 	}
 
 	connect();
-	
-	
-	
-	
-		function fetchData() {	
-			var xhr = new XMLHttpRequest(); //AJAX Engine
-			xhr.open("Get", "<c:url value='/pendingOrder'/>", true);
-			xhr.send(); //readyState 0->1, 1->2, 2->3, 3->4
-			xhr.onreadystatechange = function() {
-				if (xhr.readyState == 4 && xhr.status == 200) {
-					var content = "<table>";
-					content += "<tr><th colspan='7'>刊版系統</th></tr>";
-					content += "<tr ><th>單號</th><th>內用外帶</th>"
-							+ "<th>品名</th><th>數量</th>"
-							+ "<th>接單時間</th></tr>";
-					console.log(xhr.responseText);
-					var orders = JSON.parse(xhr.responseText); // 解析 orders[i].orderId
-					console.log(orders);
-					for (var i = 0; i < orders.length; i++) {
-	
-						content += "<tr>"
-								+ "<td>"
-								+ orders[i].orderNo
-								+ "</td>"
-								+ "<td>"
-								+ orders[i].diningLocation
-								+ "</td>"
-								+ "<td>"
-								+ orders[i].foodName
-								+ "</td>"
-								+ "<td>"
-								+ orders[i].foodQuantity
-								+ "</td>"
-								+ "<td>"
-								+ orders[i].created_at
-								+ "</td>"
-								+ "</tr>";
-					}
-					content += "</table>";
-					var divs = document.getElementById("somedivS");
-					divs.innerHTML = content;
-				}
-			}
-		}
-	   // 使用 setInterval 定期執行 fetchData 函數
-    	setInterval(fetchData, 1000); // 每 1 秒更新一次資料
 	}	
 	</script>
 </head>
