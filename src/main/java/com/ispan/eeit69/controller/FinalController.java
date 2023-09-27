@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 @Controller
 public class FinalController {
     @GetMapping("/final")
-    public String finalPage(@RequestParam(name = "orderNumbers", required = false) String orderNumbers, Model model) {
+    public String hello(@RequestParam("orderNumbers") String orderNumbers, Model model) {
         model.addAttribute("orderNumbers", orderNumbers);
         return "final";
     }
