@@ -1,6 +1,7 @@
 package com.ispan.eeit69.service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,14 @@ public class OrderService {
 	@Autowired
 	private PendingOrderRepository pendingOrderRepository;
 
-	public void createOrders(List<PendingOrder> pendingOrders) {
+	public List<Integer> createOrders(List<PendingOrder> pendingOrders) {
+		List<Integer> orderNumbers = new ArrayList<>();
+
 		// 生成新的訂單號碼
 		Integer newOrderNo = generateNewOrderNumber();
 		for (PendingOrder pendingOrder : pendingOrders) {
-			 pendingOrder.setCreated_at(new Timestamp(System.currentTimeMillis()));
+			// 設置訂單創建時間為當前時間
+			pendingOrder.setCreated_at(new Timestamp(System.currentTimeMillis()));
 
 			Product product = productRepository.findByProductName(pendingOrder.getProductName());
 			if (product == null) {
@@ -53,7 +57,12 @@ public class OrderService {
 			pendingOrder.setOrderNo(newOrderNo);
 			// 將購物車資料寫入資料庫
 			pendingOrderRepository.save(pendingOrder);
+
+			// 將訂單號添加到訂單號列表
+			orderNumbers.add(newOrderNo);
 		}
+
+		return orderNumbers;
 	}
 
 	private Integer generateNewOrderNumber() {

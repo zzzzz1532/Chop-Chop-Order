@@ -166,7 +166,9 @@ h2, h4 {
 </style>
 </head>
 <body>
-
+	<div id="orderNumber">
+		<!-- 这里将显示订单号 -->
+	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-10 col-lg-8 col-xl-7 mx-auto">
@@ -249,6 +251,8 @@ h2, h4 {
 	</div>
 
 
+
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -260,22 +264,24 @@ h2, h4 {
 	<script src="https://kit.fontawesome.com/ed6fd4cc97.js"
 		crossorigin="anonymous"></script>
 
-	
+
 	<script>
 		// 定義一個函式，用於處理送出訂單的 AJAX 呼叫
 		function submitOrder() {
 			// 從 Local Storage 中擷取資料
-			var data = localStorage.getItem('pendingOrder'); // 替換'myData'為您儲存在 Local Storage 中的資料的鍵
+			var data = localStorage.getItem('pendingOrder');
+			var parsedData = JSON.parse(data);
 
 			// 使用 AJAX 將資料發送到後端 Controller
 			$.ajax({
 				url : '/api/orders/create', // 替換為後端 Controller 的 URL 端點
 				method : 'POST',
 				contentType : 'application/json',
-				data : JSON.stringify(data), // 將資料轉換為 JSON 格式
+				data : JSON.stringify(parsedData), // 將資料轉換為 JSON 格式
 				success : function(response) {
 					console.log(response);
 					// 在此處處理後端的回應
+					window.location.href = '/final?orderNumbers=' + response.join(',');
 				},
 				error : function(error) {
 					console.error('Error:', error);
@@ -292,38 +298,53 @@ h2, h4 {
 				});
 	</script>
 	<script>
-	var cartData = {
-			  items: [
-			    {
-			      
-			      foodName: "薯餅蛋餅",
-			      labelname: "加辣",
-			      price: 80,
-			      foodQuantity: 2
-			    },
-			    {
-			      
-			      foodName: "鮮奶茶",
-			      labelName: "去冰",
-			      price: 90,
-			      foodQuantity: 2
-			    }
-			  ],
-			  orderPrice: 250
-			};
+		var cartData = [ {
 
-			// 將購物車數據轉換為 JSON 格式
-			var cartDataJSON = JSON.stringify(cartData);
+			"diningLocation" : "內用",
+			"productName" : "薯餅蛋餅",
+			"categoryName" : "蛋餅",
+			"foodQuantity" : 2,
+			"orderPrice" : 160,
+			"labelName" : "加起司",
+			"foodNote" : "不要蔥",
+			"orderNote" : "多加醬"
+		}, {
 
-			// 將購物車數據存儲在 Local Storage 中
-			localStorage.setItem('pendingOrder', cartDataJSON);
+			"diningLocation" : "外帶",
+			"productName" : "鮮奶茶",
+			"categoryName" : "飲料",
+			"foodQuantity" : 1,
+			"orderPrice" : 90,
+			"labelName" : "去冰",
+			"foodNote" : "加糖",
+			"orderNote" : "少冰"
+		} ]
 
-			console.log('購物車數據已存儲在 Local Storage 中');
-	
+		// 將購物車數據轉換為 JSON 格式
+		var cartDataJSON = JSON.stringify(cartData);
+
+		// 將購物車數據存儲在 Local Storage 中
+		localStorage.setItem('pendingOrder', cartDataJSON);
+
+		console.log('購物車數據已存儲在 Local Storage 中');
 	</script>
-	
+	<script>
+		function handleOrderResponse(response) {
+			// 處理後端響應
+			console.log("訂單編號:", response);
 
+			// 假設有一個用於顯示訂單號的HTML元素，例如一個带有id="orderNumber"的<div>
+			var orderNumberElement = document.getElementById('orderNumber');
 
+			// 創建一个新的<p>元素來顯示訂單號，並附加到頁面上
+			var pElement = document.createElement('p');
+			pElement.textContent = "訂單編號: " + orderNumber;
+			orderNumberElement.appendChild(pElement);
+		}
+
+		// 根据不同的響應調用函數
+		handleOrderResponse(jsonResponse1); // 處理第一個響應
+	</script>
 
 </body>
 

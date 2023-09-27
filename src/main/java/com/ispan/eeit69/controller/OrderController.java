@@ -24,10 +24,11 @@ public class OrderController {
     public ResponseEntity<?> createOrders(@RequestBody List<PendingOrder> pendingOrders) {
         try {
             // 呼叫 OrderService 創建訂單
-            orderService.createOrders(pendingOrders);
-            return new ResponseEntity<>("訂單創建成功", HttpStatus.CREATED);
+            List<Integer> orderNumbers = orderService.createOrders(pendingOrders);
+            return new ResponseEntity<>(orderNumbers, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("無法創建訂單：" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }
+
