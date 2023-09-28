@@ -23,6 +23,13 @@ public class ChartServiceImpl implements ChartService {
 
 	Date currentDate = new Date();
 
+//	@Override
+//	public List<CompleteOrder> findAll() {
+//		
+//		return chartRp.findAll();
+//	}
+	
+	
 	// 日營業總額
 	@Override
 	public Integer calDailyTotalRevenue() {

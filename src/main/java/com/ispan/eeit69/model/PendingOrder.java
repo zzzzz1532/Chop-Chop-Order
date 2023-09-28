@@ -8,6 +8,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -25,8 +27,12 @@ public class PendingOrder implements Serializable{
 	private Integer orderId; //編號
 	private Integer orderNo; // 訂單號
 	private String diningLocation; //內用外帶
-	private String productName; // 品名
-	private String categoryName; //類別名稱
+	
+	@ManyToOne // 建立與產品表的多對一關聯
+	@JoinColumn(name = "productName", referencedColumnName = "productName")
+	private Product product; // 品名
+	
+//	private String categoryName; //類別名稱
 	private Integer foodQuantity; // 數量
 	private Integer orderPrice; //訂單總額
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
@@ -42,14 +48,13 @@ public class PendingOrder implements Serializable{
 	}
 
 
-	public PendingOrder(Integer orderId, Integer orderNo, String diningLocation, String productName, String categoryName, Integer foodQuantity,
+	public PendingOrder(Integer orderId, Integer orderNo, String diningLocation, Product product, Integer foodQuantity,
 			Integer orderPrice, Timestamp created_at, String labelName, String foodNote, String orderNote) {
 		super();
 		this.orderId = orderId;
 		this.orderNo = orderNo;
 		this.diningLocation = diningLocation;
-		this.productName = productName;
-		this.categoryName = categoryName;
+		this.product = product;
 		this.foodQuantity = foodQuantity;
 		this.orderPrice = orderPrice;
 		this.created_at = created_at;
@@ -89,13 +94,13 @@ public class PendingOrder implements Serializable{
 	}
 
 
-	public String getCategoryName() {
-		return categoryName;
+	public Product getProduct() {
+		return product;
 	}
 
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 
@@ -129,11 +134,6 @@ public class PendingOrder implements Serializable{
 	}
 
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-
 	public String getLabelName() {
 		return labelName;
 	}
@@ -158,21 +158,15 @@ public class PendingOrder implements Serializable{
 		return orderNote;
 	}
 
+
 	public void setOrderNote(String orderNote) {
 		this.orderNote = orderNote;
 	}
 
 
-	public String getProductName() {
-		return productName;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-
-	
 	
 }

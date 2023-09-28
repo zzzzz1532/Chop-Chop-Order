@@ -24,11 +24,12 @@ public interface CompleteOrderRepository extends JpaRepository<CompleteOrder, In
 	List<Object[]> countDiningLocation(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 	// 統計產品類別比例
-	@Query("SELECT Complete_Order.categoryName, COUNT(Complete_Order) FROM CompleteOrder Complete_Order WHERE Complete_Order.complete_at BETWEEN :startDate AND :endDate GROUP BY Complete_Order.categoryName")
+//	@Query("SELECT Complete_Order.categoryName, COUNT(Complete_Order) FROM CompleteOrder Complete_Order WHERE Complete_Order.complete_at BETWEEN :startDate AND :endDate GROUP BY Complete_Order.categoryName")
+	@Query("SELECT co.product.category.categoryName, COUNT(co) FROM CompleteOrder co WHERE co.complete_at BETWEEN :startDate AND :endDate GROUP BY co.product.category.categoryName")
 	List<Object[]> countFoodCategory(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 	// 熱門商品排行
-	@Query("SELECT Complete_Order.productName, SUM(Complete_Order.foodQuantity), SUM(Complete_Order.orderPrice) FROM CompleteOrder Complete_Order WHERE Complete_Order.complete_at BETWEEN :startDate AND :endDate GROUP BY Complete_Order.productName ORDER BY SUM(Complete_Order.foodQuantity) DESC")
+	@Query("SELECT Complete_Order.product.productName, SUM(Complete_Order.foodQuantity), SUM(Complete_Order.orderPrice) FROM CompleteOrder Complete_Order WHERE Complete_Order.complete_at BETWEEN :startDate AND :endDate GROUP BY Complete_Order.product ORDER BY SUM(Complete_Order.foodQuantity) DESC")
 	List<Object[]> hotProduct(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
 	// 查詢每日營業額及訂單量

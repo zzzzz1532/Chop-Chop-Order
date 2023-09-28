@@ -42,5 +42,6 @@ public interface ChartService {
 	 List<List<Object>> findMonthlyData();
 	 List<List<Object>> findCustomData(Date startDate, Date endDate);
 	 
+//	 List<CompleteOrder> findAll();
 	 
 }

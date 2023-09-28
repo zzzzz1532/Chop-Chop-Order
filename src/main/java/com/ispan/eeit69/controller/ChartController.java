@@ -26,6 +26,10 @@ public class ChartController {
 		return "chart";
 	}
 	
+//	@GetMapping("/charttest")
+//	public @ResponseBody List<CompleteOrder>charttest() {
+//		return chartService.findAll();
+//	}
 	
 	// 整合日級別數據
     @GetMapping("/todayData")
