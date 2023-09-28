@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ispan.eeit69.model.Product;
 import com.ispan.eeit69.service.ProductService;
-import com.ispan.eeit69.repository.ProductRepository;
+
 
 import java.util.List;
 

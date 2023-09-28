@@ -7,6 +7,8 @@
 <%@ page import="java.util.List"%>
 <%@ page isELIgnored="false"%>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -148,7 +150,7 @@ a.button-like:active {
 					<div style="margin: 10px;">
 						<h1>CCO早餐店</h1>
 					</div>
-					<img src="./img/點餐頁面.jpeg" style="width: 100%;">
+					<img src="" style="width: 100%;">
 					<div class="cardheader">
 						<details open>
 							<summary style="margin: 20px 0px;">公告</summary>
@@ -190,8 +192,8 @@ a.button-like:active {
 							</c:if>
 							<div class="productitem">
 								<div style="display: flex; align-items: center;">
-									<img src="${product.imageDataUrl}" alt="${product.productName}"
-										style="max-width: 100px; max-height: 100px;">
+<!-- 								功能上線時將data:image/jpg;base64,刪除 -->
+									<img width='150' height='100' src='data:image/jpg;base64,${product.dataUri}'>
 									<div style="margin-left: 10px;">
 										<h6>${product.productName}</h6>
 										<div>
