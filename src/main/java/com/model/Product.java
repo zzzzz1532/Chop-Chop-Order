@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.utils.SystemService;
 
 @Entity
@@ -48,6 +49,7 @@ public class Product implements Serializable {
 //    Lazy（懶加載）：僅在需要時加載相關實體。當獲取主實體時，相關實體只有在需要訪問時才會被加載
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
+    @JsonIgnoreProperties("hibernateLazyInitializer")
     private Category category;
     
     /** 商品介紹  (5)*/
