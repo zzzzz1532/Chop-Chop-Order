@@ -265,6 +265,41 @@ h2, h4 {
 		crossorigin="anonymous"></script>
 
 
+
+	<script>
+		var cartData = [ {
+			"productId" : 002,
+			"diningLocation" : "內用",
+			"productName" : "薯餅蛋餅",
+			"categoryName" : "蛋餅",
+			"foodQuantity" : 2,
+			"singlePrice" : 160,
+			"labelId" : 001,
+			"labelName" : "加起司",
+			"foodNote" : "不要蔥",
+			"orderNote" : "多加醬"
+		}, {
+
+			"diningLocation" : "外帶",
+			"productId" : 001,
+			"productName" : "鮮奶茶",
+			"categoryName" : "飲料",
+			"foodQuantity" : 1,
+			"singlePrice" : 90,
+			"labelId" : 004,
+			"labelName" : "去冰",
+			"foodNote" : "加糖",
+			"orderNote" : "少冰"
+		} ]
+
+		// 將購物車數據轉換為 JSON 格式
+		var cartDataJSON = JSON.stringify(cartData);
+
+		// 將購物車數據存儲在 Local Storage 中
+		localStorage.setItem('pendingOrder', cartDataJSON);
+
+		console.log('購物車數據已存儲在 Local Storage 中');
+	</script>
 	<script>
 		// 定義一個函式，用於處理送出訂單的 AJAX 呼叫
 		function submitOrder() {
@@ -272,16 +307,73 @@ h2, h4 {
 			var data = localStorage.getItem('pendingOrder');
 			var parsedData = JSON.parse(data);
 
+			// 初始化OrderPrice為0
+			var totalOrderPrice = 0;
+
+			// 遍歷每個購物車項目
+			parsedData
+					.forEach(function(item) {
+						// 使用 AJAX 或其他方式查詢對應的product和label資料表，獲取productPrice和labelPrice
+						var productPrice = $.ajax({
+							url : '/{id}/productprice', // 替換為實際的後端端點
+							method : 'GET',
+							data : {
+								productId : item.productId
+							}, // 傳遞相關的產品ID或其他必要的參數
+							success : function(productResponse) {
+								var productPrice = productResponse.price; // 假設響應中包含產品價格
+								// 在這裡使用 productPrice 做進一步的處理
+							},
+							error : function(error) {
+								console.error('Error fetching product price:',
+										error);
+								// 處理錯誤
+							}
+						});
+						;
+						var labelPrice = $.ajax({
+							url : '/{id}/labelprice', // 替換為實際的後端端點
+							method : 'GET',
+							data : {
+								labelId : item.labelId
+							}, // 傳遞相關的產品ID或其他必要的參數
+							success : function(labelResponse) {
+								var labelPrice = labelResponse.price; // 假設響應中包含產品價格
+								// 在這裡使用 labelPrice 做進一步的處理
+							},
+							error : function(error) {
+								console.error('Error fetching label price:',
+										error);
+								// 處理錯誤
+							}
+						});
+						;
+						;
+
+						// 計算單個項目的價格
+						var itemPrice = (productPrice + labelPrice)
+								* item.foodQuantity;
+
+						// 將單個項目的價格加到OrderPrice中
+						totalOrderPrice += itemPrice;
+					});
+
+			// 將購物車數據中的OrderPrice更新為計算後的值
+			parsedData.forEach(function(item) {
+				item.OrderPrice = totalOrderPrice;
+			});
+
 			// 使用 AJAX 將資料發送到後端 Controller
 			$.ajax({
-				url : '/api/orders/create', // 替換為後端 Controller 的 URL 端點
+				url : '/cart', // 替換為後端 Controller 的 URL 端點
 				method : 'POST',
 				contentType : 'application/json',
 				data : JSON.stringify(parsedData), // 將資料轉換為 JSON 格式
 				success : function(response) {
 					console.log(response);
 					// 在此處處理後端的回應
-					window.location.href = '/final?orderNumbers=' + response.join(',');
+					window.location.href = '/final?orderNumbers='
+							+ response.join(',');
 				},
 				error : function(error) {
 					console.error('Error:', error);
@@ -297,54 +389,7 @@ h2, h4 {
 					submitOrder();
 				});
 	</script>
-	<script>
-		var cartData = [ {
 
-			"diningLocation" : "內用",
-			"productName" : "薯餅蛋餅",
-			"categoryName" : "蛋餅",
-			"foodQuantity" : 2,
-			"orderPrice" : 160,
-			"labelName" : "加起司",
-			"foodNote" : "不要蔥",
-			"orderNote" : "多加醬"
-		}, {
-
-			"diningLocation" : "外帶",
-			"productName" : "鮮奶茶",
-			"categoryName" : "飲料",
-			"foodQuantity" : 1,
-			"orderPrice" : 90,
-			"labelName" : "去冰",
-			"foodNote" : "加糖",
-			"orderNote" : "少冰"
-		} ]
-
-		// 將購物車數據轉換為 JSON 格式
-		var cartDataJSON = JSON.stringify(cartData);
-
-		// 將購物車數據存儲在 Local Storage 中
-		localStorage.setItem('pendingOrder', cartDataJSON);
-
-		console.log('購物車數據已存儲在 Local Storage 中');
-	</script>
-	<script>
-		function handleOrderResponse(response) {
-			// 處理後端響應
-			console.log("訂單編號:", response);
-
-			// 假設有一個用於顯示訂單號的HTML元素，例如一個带有id="orderNumber"的<div>
-			var orderNumberElement = document.getElementById('orderNumber');
-
-			// 創建一个新的<p>元素來顯示訂單號，並附加到頁面上
-			var pElement = document.createElement('p');
-			pElement.textContent = "訂單編號: " + orderNumber;
-			orderNumberElement.appendChild(pElement);
-		}
-
-		// 根据不同的響應調用函數
-		handleOrderResponse(jsonResponse1); // 處理第一個響應
-	</script>
 
 </body>
 

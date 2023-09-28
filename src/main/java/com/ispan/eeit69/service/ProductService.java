@@ -10,6 +10,7 @@ import com.ispan.eeit69.repository.ProductRepository;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.math.BigDecimal;
 import java.sql.Clob;
 import java.sql.SQLException;
 import java.util.Base64;
@@ -81,6 +82,14 @@ public class ProductService {
             }
         }
         return null;
+    }
+    public BigDecimal  getProductPriceById(Integer id) {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product != null) {
+            return product.getProductPrice();
+        } else {
+            return null;
+        }
     }
 }
 

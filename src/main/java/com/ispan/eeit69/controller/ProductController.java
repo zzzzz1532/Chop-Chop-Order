@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import com.ispan.eeit69.model.Product;
 import com.ispan.eeit69.service.ProductService;
 
-
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -41,6 +41,12 @@ public class ProductController {
     @GetMapping("/getAllProductsWithCategoryAndLabels")
     public List<Product> getAllProductsWithCategoryAndLabels() {
        return productService.getAllProductsWithCategoryAndLabels();
+    }
+    @GetMapping("/{id}/productprice")
+    public BigDecimal  getProductPriceById(@PathVariable Integer id) {
+        // 在這裡根據產品ID查詢資料庫或其他資料源，獲取相應產品的價格
+        // 假設您的產品價格以Double類型返回，您可以替換為您的實際邏輯
+        return productService.getProductPriceById(id);
     }
    
 }
