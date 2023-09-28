@@ -1,6 +1,10 @@
 package com.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.model.Product;
 
@@ -10,6 +14,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 
 	@Override
 	boolean existsById(Integer id) ;
+		
+	@Query("SELECT p FROM Product p WHERE p.productName LIKE CONCAT('%', :keyword, '%') "
+			+ "OR p.productId LIKE CONCAT('%', :keyword, '%')"
+			+ "OR p.category.categoryName LIKE CONCAT('%', :keyword, '%')")
+	List<Product> findByKeywordContaining(@Param("keyword") String keyword);
 
 }
 

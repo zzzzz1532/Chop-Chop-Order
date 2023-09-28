@@ -32,13 +32,14 @@ public class LabelUpdateController extends AbstractController{
 	LabelService labelService;
 	// 檢查資料是否正確的驗證器(Insert+update)
 	LabelValidator labelValidator;
+	
 	public LabelUpdateController(LabelService labelService, LabelValidator labelValidator) {
 		super();
 		this.labelService = labelService;
 		this.labelValidator = labelValidator;
 	}
 	@GetMapping("/label/findById/{id}")
-	public String sendEmptyForm() {
+	public String sendEmptyForm(Model mode) {
 		return "Label_update";
 	}
 	
@@ -86,6 +87,7 @@ public class LabelUpdateController extends AbstractController{
 		if (optional.isPresent()) {
 			label = optional.get();
 			model.addAttribute("previous_label_id", label.getLabelId());
+			label.setLabelPrice(label.getLabelPrice());
 		} else {
 			throw new RuntimeException("查無此筆紀錄: 鍵值: " + id);
 		} 

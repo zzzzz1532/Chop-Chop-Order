@@ -28,12 +28,12 @@ public class Label implements Serializable{
 	public Label() {
 		super();
 	}
-
 	@Override
 	public String toString() {
 		return "Label [Id=" + Id + ", labelId=" + labelId + ", labelName=" + labelName + ", labelPrice=" + labelPrice
 				+ "]";
 	}
+
 
 	public Label(Integer id, String labelId, String labelName, BigDecimal labelPrice) {
 		super();
@@ -68,16 +68,16 @@ public class Label implements Serializable{
 		this.labelName = labelName;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public BigDecimal getLabelPrice() {
 		return labelPrice;
 	}
 
 	public void setLabelPrice(BigDecimal labelPrice) {
 		this.labelPrice = labelPrice;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

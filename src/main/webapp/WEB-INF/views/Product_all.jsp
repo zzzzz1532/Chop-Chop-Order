@@ -8,7 +8,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Products</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-	<link rel='stylesheet' href="<c:url value='/css/styles.css' />" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<link rel='stylesheet' href="<c:url value='/css/back-end.css' />" />
+	<script type="text/javascript" src="/js/back-end.js"></script>
+	<style>
+		.table{
+			width: 90%;
+			text-align: center;
+			margin: 0 auto;
+		}
+		.container{
+		    margin-top: 100px; /* 設置上外邊距為 50 像素，你可以根據需要調整 */
+		    width: 91%;
+		}
+		legend {
+			font-weight: bold;
+			color: black;
+			background-color: white;
+			border: 1px solid #cccccc;
+			padding: 4px 2px;
+		}		
+		fieldset {
+			font-weight: bold;
+			color: black;
+			background-color: #ffffcc;
+			border: 1px solid #cccccc;
+			padding: 4px 2px;
+	</style>
     <script>
 		 function deleteProduct(ids, empno){
 			 
@@ -38,16 +65,81 @@
              }
 		  }
 	</script>
+	<script>
+		function searchProducts(data) {			
+			console.log("searchProducts function called."); // 檢查函式是否被呼叫
+			var keywordInput = document.getElementById("searchKeyword");	
+		    if (!keywordInput) {
+		        console.error("Element with id 'searchKeyword' not found.");
+		        return;
+		    }	
+		    var keyword = keywordInput.value;	
+		    console.log("Keyword: " + keyword);  // 檢查keyword是否有值
+		    
+		    // 使用 Ajax 向後端發送搜尋請求
+		    $.ajax({
+		        type: "GET",
+		        url: "<c:url value='/searchProducts' />",
+		        data: { keyword: keyword },
+		        success: function(responseHtml) {
+		            console.log('Received HTML data:', responseHtml);
+		            
+		            // Assuming the responseHtml is a table structure or contains the table you want to display.
+		            // Insert the HTML into the searchResults element.
+		            document.getElementById("searchResults").style.display = "block";
+		            document.getElementById("searchResults").innerHTML = responseHtml;
+		        },
+		        error: function(jqXHR, textStatus, errorThrown) {
+		            console.error("搜尋商品時發生錯誤:");
+		            console.error("狀態碼：" + jqXHR.status);
+		            console.error("錯誤訊息：" + textStatus);
+		            console.error("錯誤拋出：" + errorThrown);
+		        }
+		    });
+		}
+	</script>
 </head>
 <body>
-  <div class='container my-5'>
-      <div class='alert alert-success'>
-      	<h2 align='center'>所有商品列表</h2>     	  
-      </div>
-	<span>&nbsp;</span>
-	<a class='btn btn-success btn-sm float-end' href="<c:url value='/product/insertProduct' />">新增商品</a>
-   <h4 align='center'>${message}&nbsp;</h4>
-   <table class='table table-striped table-hover align-middle' style='width:100% '>
+	<header>
+	   <div class="openButton"></div>
+	   <h1>所有商品列表</h1>
+	   <ul class="menuBox" style=" padding-left: 0 ;">
+	   	   <li>
+	       <div class="menu-top">
+	           <div class="closeButton"></div>
+	       </div>
+	       <li>
+	           <a class="click1" href="#">第一層</a>
+	       <li>
+	           <a class="click2" href="#">第一層</a>
+	       <li>
+	           <a class="click3" href="#">第一層</a>
+	    </ul>
+	</header>
+	<div class='container'>
+		<div class="row align-items-end">
+		    <div class="col-lg-4">
+		        <label for="searchKeyword" class="form-label">搜尋商品：</label>
+		        <form autocomplete="off">
+		        	<input type="text" class="form-control" id="searchKeyword" placeholder="輸入商品編號、商品名稱、類別名稱">
+		        </form>		        
+		    </div>
+		    <div class="col-lg-4">
+		        <button class="btn btn-primary" onclick="searchProducts()">搜尋</button>
+		    </div>
+		    <div class="col-lg-4 text-end">
+		        <a class='btn btn-success' href="<c:url value='/product/insertProduct' />">新增商品</a>
+		    </div>
+		</div>
+	</div>
+	<p>
+	<div id="searchResults" style="display: none;">
+
+	</div>
+	<p>
+	<h4 align='center'>${message}&nbsp;</h4>
+	<p>
+	<table class='table table-striped table-hover align-middle'>
         <thead>
             <tr>
             	<th>商品編號</th>
@@ -121,24 +213,22 @@
 	            </tr>
 	        </c:if>
 	    </c:forEach>
-	</tbody>
-		
-      </table>
-		<div class="pagination d-flex justify-content-center">
-		    <c:if test="${productPage.hasPrevious()}">
-		        <a href="<c:url value='/product?page=${productPage.previousPageable().pageNumber}' />" class="btn btn-secondary">上一頁</a>
-		    </c:if>
-		    <span class="align-self-center mx-2">第 ${productPage.number + 1} 頁，共 ${productPage.totalPages} 頁</span>
-		    <c:if test="${productPage.hasNext()}">
-		        <a class="btn btn-secondary" href="<c:url value='/product?page=${productPage.nextPageable().pageNumber}' />">下一頁</a>
-		    </c:if>
-		</div>
-		<p>    
-      <div align='center'>
+		</tbody>	
+    </table>
+    <p>
+	<div class="pagination d-flex justify-content-center">
+	    <c:if test="${productPage.hasPrevious()}">
+	        <a href="<c:url value='/product?page=${productPage.previousPageable().pageNumber}' />" class="btn btn-secondary">上一頁</a>
+	    </c:if>
+	    <span class="align-self-center mx-2">第 ${productPage.number + 1} 頁，共 ${productPage.totalPages} 頁</span>
+	    <c:if test="${productPage.hasNext()}">
+	        <a class="btn btn-secondary" href="<c:url value='/product?page=${productPage.nextPageable().pageNumber}' />">下一頁</a>
+	    </c:if>
+	</div>
+	<p>    
+    <div align='center'>
   			<a class='btn btn-outline-primary' href="<c:url value='/' />" role='button'>回首頁</a>
-      </div>
     </div>
-    <form action="#" method='POST'>
-    </form> 
+    <form action="#" method='POST'></form>
 </body>
 </html>

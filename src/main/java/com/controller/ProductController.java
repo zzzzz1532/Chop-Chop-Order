@@ -66,8 +66,15 @@ public class ProductController extends AbstractController{
 	    model.addAttribute("productList", nonEmptyProducts);
 		log.info("送出所有商品資料供Product_all.jsp顯示");
 		return "Product_all";
+	}	
+    // 搜尋商品
+	@GetMapping("/searchProducts")
+	public String searchProducts(@RequestParam("keyword") String keyword, Model model) {
+		log.info("Searching for keyword: " + keyword);
+	    List<Product> searchResults = productService.searchProducts(keyword);
+	    model.addAttribute("searchResults", searchResults);
+	    return "SearchResults";  // Assuming this is your main JSP file
 	}
-
 	// 新增商品資料
     // 當使用者在首頁按下『新增員工資料』超連結十，由本方法送出可讓使用者新增員工資料的空白表單。
     // 由Product_insert.jsp顯示空白表單，以便使用者於瀏覽器上新員工增資料。
@@ -110,6 +117,11 @@ public class ProductController extends AbstractController{
 			// -------------------------------------
 			// 下列四列敘述只有需要獲知由於格式錯而無法綁定時所需的錯誤訊息的Key才會用到它們
 			List<ObjectError> errors = result.getAllErrors();
+	        List<Category> categories = categoryService.findAll();
+	        List<Label> labels = labelService.findAll();
+	        model.addAttribute(categories);
+	        model.addAttribute(labels);
+
 			for(ObjectError error : errors) {
 				log.warn("/productsdjpa, " + error.toString());
 			}
@@ -126,6 +138,10 @@ public class ProductController extends AbstractController{
 		if (productService.existsByProductId(product)) {
 			log.warn("/productsdjpa, 提供的商品編號已存在: " + product.getProductId());
 			result.rejectValue("productId", "product.productId.exist.error", "商品編號已存在，請更換新的商品編號");
+	        List<Category> categories = categoryService.findAll();
+	        List<Label> labels = labelService.findAll();
+	        model.addAttribute(categories);
+	        model.addAttribute(labels);
 			model.addAttribute("image", product.getImage());
 			model.addAttribute("fileName", product.getFileName());
 			return "Product_insert";

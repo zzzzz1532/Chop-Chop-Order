@@ -10,7 +10,9 @@
 	<title>修改商品資料</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-	<link rel='stylesheet' href="<c:url value='/css/styles.css' />"type="text/css" />
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<link rel='stylesheet' href="<c:url value='/css/back-end.css' />" />
+	<script type="text/javascript" src="/js/back-end.js"></script>
 	<script>
 	   let inputFileToLoad = null;
 	   let image = null;
@@ -37,72 +39,95 @@
 	          fileReader.readAsDataURL(fileToLoad);
 	      }
 	 }
-	</script>
+	</script>	
 	<style type="text/css">
-		span.error {
+	span.error {
 			color: red;
 			display: inline-block;
 			font-size: 11pt;
 		}		
-		.fieldset-auto-width {
+	.fieldset-auto-width {
 			display: inline-block;
+		}
+	.container {
+		    margin-top: 100px; /* 設置上外邊距為 50 像素，你可以根據需要調整 */
 		}
 	</style>
 </head>
-
-<c:set var="id"  					    value = "${product.id}" />
-<c:set var="productId"  			value = "${product.productId}" />
-<c:set var="previous_productId"  	value = "${sessionScope.previous_product_id}" />
-<c:set var="productName"  			value = "${product.productName}" />
-<c:choose>
-   <c:when test='${ empty requestScope.image}'>
-		<c:set var="image"  value = "${product.dataUri}" />
-   </c:when>
-   <c:otherwise>
-   		<c:set var="image"  value = "${requestScope.image}" />
-   </c:otherwise>
-</c:choose>
-<c:set var="category"  		value = "${product.category}" />
-<c:set var="productDescription"  	value = "${product.productDescription}" />
-<c:set var="productPrice"  		    value = "${product.productPrice}" />
-<c:set var="productPortion"  		value = "${product.productPortion}" />
-<c:set var="productStock"  		    value = "${product.productStock}" />
-<c:set var="labels"  		    value = "${product.labels}" />
+	<c:set var="id"  					    value = "${product.id}" />
+	<c:set var="productId"  			value = "${product.productId}" />
+	<c:set var="previous_productId"  	value = "${sessionScope.previous_product_id}" />
+	<c:set var="productName"  			value = "${product.productName}" />
+	<c:choose>
+	   <c:when test='${ empty requestScope.image}'>
+			<c:set var="image"  value = "${product.dataUri}" />
+	   </c:when>
+	   <c:otherwise>
+	   		<c:set var="image"  value = "${requestScope.image}" />
+	   </c:otherwise>
+	</c:choose>
+	<c:set var="category"  		value = "${product.category}" />
+	<c:set var="productDescription"  	value = "${product.productDescription}" />
+	<c:set var="productPrice"  		    value = "${product.productPrice}" />
+	<c:set var="productPortion"  		value = "${product.productPortion}" />
+	<c:set var="productStock"  		    value = "${product.productStock}" />
+	<c:set var="labels"  		    value = "${product.labels}" />
 
 <body>
-    <div class='container my-5'>
-    <div class='alert alert-success'><h2 align='center'>修改商品資料</h2></div>
+	<header>
+	   <div class="openButton"></div>
+	   <h1>修改商品資料</h1>
+	   <ul class="menuBox" style=" padding-left: 0 ;">
+	   	   <li>
+	       <div class="menu-top">
+	           <div class="closeButton"></div>
+	       </div>
+	       <li>
+	           <a class="click1" href="#">第一層</a>
+	           <!-- 看自已要不要加 -->
+	           <!-- <ul>     
+	                   <li><a href="#">第二層</a></li>
+	                   <li><a href="#">第二層</a></li>
+	                   <li><a href="#">第二層</a></li>
+	               </ul> -->
+	        <li>
+	            <a class="click2" href="#">第一層</a>
+	        <li>
+	            <a class="click3" href="#">第一層</a>
+	    </ul>
+	</header>
+    <div class='container text-center'>
      <c:url var='updateUrl' value='/product/editProduct/${id}'/>
      <form:form method='POST' action="${updateUrl}" modelAttribute='product'>    
         <div class='row mb-3'>
-            <label class='col-sm-2'>商品編號</label>
+            <label class='col-sm-3'>商品編號</label>
             <div class='col-sm-6'>
                 <input type='text' class='form-control' name='productId' value="${productId}" >
                 <input type='hidden' name='previous_productId' value="${previous_productId}" >
                 <input type='hidden' name='_method' value="PUT" >
             </div>
-            <div class='col-sm-4'>
+            <div class='col-sm-3'>
             	<form:errors cssClass="error" path='productId' />
             </div>
         </div>
         
         <div class='row mb-3'>
-            <label class='col-sm-2'>商品名稱</label>
+            <label class='col-sm-3'>商品名稱</label>
             <div class='col-sm-6'>
                 <input type='text' class='form-control' name='productName' value="${productName}" >
             </div>
-            <div class='col-sm-4'>
+            <div class='col-sm-3'>
             	<form:errors cssClass="error" path='productName' />
             </div>
         </div>
         
         <div class='row mb-3'>
-            <label class='col-sm-2'>圖片</label>
-            <div class='col-sm-4	'>
+            <label class='col-sm-3'>圖片</label>
+            <div class='col-sm-3'>
                 <form:input type='file' id='inputFileToLoad' class='form-control' path='fileName'
                        placeholder="請挑選圖片"  value='${product.fileName}'  />
             </div>
-            <div class='col-sm-2'>
+            <div class='col-sm-4'>
                 <c:choose>
                    <c:when test='${empty image}' >
 <!-- 		                <img id='img' width='60' height='80'> -->
@@ -114,13 +139,13 @@
                    </c:otherwise>
                 </c:choose>
             </div>    
-            <div class='col-sm-4'>
+            <div class='col-sm-2'>
             	<form:errors cssClass="error" path='fileName' />
             </div>
         </div>
         
 		<div class='row mb-3'>
-            <label class='col-sm-2'>類別名稱</label>
+            <label class='col-sm-3'>類別名稱</label>
 		    <div class="col-sm-6">
 				<select class="form-select" name="category">
 				    <option value="none">Select a category</option>
@@ -131,63 +156,67 @@
 				    </c:forEach>
 				</select>
 		    </div>
-            <div class='col-sm-4'>
+            <div class='col-sm-3'>
             	<form:errors cssClass="error" path='category' />
             </div>
         </div>
         
         <div class='row mb-3'>
-            <label class='col-sm-2'>商品介紹</label>
+            <label class='col-sm-3'>商品介紹</label>
             <div class='col-sm-6'>
 				<textarea class='form-control' name='productDescription'>${productDescription}</textarea>
 				<input type='hidden' name='_method' value="PUT" />
             </div>
-            <div class='col-sm-4'>
+            <div class='col-sm-3'>
             	<form:errors cssClass="error" path='productDescription' />
             </div>
         </div>
               
         <div class='row mb-3'>
-            <label class='col-sm-2'>份量</label>
+            <label class='col-sm-3'>份量</label>
             <div class='col-sm-6'>
                 <input type='text' class='form-control' name='productPortion' value="${productPortion}"/>
             </div>
-             <div class='col-sm-4'>
+             <div class='col-sm-3'>
             	<form:errors cssClass="error" path='productPortion' />
             </div>
         </div>
         
         <div class='row mb-3'>
-            <label class='col-sm-2'>價格</label>
+            <label class='col-sm-3'>價格</label>
             <div class='col-sm-6'>
                 <input type='number' min="0" class='form-control' name='productPrice' value="${productPrice}" />
             </div>
-            <div class='col-sm-4'>
+            <div class='col-sm-3'>
             	<form:errors cssClass="error" path='productPrice' />
             </div>
         </div>
         
         <div class='row mb-3'>
-            <label class='col-sm-2'>庫存</label>
+            <label class='col-sm-3'>庫存</label>
             <div class='col-sm-6'>
                 <input type='number' min="0" class='form-control' name='productStock' value="${productStock}"/>
             </div>
-            <div class='col-sm-4'>
+            <div class='col-sm-3'>
             	<form:errors cssClass="error" path='productStock' />
             </div>
         </div>
 
 		<div class='row mb-3'>
-		    <label class='col-sm-2'>客製標籤</label>
+		    <label class='col-sm-3'>客製標籤</label>
 		    <div class='col-sm-6'>
-		        <c:forEach var="label" items="${alllabels}">
-		            <label>
-		                <input type="checkbox" name="labels" value="${label.id}" 
-		                    <c:if test="${selectedLabels.contains(label)}">checked</c:if>> ${label.labelName}
-		            </label><br>
-		        </c:forEach>
+		    	<div class="row">
+			        <c:forEach var="label" items="${alllabels}">
+			        	<div class="col-sm-3">
+				            <label>
+				                <input type="checkbox" name="labels" value="${label.id}" 
+				                    <c:if test="${selectedLabels.contains(label)}">checked</c:if>> ${label.labelName}
+				            </label><br>
+				        </div>
+			        </c:forEach>
+			    </div> 
 		    </div>  
-		    <div class='col-sm-4'>
+		    <div class='col-sm-3'>
 		        <form:errors cssClass="error" path="labels"  />
 		    </div>
 		</div>

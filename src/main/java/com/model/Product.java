@@ -70,10 +70,11 @@ public class Product implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "label_id")
     )
     private Set<Label> labels = new HashSet<>();
-
+    
 	public Product() {
 		super();
 	}
+	
 	public Product(Integer id, String productId, String productName, Clob picture, String image, String fileName,
 			Category category, String productDescription, BigDecimal productPrice, String productPortion,
 			Integer productStock, Timestamp created_at, Set<Label> labels) {
@@ -92,6 +93,7 @@ public class Product implements Serializable {
 		this.created_at = created_at;
 		this.labels = labels;
 	}
+
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", productId=" + productId + ", productName=" + productName + ", picture="
@@ -100,6 +102,7 @@ public class Product implements Serializable {
 				+ productPortion + ", productStock=" + productStock + ", created_at=" + created_at + ", labels="
 				+ labels + "]";
 	}
+
 	public String getDataUri() throws Exception {
 		return SystemService.clobToString(picture);
 	}

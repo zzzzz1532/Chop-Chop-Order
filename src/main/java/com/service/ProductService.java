@@ -33,4 +33,6 @@ public interface ProductService {
 	Page<Product> findAll(PageRequest of);
 	List<Product> getNonEmptyProducts(List<Product> products);
 
+	List<Product> searchProducts(String keyword);
+
 }
