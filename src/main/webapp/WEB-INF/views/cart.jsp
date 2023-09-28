@@ -301,7 +301,6 @@ h2, h4 {
 		console.log('購物車數據已存儲在 Local Storage 中');
 	</script>
 	<script>
-		// 定義一個函式，用於處理送出訂單的 AJAX 呼叫
 		function submitOrder() {
 			// 從 Local Storage 中擷取資料
 			var data = localStorage.getItem('pendingOrder');
@@ -314,72 +313,93 @@ h2, h4 {
 			parsedData
 					.forEach(function(item) {
 						// 使用 AJAX 或其他方式查詢對應的product和label資料表，獲取productPrice和labelPrice
-						var productPrice = $.ajax({
-							url : '/{id}/productprice', // 替換為實際的後端端點
-							method : 'GET',
-							data : {
-								productId : item.productId
-							}, // 傳遞相關的產品ID或其他必要的參數
-							success : function(productResponse) {
-								var productPrice = productResponse.price; // 假設響應中包含產品價格
-								// 在這裡使用 productPrice 做進一步的處理
-							},
-							error : function(error) {
-								console.error('Error fetching product price:',
-										error);
-								// 處理錯誤
-							}
-						});
-						;
-						var labelPrice = $.ajax({
-							url : '/{id}/labelprice', // 替換為實際的後端端點
-							method : 'GET',
-							data : {
-								labelId : item.labelId
-							}, // 傳遞相關的產品ID或其他必要的參數
-							success : function(labelResponse) {
-								var labelPrice = labelResponse.price; // 假設響應中包含產品價格
-								// 在這裡使用 labelPrice 做進一步的處理
-							},
-							error : function(error) {
-								console.error('Error fetching label price:',
-										error);
-								// 處理錯誤
-							}
-						});
-						;
-						;
+						$
+								.ajax({
+									url : '/{id}/productprice', // 替換為實際的後端端點
+									method : 'GET',
+									data : {
+										productId : item.productId
+									},
+									success : function(productResponse) {
+										var productPrice = productResponse.price; // 假設響應中包含產品價格
+										// 在這裡使用 productPrice 做進一步的處理
 
-						// 計算單個項目的價格
-						var itemPrice = (productPrice + labelPrice)
-								* item.foodQuantity;
+										// 使用 AJAX 請求獲取 labelPrice
+										$
+												.ajax({
+													url : '/{id}/labelprice', // 替換為實際的後端端點
+													method : 'GET',
+													data : {
+														labelId : item.labelId
+													},
+													success : function(
+															labelResponse) {
+														var labelPrice = labelResponse.price; // 假設響應中包含標籤價格
+														// 在這裡使用 labelPrice 做進一步的處理
 
-						// 將單個項目的價格加到OrderPrice中
-						totalOrderPrice += itemPrice;
+														// 計算單個項目的價格
+														var itemPrice = (productPrice + labelPrice)
+																* item.foodQuantity;
+
+														// 將單個項目的價格加到OrderPrice中
+														totalOrderPrice += itemPrice;
+
+														// 檢查是否已經處理了所有項目
+														if (item === parsedData[parsedData.length - 1]) {
+															// 所有項目都已處理，現在可以進行後續的操作
+															// 更新購物車數據中的OrderPrice
+															parsedData
+																	.forEach(function(
+																			cartItem) {
+																		cartItem.OrderPrice = totalOrderPrice;
+																	});
+
+															// 使用 AJAX 將資料發送到後端 Controller
+															$
+																	.ajax({
+																		url : '/api/orders/create', // 替換為後端 Controller 的 URL 端點
+																		method : 'POST',
+																		contentType : 'application/json',
+																		data : JSON
+																				.stringify(parsedData), // 將資料轉換為 JSON 格式
+																		success : function(
+																				response) {
+																			console
+																					.log(response);
+																			// 在此處處理後端的回應
+																			window.location.href = '/final?orderNumbers='
+																					+ response
+																							.join(',');
+																		},
+																		error : function(
+																				error) {
+																			console
+																					.error(
+																							'Error:',
+																							error);
+																			// 處理錯誤
+																		}
+																	});
+														}
+													},
+													error : function(error) {
+														console
+																.error(
+																		'Error fetching label price:',
+																		error);
+														// 處理錯誤
+													}
+												});
+									},
+									error : function(error) {
+										console
+												.error(
+														'Error fetching product price:',
+														error);
+										// 處理錯誤
+									}
+								});
 					});
-
-			// 將購物車數據中的OrderPrice更新為計算後的值
-			parsedData.forEach(function(item) {
-				item.OrderPrice = totalOrderPrice;
-			});
-
-			// 使用 AJAX 將資料發送到後端 Controller
-			$.ajax({
-				url : '/cart', // 替換為後端 Controller 的 URL 端點
-				method : 'POST',
-				contentType : 'application/json',
-				data : JSON.stringify(parsedData), // 將資料轉換為 JSON 格式
-				success : function(response) {
-					console.log(response);
-					// 在此處處理後端的回應
-					window.location.href = '/final?orderNumbers='
-							+ response.join(',');
-				},
-				error : function(error) {
-					console.error('Error:', error);
-					// 處理錯誤
-				}
-			});
 		}
 
 		// 監聽送出訂單按鈕的點擊事件
