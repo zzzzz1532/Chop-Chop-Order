@@ -268,7 +268,7 @@ h2, h4 {
 
 	<script>
 		var cartData = [ {
-			"productId" : 002,
+			"productId" : 2,
 			"diningLocation" : "內用",
 			"productName" : "薯餅蛋餅",
 			"categoryName" : "蛋餅",
@@ -281,13 +281,13 @@ h2, h4 {
 		}, {
 
 			"diningLocation" : "外帶",
-			"productId" : 001,
+			"productId" : 1,
 			"productName" : "鮮奶茶",
 			"categoryName" : "飲料",
 			"foodQuantity" : 1,
 			"singlePrice" : 90,
 			"labelId" : 004,
-			"labelName" : "去冰",
+			"labelName" : "加珍珠",
 			"foodNote" : "加糖",
 			"orderNote" : "少冰"
 		} ]
@@ -296,119 +296,43 @@ h2, h4 {
 		var cartDataJSON = JSON.stringify(cartData);
 
 		// 將購物車數據存儲在 Local Storage 中
-		localStorage.setItem('pendingOrder', cartDataJSON);
+		localStorage.setItem('orderItem', cartDataJSON);
 
 		console.log('購物車數據已存儲在 Local Storage 中');
 	</script>
 	<script>
 		function submitOrder() {
-			// 從 Local Storage 中擷取資料
-			var data = localStorage.getItem('pendingOrder');
+			// 从 Local Storage 中获取数据
+			var data = localStorage.getItem('orderItem');
 			var parsedData = JSON.parse(data);
 
-			// 初始化OrderPrice為0
-			var totalOrderPrice = 0;
-
-			// 遍歷每個購物車項目
-			parsedData
-					.forEach(function(item) {
-						// 使用 AJAX 或其他方式查詢對應的product和label資料表，獲取productPrice和labelPrice
-						$
-								.ajax({
-									url : '/{id}/productprice', // 替換為實際的後端端點
-									method : 'GET',
-									data : {
-										productId : item.productId
-									},
-									success : function(productResponse) {
-										var productPrice = productResponse.price; // 假設響應中包含產品價格
-										// 在這裡使用 productPrice 做進一步的處理
-
-										// 使用 AJAX 請求獲取 labelPrice
-										$
-												.ajax({
-													url : '/{id}/labelprice', // 替換為實際的後端端點
-													method : 'GET',
-													data : {
-														labelId : item.labelId
-													},
-													success : function(
-															labelResponse) {
-														var labelPrice = labelResponse.price; // 假設響應中包含標籤價格
-														// 在這裡使用 labelPrice 做進一步的處理
-
-														// 計算單個項目的價格
-														var itemPrice = (productPrice + labelPrice)
-																* item.foodQuantity;
-
-														// 將單個項目的價格加到OrderPrice中
-														totalOrderPrice += itemPrice;
-
-														// 檢查是否已經處理了所有項目
-														if (item === parsedData[parsedData.length - 1]) {
-															// 所有項目都已處理，現在可以進行後續的操作
-															// 更新購物車數據中的OrderPrice
-															parsedData
-																	.forEach(function(
-																			cartItem) {
-																		cartItem.OrderPrice = totalOrderPrice;
-																	});
-
-															// 使用 AJAX 將資料發送到後端 Controller
-															$
-																	.ajax({
-																		url : '/api/orders/create', // 替換為後端 Controller 的 URL 端點
-																		method : 'POST',
-																		contentType : 'application/json',
-																		data : JSON
-																				.stringify(parsedData), // 將資料轉換為 JSON 格式
-																		success : function(
-																				response) {
-																			console
-																					.log(response);
-																			// 在此處處理後端的回應
-																			window.location.href = '/final?orderNumbers='
-																					+ response
-																							.join(',');
-																		},
-																		error : function(
-																				error) {
-																			console
-																					.error(
-																							'Error:',
-																							error);
-																			// 處理錯誤
-																		}
-																	});
-														}
-													},
-													error : function(error) {
-														console
-																.error(
-																		'Error fetching label price:',
-																		error);
-														// 處理錯誤
-													}
-												});
-									},
-									error : function(error) {
-										console
-												.error(
-														'Error fetching product price:',
-														error);
-										// 處理錯誤
-									}
-								});
-					});
+			// 使用 AJAX 将数据发送到后端 Controller
+			$.ajax({
+				url : '/processOrder', // 替换为后端 Controller 的 URL 端点
+				method : 'POST',
+				contentType : 'application/json',
+				data : JSON.stringify(parsedData), // 将数据转换为 JSON 格式
+				success : function(response) {
+					console.log(response);
+					// 在此处处理后端的响应
+					window.location.href = '/final?orderNumbers='
+							+ response.join(',');
+				},
+				error : function(error) {
+					console.error(error);
+				}
+			});
 		}
 
-		// 監聽送出訂單按鈕的點擊事件
+		// 监听提交订单按钮的点击事件
 		document.getElementById('submitOrderButton').addEventListener('click',
 				function() {
-					// 呼叫 submitOrder 函式來觸發 AJAX 呼叫
+					// 调用 submitOrder 函数来触发 AJAX 调用
 					submitOrder();
 				});
 	</script>
+
+
 
 
 </body>
