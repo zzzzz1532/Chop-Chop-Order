@@ -29,14 +29,14 @@ public class OrderService {
     public void processOrderItems(List<Map<String, Object>> orderItems) {
         BigDecimal totalOrderPrice = BigDecimal.ZERO;
 
-        // 获取最后一个订单号并加1
-        // 获取最后一个订单号并加1
+ 
+        // 最後一個訂單號並加1
         Integer lastOrderNo = pendingOrderRepository.findLastOrderNo();
         Integer newOrderNo = (lastOrderNo != null) ? lastOrderNo + 1 : 1;
 
 
         for (Map<String, Object> orderItem : orderItems) {
-            // 提取orderItem中的数据
+            // 提取orderItem中的數據
             Integer productId = (Integer) orderItem.get("productId");
             Integer labelId = (Integer) orderItem.get("labelId");
             Integer foodQuantity = (Integer) orderItem.get("foodQuantity");

@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import com.ispan.eeit69.model.PendingOrder;
 
 public interface PendingOrderRepository extends JpaRepository<PendingOrder, Integer> {
-	// 添加根据订单号查询订单的方法
+	// 添加根據訂單号查詢訂單的方法
 	PendingOrder findByOrderNo(Integer orderNo);
 
 	@Query("SELECT MAX(p.orderNo) FROM PendingOrder p")
@@ -20,6 +20,6 @@ public interface PendingOrderRepository extends JpaRepository<PendingOrder, Inte
 
 
 
-	// 添加判断订单是否存在的方法
+	// 添加判斷訂單是否存在的方法
 	boolean existsByOrderNo(Integer orderNo);
 }

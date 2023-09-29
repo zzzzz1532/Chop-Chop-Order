@@ -166,9 +166,7 @@ h2, h4 {
 </style>
 </head>
 <body>
-	<div id="orderNumber">
-		<!-- 这里将显示订单号 -->
-	</div>
+	
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-10 col-lg-8 col-xl-7 mx-auto">
@@ -302,21 +300,21 @@ h2, h4 {
 	</script>
 	<script>
 		function submitOrder() {
-			// 从 Local Storage 中获取数据
+			// 從 Local Storage 中獲取數據
 			var data = localStorage.getItem('orderItem');
 			var parsedData = JSON.parse(data);
 
-			// 使用 AJAX 将数据发送到后端 Controller
+			// 使用 AJAX 將數據發送到後端 Controller
 			$.ajax({
-				url : '/processOrder', // 替换为后端 Controller 的 URL 端点
+				url : '/processOrder', 
 				method : 'POST',
 				contentType : 'application/json',
-				data : JSON.stringify(parsedData), // 将数据转换为 JSON 格式
+				data : JSON.stringify(parsedData), // 將數據轉換為JSON格式
 				success : function(response) {
-					console.log(response);
-					// 在此处处理后端的响应
-					window.location.href = '/final?orderNumbers='
-							+ response.join(',');
+// 					console.log(response);
+// 					// 處理後端響應
+// 					window.location.href = '/final?orderNumbers='
+// 							+ response.join(',');
 				},
 				error : function(error) {
 					console.error(error);
@@ -324,10 +322,10 @@ h2, h4 {
 			});
 		}
 
-		// 监听提交订单按钮的点击事件
+		// 監聽提交訂單按鈕的點擊事件
 		document.getElementById('submitOrderButton').addEventListener('click',
 				function() {
-					// 调用 submitOrder 函数来触发 AJAX 调用
+					// 調用 submitOrder 函數觸發 AJAX 調用
 					submitOrder();
 				});
 	</script>
