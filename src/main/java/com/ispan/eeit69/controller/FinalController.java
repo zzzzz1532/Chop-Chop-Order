@@ -8,8 +8,9 @@ import org.springframework.ui.Model;
 @Controller
 public class FinalController {
     @GetMapping("/final")
-    public String hello(@RequestParam("orderNumbers") String orderNumbers, Model model) {
-        model.addAttribute("orderNumbers", orderNumbers);
-        return "final";
+    public String finalPage(@RequestParam String orderNumber, Model model) {
+        // 在此處理Final頁面的邏輯，您可以使用orderNumber来檢索相關訂單數據
+        return "final"; // 返回Final頁面的視圖名稱
     }
 }
+

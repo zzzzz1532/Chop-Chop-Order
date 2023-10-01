@@ -16,7 +16,8 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/processOrder")
-    public void processOrder(@RequestBody List<Map<String, Object>> orderItems) {
-        orderService.processOrderItems(orderItems);
+    public Integer processOrder(@RequestBody List<Map<String, Object>> orderItems) {
+        Integer updatedOrderNo = orderService.updateOrderPriceAndReturnOrderNo(orderItems);
+        return updatedOrderNo;
     }
 }

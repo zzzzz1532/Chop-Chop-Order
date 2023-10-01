@@ -17,6 +17,11 @@ public interface PendingOrderRepository extends JpaRepository<PendingOrder, Inte
 	
 	@Query("SELECT p FROM PendingOrder p WHERE p.orderNo = :orderNo")
 	List<PendingOrder> findLastOrderByOrderNo(@Param("orderNo") Integer orderNo);
+	@Query("SELECT MAX(p.orderPrice) FROM PendingOrder p")
+	Integer findLastOrderPrice();
+
+
+
 
 
 
