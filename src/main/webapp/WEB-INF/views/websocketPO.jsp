@@ -50,7 +50,7 @@
 	<script>
 	window.onload = function() {
 	var stompClient = null;
-
+	console.log("WORKING....")
 	function connect() {
 	    var socket = new SockJS('/websocket');
 	    stompClient = Stomp.over(socket);
@@ -75,7 +75,7 @@
 							+ orders[i].diningLocation
 							+ "</td>"
 							+ "<td>"
-							+ orders[i].productName
+							+ orders[i].product.productName
 							+ "</td>"
 							+ "<td>"
 							+ orders[i].foodQuantity

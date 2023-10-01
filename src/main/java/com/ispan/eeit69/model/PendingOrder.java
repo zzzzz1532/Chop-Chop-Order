@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class PendingOrder implements Serializable{
 	private Integer orderNo; // 訂單號
 	private String diningLocation; //內用外帶
 	
-	@ManyToOne // 建立與產品表的多對一關聯
+	@ManyToOne// 建立與產品表的多對一關聯
 	@JoinColumn(name = "productName", referencedColumnName = "productName")
 	private Product product; // 品名
 	

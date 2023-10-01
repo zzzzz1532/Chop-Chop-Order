@@ -14,7 +14,6 @@ import com.ispan.eeit69.service.PendingOrderService;
 
 
 @Controller
-@Lazy
 public class WebSocketMessageHandler {
 	
 	@Autowired
