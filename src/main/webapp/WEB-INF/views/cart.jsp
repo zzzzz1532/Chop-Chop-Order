@@ -305,7 +305,7 @@ h2, h4 {
 	            data: JSON.stringify(parsedData),
 	            success: function(response) {
 	                console.log('現場付款成功：', response);
-	                window.location.href = '/final?orderNumber=' + response;
+	                window.location.href = '/final';
 	            },
 	            error: function(error) {
 	                console.error('現場付款錯誤：', error);

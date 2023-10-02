@@ -22,6 +22,7 @@
 	crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
+// 生成隨機碼，單純練習實作
 	function generateRandomID(length) {
 		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 		let randomID = '';
@@ -150,6 +151,7 @@ a.button-like:active {
 					<div style="margin: 10px;">
 						<h1>CCO早餐店</h1>
 					</div>
+					<!-- 原本的店頭圖片 -->
 					<img src="" style="width: 100%;">
 					<div class="cardheader">
 						<details open>
@@ -160,7 +162,7 @@ a.button-like:active {
 							</div>
 						</details>
 					</div>
-					<!-- 模态框内容 -->
+					<!-- 模態框内容 -->
 					<div id="orderChoiceModal" class="modal">
 						<div class="modal-content">
 							<h2>請選擇內用或外帶</h2>
@@ -169,6 +171,9 @@ a.button-like:active {
 						</div>
 					</div>
 					<div class="divsticky">
+					<!-- 頂部錨點標籤 -->
+					<!-- Foreach Product列表，經由Product查詢Category資料表中的CategoryName欄位 -->
+					<!-- 查詢後剃除重複項寫入標籤和超連結 -->
 						<c:set var="previousCategory" value="" />
 						<c:forEach items="${products}" var="product" varStatus="loop">
 							<c:if
@@ -182,6 +187,7 @@ a.button-like:active {
 						</c:forEach>
 					</div>
 					<div class="cardbody">
+					<!-- 查詢product中的categoryid(串接category查詢categoryname) productname picture productprice 剔除重複的categoryname-->
 						<c:set var="previousCategory" value="" />
 						<c:forEach items="${products}" var="product">
 							<c:if

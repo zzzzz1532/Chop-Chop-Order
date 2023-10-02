@@ -53,15 +53,17 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAllWithCategoryAndLabels();
     }
 
+    
+    //
     @Override
 	public List<Product> getAllProductsWithCategory() {
         List<Product> products = productRepository.findAll();
         for (Product product : products) {
             try {
                 String imageDataUrl = clobToImageDataUrl(product.getPicture());
-                product.setImage(imageDataUrl); // 设置image属性为图像数据URI
+                product.setImage(imageDataUrl); // 設置image屬性為圖像數據URI
             } catch (Exception e) {
-                // 处理异常
+                // 處理異常
                 e.printStackTrace();
             }
 
@@ -73,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
         }
         return products;
     }
-
+    //圖片處理邏輯
     private String clobToImageDataUrl(Clob clob) throws SQLException, IOException {
         if (clob != null) {
             try (Reader reader = clob.getCharacterStream()) {
@@ -84,12 +86,15 @@ public class ProductServiceImpl implements ProductService {
                     while ((bytesRead = reader.read(buffer)) != -1) {
                         imageData.append(buffer, 0, bytesRead);
                     }
+                    // 
                     return "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageData.toString().getBytes());
                 }
             }
         }
         return null;
     }
+    
+    //根據產品ID查詢產品價格
     @Override
 	public BigDecimal  getProductPriceById(Integer id) {
         Product product = productRepository.findById(id).orElse(null);

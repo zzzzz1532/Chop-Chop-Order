@@ -18,7 +18,7 @@ public interface ProductService {
 	List<Product> getAllProductsWithCategoryAndLabels();
 
 	List<Product> getAllProductsWithCategory();
-
+	//根據產品ID查詢產品價格
 	BigDecimal getProductPriceById(Integer id);
 
 }
