@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.ispan.eeit69.service.ProductService;
 import com.ispan.eeit69.model.Product;
+import com.ispan.eeit69.service.ProductService;
 @Controller
 public class MainController {
     @Autowired

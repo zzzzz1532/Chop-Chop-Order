@@ -1,36 +1,17 @@
 package com.ispan.eeit69.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
 import com.ispan.eeit69.model.Category;
 
-import com.ispan.eeit69.repository.CategoryRepository;
+public interface CategoryService {
 
-import java.util.List;
+	List<Category> getAllCategories();
 
-@Service
-public class CategoryService {
-    private final CategoryRepository categoryRepository;
+	Category getCategoryById(Integer id);
 
-    @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+	void saveCategory(Category Category);
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
+	void deleteCategory(Integer id);
 
-	public Category getCategoryById(Integer id) {
-		return categoryRepository.findById(id).orElse(null);
-	}
-
-	public void saveCategory(Category Category) {
-		categoryRepository.save(Category);
-	}
-
-	public void deleteCategory(Integer id) {
-		categoryRepository.deleteById(id);
-	}
 }
