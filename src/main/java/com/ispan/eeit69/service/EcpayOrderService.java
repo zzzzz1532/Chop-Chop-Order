@@ -38,7 +38,7 @@ public class EcpayOrderService {
 		obj.setItemName(newOrderNo.toString());
 		obj.setReturnURL("http://211.23.128.214:5000");
 		obj.setNeedExtraPaidInfo("N");
-		obj.setClientBackURL("/123.html");
+		obj.setClientBackURL("/final.html");
 		String form = all.aioCheckOut(obj, null);
 
 		return form;
