@@ -38,6 +38,10 @@
             width: 100%;
             border-collapse: collapse;
         }
+        
+        .webpage2 {
+            display: none;
+        }
     
         th,
         td {
@@ -133,76 +137,147 @@
     </style>
 
     <script type="text/javascript" src="<c:url value='/webjars/jquery/3.5.1/jquery.js' />"></script>
-    <script>
-        window.onload = function () {
-            function fetchData() {
-                var xhr = new XMLHttpRequest(); // AJAX Engine
-                xhr.open("GET", "<c:url value='/pendingorder'/>", true); 
-                xhr.send();
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                    	var content = "<table>";
-                        content += "<tr><th colspan='4'>接單系統</th></tr>";
-                        content += "<tr><th>單號</th><th>總額</th><th>客戶送單時間</th><th>操作</th></tr>";
-                        var orders = JSON.parse(xhr.responseText);
-                        for (var i = 0; i < orders.length; i++) {
-                        	
-                            content += "<tr>";
-                            content += "<td>" + orders[i].orderNo + "</td>";
-                            content += "<td>" + orders[i].orderPrice + "</td>";
-                            content += "<td>" + orders[i].created_at + "</td>";
-                            content += "<td>";
-                            content += "<button class='button' onclick='showBox()'>查看品項</button>";
-                            content += "<button class='button complete-button'>完成</button>";
-                            content += "<button class='button delete-button'>刪除</button>";
-                            content += "</td>";
-                            content += "</tr>"; 
-                            content += "</table>";
-                            content += `<div id="webpage2" style="display: none;">`;
-                            content += "<table>";
-                            content += "<th>品名</th><th>數量</th>";
-                            content += "<td>" + orders[i].ProductName + "</td>";
-                            content += "<td>" + orders[i].foodQuantity + "</td>";
-                            content += "</table>";
-                            content += "</div>";
-                        }            
-                        var divs = document.getElementById("somedivS");
-                        divs.innerHTML = content;
-                        console.log(content);
-                    }
-                }
-            }
-            // 使用 setInterval 定期執行 fetchData 函數
-            setInterval(fetchData, 10000); // 每 1 秒更新一次資料
-            function showBox() {
-                const webpage2 = document.getElementById('webpage2');
-                if (webpage2.style.display === 'none') {
-                    webpage2.style.display = 'block';
-                } else {
-                    webpage2.style.display = 'none';
-                }
-            }       
-        }
+    
+    
+        <script>
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "<c:url value='/pendingorder'/>", true);
         
-        function showBox() {
-            const webpage2 = document.getElementById('webpage2');
-            if (webpage2.style.display === 'none') {
+        function fetchData() {
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var orders = JSON.parse(xhr.responseText);
+                    var content = "";
+
+                    for (var i = 0; i < orders.length; i++) {
+                        content += "<tr>";
+
+                        content += "<td>" + orders[i].orderNo + "</td>";
+                        content += "<td>" + orders[i].orderPrice + "</td>";
+                        content += "<td>" + orders[i].created_at + "</td>";
+
+                        content += "<td>";
+                        content += "<button class='button' onclick='showDetails(" + orders[i].orderNo + ")'>查看品項</button>";
+                        content += "<button class='button complete-button' onclick='Completed()'>完成</button>";
+                        content += "<button class='button delete-button' onclick='Delete(" + orders[i].orderNo + ")'>刪除</button>";
+                        content += "</td>";
+
+                        content += "</tr>";
+
+                        // content += "<tr>";
+                        content += "<tr id='" + i + "' class='webpage2'>";
+                        content += `<td style="background-color: #f4f4f4;">品項</td><td style="background-color: #f4f4f4;">數量</td>`; // 修正列標題
+                        // content += "</tr>";
+                        content += "<tr id='" + i + "' class='webpage2'>";
+                        content += "<td>" + orders[i].ProductName + "</td>" + "<td>" + orders[i].foodQuantity + "</td>";
+                        content += "</tr>";
+
+                        content += "</tr>";
+                    }
+                    var tableBody = document.getElementById("tableBody");
+                    tableBody.innerHTML = content;
+                }
+            };
+        }
+
+        
+        function showDetails(orderNo) {
+            alert(); // Add an alert for testing purposes
+            const webpage2 = document.getElementById(orderNo); // Change getElementsByID to getElementById
+            console.log(webpage2);
+            console.log(webpage2.style);
+
+            if (webpage2.style === null || webpage2.style.display === 'none') { // Check if the display style is 'none'
                 webpage2.style.display = 'block';
             } else {
                 webpage2.style.display = 'none';
             }
-        }        
+        }
+
+
+        function Completed() {
+        	// 使用 alert 函数确认是否要删除
+            var confirmComplete = confirm("此訂單是否完成")
+          
+            if (confirmComplete) {
+                // 在这里执行删除操作
+                // 可以调用后端API来执行删除操作
+                // 例如：deleteData();
+            } else {
+                // 用户取消了删除操作，可以选择刷新数据
+                fetchData();
+            }
+        }
+
+        function Delete(orderNo) {
+            if (confirm('確定要刪除訂單: ' + orderNo + ' 這筆紀錄?')) {
+                var url = "<c:url value='/orderIDdelete' />" + "/" + orderNo;
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            console.log("Order deleted successfully");
+                            // You might want to update the UI or take additional actions here
+
+                            // Perform a synchronous redirect after the deletion is successful
+                            window.location.href = "/showOrderSystem";
+                        } else {
+                            console.error("Failed to delete order");
+                            // Regardless of success or failure, you might want to refresh the data
+                            fetchData();
+                        }
+                    }
+                };
+
+                xhr.send("orderNo=" + orderNo + "&_method=DELETE");
+            } else {
+                fetchData();
+            }
+        }
+
+
+
+        
+        // <----------------------------------------------------------------------------------->
+
+
+
+
+        window.onload = function () {
+            fetchData();
+            setInterval(fetchData, 8000); // 每 1 秒更新一次資料
+        }
+
     </script>
+    
+    
+    
+    
 </head>
 
 <body>
     <header>
         <h1>接單系統</h1>
     </header>
-    
-    <div class="container" id="somedivS">
-    </div>
-        
+
+    <table class="container">
+        <thead>
+            <tr>
+                <th>單號</th>
+                <th>總額</th>
+                <th>客戶送單時間</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- 動態生成表格行 -->
+        </tbody>
+    </table>
 </body>
 
 </html>

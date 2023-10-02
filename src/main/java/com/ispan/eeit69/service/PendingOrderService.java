@@ -4,7 +4,11 @@ import java.util.List;
 
 import com.ispan.eeit69.model.PendingOrder;
 
+
 public interface PendingOrderService {
 	
 	List<PendingOrder> findAll(); 
+		
+	void deleteById(Integer orderNo);
+	
 }

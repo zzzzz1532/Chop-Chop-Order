@@ -13,13 +13,20 @@ import com.ispan.eeit69.service.PendingOrderService;
 public class PendingOrderServiceImpl implements PendingOrderService {
 
 	@Autowired
-	PendingOrderRepository pendingOrder;
+	PendingOrderRepository PendingOrder;
 	
 	
 	@Override
 	public List<PendingOrder> findAll() {
 		
-		return pendingOrder.findAll();
+		return PendingOrder.findAll();
 	}
+	
+	@Override
+	public void deleteById(Integer orderNo) {
+		PendingOrder.deleteById(orderNo);		
+	}
+	
+	
 
 }
