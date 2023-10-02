@@ -3,7 +3,6 @@ package com.ispan.eeit69.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +28,6 @@ public class WebSocketMessageHandler {
 	     messagingTemplate.convertAndSend("/topic/pendingOrders", pendingOrders);
 	     return pendingOrders;
 	 }
-
-
 
 }
 // 處理建立連線後的資料更新

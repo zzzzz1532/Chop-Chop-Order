@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ispan.eeit69.controller.WebSocketMessageHandler;
 import com.ispan.eeit69.model.Label;
 import com.ispan.eeit69.model.PendingOrder;
 import com.ispan.eeit69.model.Product;
@@ -28,6 +29,8 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private LabelRepository labelRepository;
 	
+	@Autowired
+	private WebSocketMessageHandler wmsh;
 	
 
 	@Override
@@ -90,7 +93,10 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			pendingOrderRepository.saveAll(ordersToUpdate);
+			
 		}
+		wmsh.sendPendingOrders();
+		System.out.println(wmsh.sendPendingOrders());
 		return updatedOrderNo;
 	}
 	@Override

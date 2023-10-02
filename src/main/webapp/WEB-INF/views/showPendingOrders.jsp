@@ -71,7 +71,7 @@
 								+ orders[i].diningLocation
 								+ "</td>"
 								+ "<td>"
-								+ orders[i].product.productName
+								+ orders[i].productName
 								+ "</td>"
 								+ "<td>"
 								+ orders[i].foodQuantity
