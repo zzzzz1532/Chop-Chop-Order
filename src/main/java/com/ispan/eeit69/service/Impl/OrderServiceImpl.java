@@ -28,8 +28,10 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private LabelRepository labelRepository;
 	
+	private Integer cachedOrderNo; // 暫存OrderNo
+    private Integer cachedOrderPrice; // 暫存OrderPrice
+    private String cachedDiningLocation; // 暫存diningLocation
 	
-
 	@Override
 	public Integer updateOrderPriceAndReturnOrderNo(List<Map<String, Object>> orderItems) {
 		BigDecimal totalOrderPrice = BigDecimal.ZERO;
@@ -80,29 +82,39 @@ public class OrderServiceImpl implements OrderService {
 				}
 			}
 		}
+		// 暫存OrderNo、OrderPrice和diningLocation
+        cachedOrderNo = updatedOrderNo;
+        cachedOrderPrice = totalOrderPrice.intValue();
+        cachedDiningLocation = orderItems.get(0).get("diningLocation").toString(); // 假設diningLocation相同
 
 		// 更新總訂單價格
 		List<PendingOrder> ordersToUpdate = pendingOrderRepository.findLastOrderByOrderNo(newOrderNo);
 
 		if (!ordersToUpdate.isEmpty()) {
-			for (PendingOrder orderToUpdate : ordersToUpdate) {
-				orderToUpdate.setOrderPrice(totalOrderPrice.intValue());
-			}
+		    for (PendingOrder orderToUpdate : ordersToUpdate) {
+		        orderToUpdate.setOrderPrice(cachedOrderPrice); // 使用暫存的OrderPrice
+		    }
 
-			pendingOrderRepository.saveAll(ordersToUpdate);
+		    pendingOrderRepository.saveAll(ordersToUpdate);
 		}
 		return updatedOrderNo;
 	}
 	@Override
-	public Integer getTotalOrderPrice() {
-	    // 返回實際的totalOrderPrice值
-	    return pendingOrderRepository.findLastOrderPrice();
-	}
+    public Integer getTotalOrderPrice() {
+        // 返回實際的totalOrderPrice值
+        return cachedOrderPrice;
+    }
 
-	@Override
-	public Integer getNewOrderNo() {
-	    // 返回實際的newOrderNo值
-	    return pendingOrderRepository.findLastOrderNo();
-	}
+    @Override
+    public Integer getNewOrderNo() {
+        // 返回實際的newOrderNo值
+        return cachedOrderNo;
+    }
+
+    @Override
+    public String getDiningLocation() {
+        // 返回暫存的diningLocation值
+        return cachedDiningLocation;
+    }
 
 }
