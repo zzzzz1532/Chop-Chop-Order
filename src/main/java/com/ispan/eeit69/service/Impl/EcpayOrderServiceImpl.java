@@ -40,7 +40,7 @@ public class EcpayOrderServiceImpl implements EcpayOrderService {
 		obj.setItemName(newOrderNo.toString());
 		obj.setReturnURL("http://211.23.128.214:5000");
 		obj.setNeedExtraPaidInfo("N");
-		obj.setClientBackURL("/final");
+		obj.setClientBackURL("http://localhost:8080/final");
 		String form = all.aioCheckOut(obj, null);
 
 		return form;
