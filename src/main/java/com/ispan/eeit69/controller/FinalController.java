@@ -1,31 +1,31 @@
 package com.ispan.eeit69.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-
+import org.springframework.web.bind.annotation.RequestParam;
 import com.ispan.eeit69.service.PendingOrderService;
-
 
 @Controller
 public class FinalController {
 
-    @Autowired
-    private PendingOrderService pendingOrderService;
+	@Autowired
+	private PendingOrderService pendingOrderService;
 
-    @GetMapping("/final") // 
-    public String showFinalPage(Model model) {
-        // 獲取OrderNo和diningLocation數據
-        Integer orderNo = pendingOrderService.getOrderNo();
-        String diningLocation = pendingOrderService.getDiningLocation();
+	@GetMapping("/final")
+	public String showFinalPage(@RequestParam(name = "updatedOrderNo", required = false) Integer updatedOrderNo,
+			Model model) {
+		if (updatedOrderNo != null) {
 
-        // 將數據存入Model以便在JSP頁面中使用
-        model.addAttribute("orderNo", orderNo);
-        model.addAttribute("diningLocation", diningLocation);
+			// 使用PendingOrderService中的方法來獲取數據
+			String diningLocation = pendingOrderService.findDiningLocation(updatedOrderNo);
+			Integer orderPrice = pendingOrderService.findOrderPrice(updatedOrderNo);
 
-        // 返回"final"页面的视图名称
-        return "final";
-    }
+			// 將訂單詳細資料添加到模型中，以便在 JSP 頁面中使用
+			model.addAttribute("diningLocation", diningLocation);
+			model.addAttribute("orderPrice", orderPrice);
+		}
+
+		return "final";
+	}
 }

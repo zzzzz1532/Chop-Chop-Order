@@ -25,10 +25,10 @@ public class EcpayOrderController {
 	@PostMapping("/ecpayCheckout")
 	@ResponseBody
 	public String ecpayCheckout(@RequestBody List<Map<String, Object>> orderItems) {
-		// 先调用OrderService完成其逻辑
+		
 		Integer updatedOrderNo = orderService.updateOrderPriceAndReturnOrderNo(orderItems);
-		// 再调用EcpayOrderService继续执行其逻辑，获取支付表单字符串
-		String aioCheckOutALLForm = ecpayOrderService.ecpayCheckout();
+		
+		String aioCheckOutALLForm = ecpayOrderService.ecpayCheckout(updatedOrderNo);
 		// 将支付表单字符串添加到模型中
 //        System.out.println("Payment Form: " + aioCheckOutALLForm);
 //        Model.addAttribute("aioCheckOutALLForm", aioCheckOutALLForm);

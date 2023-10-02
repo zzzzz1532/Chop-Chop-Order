@@ -27,19 +27,12 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private LabelRepository labelRepository;
-	
+
 	private Integer cachedOrderNo; // 暫存OrderNo
-    private Integer cachedOrderPrice; // 暫存OrderPrice
-    private String cachedDiningLocation; // 暫存diningLocation
-	
 	@Override
 	public Integer updateOrderPriceAndReturnOrderNo(List<Map<String, Object>> orderItems) {
 		BigDecimal totalOrderPrice = BigDecimal.ZERO;
 		Integer updatedOrderNo = null;
-
-		// 最後一個訂單號並加1
-		Integer lastOrderNo = pendingOrderRepository.findLastOrderNo();
-		Integer newOrderNo = (lastOrderNo != null) ? lastOrderNo + 1 : 1;
 
 		for (Map<String, Object> orderItem : orderItems) {
 			// 提取orderItem中的數據
@@ -64,12 +57,12 @@ public class OrderServiceImpl implements OrderService {
 
 				// 創建PendingOrder對象
 				PendingOrder pendingOrder = new PendingOrder();
-				pendingOrder.setOrderNo(newOrderNo);
+				pendingOrder.setOrderNo(cachedOrderNo); // 使用传递的cachedOrderNo
 				pendingOrder.setDiningLocation(diningLocation);
 				pendingOrder.setProductName(product.getProductName());
 				pendingOrder.setCategoryName(product.getCategory().getCategoryName());
 				pendingOrder.setFoodQuantity(foodQuantity);
-				pendingOrder.setOrderPrice(totalPrice.intValue());
+				pendingOrder.setOrderPrice(totalPrice.intValue()); // 將總價賦值给OrderPrice字段
 				pendingOrder.setCreated_at(new Timestamp(System.currentTimeMillis()));
 				pendingOrder.setLabelName(label.getLabelName());
 				pendingOrder.setFoodNote(foodNote);
@@ -78,43 +71,11 @@ public class OrderServiceImpl implements OrderService {
 				// 保存訂單
 				pendingOrderRepository.save(pendingOrder);
 				if (updatedOrderNo == null) {
-					updatedOrderNo = newOrderNo;
+					updatedOrderNo = cachedOrderNo;
 				}
 			}
 		}
-		// 暫存OrderNo、OrderPrice和diningLocation
-        cachedOrderNo = updatedOrderNo;
-        cachedOrderPrice = totalOrderPrice.intValue();
-        cachedDiningLocation = orderItems.get(0).get("diningLocation").toString(); // 假設diningLocation相同
-
-		// 更新總訂單價格
-		List<PendingOrder> ordersToUpdate = pendingOrderRepository.findLastOrderByOrderNo(newOrderNo);
-
-		if (!ordersToUpdate.isEmpty()) {
-		    for (PendingOrder orderToUpdate : ordersToUpdate) {
-		        orderToUpdate.setOrderPrice(cachedOrderPrice); // 使用暫存的OrderPrice
-		    }
-
-		    pendingOrderRepository.saveAll(ordersToUpdate);
-		}
 		return updatedOrderNo;
 	}
-	@Override
-    public Integer getTotalOrderPrice() {
-        // 返回實際的totalOrderPrice值
-        return cachedOrderPrice;
-    }
-
-    @Override
-    public Integer getNewOrderNo() {
-        // 返回實際的newOrderNo值
-        return cachedOrderNo;
-    }
-
-    @Override
-    public String getDiningLocation() {
-        // 返回暫存的diningLocation值
-        return cachedDiningLocation;
-    }
 
 }

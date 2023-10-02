@@ -7,8 +7,5 @@ public interface OrderService {
 
 	Integer updateOrderPriceAndReturnOrderNo(List<Map<String, Object>> orderItems);
 
-	Integer getTotalOrderPrice();
-
-	Integer getNewOrderNo();
 
 }
