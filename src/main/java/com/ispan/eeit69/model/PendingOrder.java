@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,8 +12,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+//@EntityListeners(PendingOrderListener.class)
 @Entity
-@Table(name="pendingorder")
+@Table(name="pendingOrder")
 public class PendingOrder implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -23,31 +25,46 @@ public class PendingOrder implements Serializable{
 	private Integer orderId; //編號
 	private Integer orderNo; // 訂單號
 	private String diningLocation; //內用外帶
-	private String ProductName; // 品名
+	
+//	@ManyToOne// 建立與產品表的多對一關聯
+//	@JoinColumn(name = "productName", referencedColumnName = "productName")
+//	private Product product; // 品名
+	
+	private String productName;
 	private String categoryName; //類別名稱
 	private Integer foodQuantity; // 數量
 	private Integer orderPrice; //訂單總額
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Timestamp created_at; // 生成時間
 	//上方屬性可能會再修改，依最終暫存訂單資料表為準
+	private String labelName;
+	private String foodNote;
+	private String orderNote;
+	
 	
 	public PendingOrder()  {
 		
 	}
 
 
-	public PendingOrder(Integer orderId, Integer orderNo, String diningLocation, String ProductName, String categoryName, Integer foodQuantity,
-			Integer orderPrice, Timestamp created_at) {
+	public PendingOrder(Integer orderId, Integer orderNo, String diningLocation, String productName,
+			String categoryName, Integer foodQuantity, Integer orderPrice, Timestamp created_at, String labelName,
+			String foodNote, String orderNote) {
 		super();
 		this.orderId = orderId;
 		this.orderNo = orderNo;
 		this.diningLocation = diningLocation;
-		this.ProductName = ProductName;
+		this.productName = productName;
 		this.categoryName = categoryName;
 		this.foodQuantity = foodQuantity;
 		this.orderPrice = orderPrice;
 		this.created_at = created_at;
+		this.labelName = labelName;
+		this.foodNote = foodNote;
+		this.orderNote = orderNote;
 	}
+
+
 
 
 	public Integer getOrderId() {
@@ -81,12 +98,12 @@ public class PendingOrder implements Serializable{
 
 
 	public String getProductName() {
-		return ProductName;
+		return productName;
 	}
 
 
-	public void setProductName(String ProductName) {
-		this.ProductName = ProductName;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 
@@ -130,7 +147,39 @@ public class PendingOrder implements Serializable{
 	}
 
 
+	public String getLabelName() {
+		return labelName;
+	}
+
+
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
+	}
+
+
+	public String getFoodNote() {
+		return foodNote;
+	}
+
+
+	public void setFoodNote(String foodNote) {
+		this.foodNote = foodNote;
+	}
+
+
+	public String getOrderNote() {
+		return orderNote;
+	}
+
+
+	public void setOrderNote(String orderNote) {
+		this.orderNote = orderNote;
+	}
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+
 }

@@ -12,21 +12,23 @@ import com.ispan.eeit69.service.PendingOrderService;
 @Service
 public class PendingOrderServiceImpl implements PendingOrderService {
 
-	@Autowired
-	PendingOrderRepository PendingOrder;
-	
-	
-	@Override
+    @Autowired
+    PendingOrderRepository pendingOrderRepository;
+
+    @Override
 	public List<PendingOrder> findAll() {
 		
-		return PendingOrder.findAll();
+		return pendingOrderRepository.findAll();
 	}
-	
-	@Override
-	public void deleteById(Integer orderNo) {
-		PendingOrder.deleteById(orderNo);		
-	}
-	
-	
 
+    @Override
+    public void deleteById(Integer orderNo) {
+        pendingOrderRepository.deleteById(orderNo);
+    }
+
+//    @Override
+//    public List<PendingOrderSummary> findOrderSummaryByOrderNo(Integer orderNo) {
+//        return pendingOrderRepository.findOrderSummaryByOrderNo(orderNo);
+//    }
 }
+
