@@ -7,6 +7,7 @@ import com.ispan.eeit69.repository.LabelRepository;
 import com.ispan.eeit69.repository.PendingOrderRepository;
 import com.ispan.eeit69.repository.ProductRepository;
 import com.ispan.eeit69.service.OrderService;
+import com.ispan.eeit69.utils.OrderDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,13 +30,11 @@ public class OrderServiceImpl implements OrderService {
     private LabelRepository labelRepository;
 
     private Integer cachedOrderNo; // 暫存OrderNo
-    private BigDecimal cachedOrderPrice; // 暫存OrderPrice
 
     @Override
-    public Integer updateOrderPriceAndReturnOrderNo(List<Map<String, Object>> orderItems) {
-        // 清空缓存的OrderNo和OrderPrice
+    public OrderDto updateOrderPriceAndReturnOrderNo(List<Map<String, Object>> orderItems) {
+        // 清空缓存的OrderNo
         cachedOrderNo = null;
-        cachedOrderPrice = BigDecimal.ZERO; // 初始化为零
 
         Integer updatedOrderNo = null;
 
@@ -53,13 +52,10 @@ public class OrderServiceImpl implements OrderService {
             Label label = labelRepository.findById(labelId).orElse(null);
 
             if (product != null && label != null) {
-                // 计算totalPrice
+                // 計算totalPrice
                 BigDecimal productPrice = product.getProductPrice();
                 BigDecimal labelPrice = label.getLabelPrice();
                 BigDecimal totalPrice = (productPrice.add(labelPrice)).multiply(new BigDecimal(foodQuantity));
-
-                // 将当前订单项的totalPrice添加到缓存的OrderPrice中
-                cachedOrderPrice = cachedOrderPrice.add(totalPrice);
 
                 if (cachedOrderNo == null) {
                     // 如果缓存中没有OrderNo，查询数据库获取最后一个OrderNo
@@ -70,41 +66,27 @@ public class OrderServiceImpl implements OrderService {
                         cachedOrderNo = lastOrderNo + 1;
                     }
                 }
-                // 创建PendingOrder对象
+                // 創建PendingOrder對象
                 PendingOrder pendingOrder = new PendingOrder();
-                pendingOrder.setOrderNo(cachedOrderNo);
+                pendingOrder.setOrderNo(cachedOrderNo); // 设置OrderNo
                 pendingOrder.setDiningLocation(diningLocation);
                 pendingOrder.setProductName(product.getProductName());
                 pendingOrder.setCategoryName(product.getCategory().getCategoryName());
                 pendingOrder.setFoodQuantity(foodQuantity);
-                pendingOrder.setOrderPrice(cachedOrderPrice.intValue()); // 使用缓存的OrderPrice
+                pendingOrder.setOrderPrice(totalPrice.intValue()); // 使用每個訂單項目的totalPrice
                 pendingOrder.setCreated_at(new Timestamp(System.currentTimeMillis()));
                 pendingOrder.setLabelName(label.getLabelName());
                 pendingOrder.setFoodNote(foodNote);
                 pendingOrder.setOrderNote(orderNote);
-
-                // 保存订单
+                // 保存訂單
                 pendingOrderRepository.save(pendingOrder);
                 if (updatedOrderNo == null) {
                     updatedOrderNo = cachedOrderNo;
                 }
             }
-        }// 在订单项迭代结束后，将累计的totalPrice设置为订单的OrderPrice
-       
-        if (cachedOrderNo != null) {
-            PendingOrder pendingOrder = new PendingOrder();
-            pendingOrder.setOrderNo(cachedOrderNo);
-            pendingOrder.setOrderPrice(cachedOrderPrice.intValue()); // 使用缓存的OrderPrice
-
-            // 更新订单的OrderPrice
-            pendingOrderRepository.updateOrderPrice(cachedOrderNo, cachedOrderPrice.intValue());
-
-            if (updatedOrderNo == null) {
-                updatedOrderNo = cachedOrderNo;
-            }
         }
-
-        System.out.println(updatedOrderNo);
-        return updatedOrderNo;
+        OrderDto orderDto = new OrderDto(updatedOrderNo);
+        System.out.print(orderDto);
+        return orderDto;
     }
 }

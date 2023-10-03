@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ispan.eeit69.service.EcpayOrderService;
 import com.ispan.eeit69.service.OrderService;
+import com.ispan.eeit69.utils.OrderDto;
 
 @Controller
 public class EcpayOrderController {
@@ -26,10 +27,10 @@ public class EcpayOrderController {
 	@ResponseBody
 	public String ecpayCheckout(@RequestBody List<Map<String, Object>> orderItems) {
 		
-		Integer updatedOrderNo = orderService.updateOrderPriceAndReturnOrderNo(orderItems);
+		OrderDto updatedOrderNo = orderService.updateOrderPriceAndReturnOrderNo(orderItems);
 		
 		String aioCheckOutALLForm = ecpayOrderService.ecpayCheckout(updatedOrderNo);
-		// 将支付表单字符串添加到模型中
+		// 將支付表單字符串添加到模型中
 //        System.out.println("Payment Form: " + aioCheckOutALLForm);
 //        Model.addAttribute("aioCheckOutALLForm", aioCheckOutALLForm);
 

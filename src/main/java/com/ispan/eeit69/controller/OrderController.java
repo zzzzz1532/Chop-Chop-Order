@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ispan.eeit69.service.OrderService;
+import com.ispan.eeit69.utils.OrderDto;
 
 import java.util.List;
 import java.util.Map;
@@ -17,8 +18,8 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/processOrder")
-    public Integer processOrder(@RequestBody List<Map<String, Object>> orderItems) {
-        Integer updatedOrderNo = orderService.updateOrderPriceAndReturnOrderNo(orderItems);
-        return updatedOrderNo;
+    public OrderDto processOrder(@RequestBody List<Map<String, Object>> orderItems) {
+        OrderDto orderDto = orderService.updateOrderPriceAndReturnOrderNo(orderItems);
+        return orderDto;
     }
 }
