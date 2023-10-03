@@ -1,6 +1,7 @@
 package com.ispan.eeit69.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -16,7 +17,9 @@ public interface PendingOrderRepository extends JpaRepository<PendingOrder, Inte
     String findDiningLocation(@Param("updatedOrderNo")Integer updatedOrderNo);
     @Query("SELECT p.orderPrice FROM PendingOrder p WHERE p.orderNo = :updatedOrderNo")
     Integer findOrderPrice(@Param("updatedOrderNo")Integer updatedOrderNo);
-
 	// 添加判斷訂單是否存在的方法
 	boolean existsByOrderNo(Integer orderNo);
+	@Modifying
+    @Query("UPDATE PendingOrder p SET p.orderPrice = :orderPrice WHERE p.orderNo = :orderNo")
+    void updateOrderPrice(@Param("orderNo") Integer orderNo, @Param("orderPrice") Integer orderPrice);
 }
