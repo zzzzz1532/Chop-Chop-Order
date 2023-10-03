@@ -28,9 +28,9 @@ public class FindPendingOrderController {
 		return "showPendingOrders";
 	}
 	
-	@GetMapping("/wspo")
+	@GetMapping("/kitchenDisplaySystem")
 	public String pendingOrdersWS() {
-		return "websocketPO";
+		return "kitchenDisplaySystem";
 	}
 	
 

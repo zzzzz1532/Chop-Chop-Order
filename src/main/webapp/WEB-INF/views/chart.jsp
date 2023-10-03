@@ -3,12 +3,15 @@
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
-<html lang="zh">
+<html>
 
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>報表分析</title>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<link rel="stylesheet" href="./css/back-end.css">
+<script type="text/javascript" src="/js/back-end.js"></script>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -17,16 +20,19 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
 	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-<script type="text/javascript" src="/js/back-end.js"></script>
-<link rel="stylesheet" href="./css/back-end.css">
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
 
 <style>
 #dataRange {
 	padding-top: 10%;
 }
+
+
 
 table {
 	table-layout: fixed;
@@ -140,47 +146,42 @@ td {
 	display: block;
 }
 
-/* .right-form {
-            float: right;
-        }
 
-        .left-form {
-            float: left;
-        } */
 </style>
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+
 
 </head>
 
 
 
 <body>
-	<header>
-		<div class="openButton"></div>
-		<h1>店家基本資料</h1>
-		<ul class="menuBox">
-			<div class="menu-top">
-				<div class="closeButton"></div>
-			</div>
-			<li><a class="click1" href="#">第一層</a> <!-- 看自已要不要加 --> <!-- <ul>     
+	 <header>
+        <div class="openButton"></div>
+        <h1>報表分析系統</h1>
+        <ul class="menuBox" style=" padding-left: 0 ;">
+            <div class="menu-top">
+                <div class="closeButton"></div>
+            </div>
+            <li>
+                <a class="click1" href="/kitchenDisplaySystem">廚房刊版系統</a>
+                <!-- 看自已要不要加 -->
+                <!-- <ul>     
                         <li><a href="#">第二層</a></li>
                         <li><a href="#">第二層</a></li>
                         <li><a href="#">第二層</a></li>
                     </ul> -->
-			<li><a class="click2" href="#">第一層</a>
-			<li><a class="click3" href="#">第一層</a>
-		</ul>
-	</header>
+            <li>
+                <a class="click2" href="#">第一層</a>
+            <li>
+                <a class="click3" href="#">第一層</a>
+        </ul>
+    </header>
 	<!-- 報表分析子容器 -->
 	<div class="container">
 		<!-- 選擇日期 -->
 	<div class="form-container">
-			<div id="defaultButton">
+			<div id="defaultButton" class="btn-group btn-group-md">
 			<button class="btn btn-primary" id="todayButton"
 				data-date-range="today" data-url="/todayData">今天</button>
 			<button class="btn btn-primary" id="weekButton"
@@ -200,7 +201,7 @@ td {
 		<hr class="my-4">
 		<span style="color: #1c7288cc; font-size: medium;">報表數據每 90 分鐘更新一次</span>
 		<!-- 營業額訂單欄 -->
-		<table style="width: 100%; border-collapse: collapse;">
+		<table  style="width: 100%; border-collapse: collapse;">
 			<tr>
 				<th>營業額</th>
 				<th>訂單量</th>
@@ -214,7 +215,7 @@ td {
 		<hr class="my-4">
 
 		<!-- 營業額 & 訂單分析圖 -->
-		<table style="width: 100%; border-collapse: collapse;">
+		<table  style="width: 100%; border-collapse: collapse;">
 			<tr>
 				<th>營業額 & 訂單分析圖</th>
 			</tr>
@@ -229,7 +230,7 @@ td {
 		<hr class="my-4">
 
 		<!-- 外帶內用 & 類別銷量 -->
-		<table style="width: 100%; border-collapse: collapse;">
+		<table  style="width: 100%; border-collapse: collapse;">
 			<tr>
 				<th>外帶內用比例</th>
 				<th>類別銷量</th>
@@ -250,7 +251,7 @@ td {
 
 		<hr class="my-4">
 		<!-- 熱賣餐點排行欄 -->
-		<table style="width: 100%; border-collapse: collapse;">
+		<table  style="width: 100%; border-collapse: collapse;">
 			<tr>
 				<th>熱賣餐點排行</th>
 			</tr>
@@ -281,7 +282,7 @@ td {
             var endDate = $("#endDate").val();
             currentUrl = "/customData"
             requestData("/customData", startDate, endDate);
-        console.log("TESTING");
+        
         });
         
         

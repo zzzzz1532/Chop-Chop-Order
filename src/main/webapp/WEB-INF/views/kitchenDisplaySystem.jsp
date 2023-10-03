@@ -9,45 +9,93 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>刊版系統</title>
-    <style>
- 		body { 
- 			font-family: Arial, sans-serif; 
- 			margin: 0; 
- 			padding: 0; 
-			background-color: #f4f4f4; 
- 		} 
-		
- 		.container { 
- 			max-width: 800px; 
- 			margin: auto; 
-			padding: 20px; 
-			background-color: white; 
- 			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
- 			border-radius: 5px; 
- 			margin-top: 20px; 
- 		} 
-		
-		table { 
-			width: 100%; 
- 			border-collapse: collapse; 
-		} 
-		
- 		th, td { 
- 			padding: 10px; 
- 			text-align: center; 
- 			border-bottom: 1px solid #ddd; 
- 		} 
-		
- 		th { 
-			background-color: #f4f4f4; 
- 		} 
-		
-	</style>
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	
+    <script type="text/javascript" src="./js/back-end.js"></script>
+	<link rel="stylesheet" href="./css/back-end.css">
+	<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+   <style>
+
+
+table {
+	table-layout: fixed;
+	text-align: center;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th {
+	font-size: 36px;
+	background-color: #f4f4f4;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+td {
+	font-size: 20px;
+	padding-top: 2%;
+}
+
+
+
+.container {
+	max-width: 1300px;
+	margin: auto;
+	padding: 20px;
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	margin-top: 100px;
+	z-index: 0;
+}
+
+
+
+.form-container {
+	display: flex;
+	align-items: flex-end;
+}
+
+
+</style>
 	
-	<script>
+	
+	
+</head>
+<body>
+	<header>
+        <div class="openButton"></div>
+        <h1>廚房刊版系統</h1>
+        <ul class="menuBox" style=" padding-left: 0 ;">
+            <div class="menu-top">
+                <div class="closeButton"></div>
+            </div>
+            <li>
+                <a class="click1" href="./chart">報表分析</a>
+                <!-- 看自已要不要加 -->
+                <!-- <ul>     
+                        <li><a href="#">第二層</a></li>
+                        <li><a href="#">第二層</a></li>
+                        <li><a href="#">第二層</a></li>
+                    </ul> -->
+            <li>
+                <a class="click2" href="#">第一層</a>
+            <li>
+                <a class="click3" href="#">第一層</a>
+        </ul>
+    </header>
+	<div class="container" id='somedivS'>
+	</div>
+<script>
 	window.onload = function() {
 	var stompClient = null;
 	console.log("WORKING....")
@@ -61,7 +109,6 @@
 	        	var orders = JSON.parse(data.body);
 	            console.log('Received Data TEST 2:', orders);
 	            var content = "<table>";
-				content += "<tr><th colspan='7'>刊版系統</th></tr>";
 				content += "<tr ><th>單號</th><th>內用外帶</th>"
 						+ "<th>品名</th><th>數量</th>"
 						+ "<th>接單時間</th></tr>";
@@ -99,11 +146,5 @@
 	connect();
 	}	
 	</script>
-</head>
-<body>
-
-	<div class="container" id='somedivS'>
-	</div>
-
 </body>
 </html>
