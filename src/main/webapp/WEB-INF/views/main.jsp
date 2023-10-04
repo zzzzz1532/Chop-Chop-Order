@@ -1,4 +1,5 @@
-  <%@ page import="java.util.HashSet"%>
+
+<%@ page import="java.util.HashSet"%>
 <%@ page import="java.util.Set"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -69,8 +70,6 @@ html, body {
 	font-size: 15px;
 	z-index: 1000;
 }
-
-
 
 .footersticky {
 	position: -webkit-sticky;
@@ -171,9 +170,9 @@ a.button-like:active {
 						</div>
 					</div>
 					<div class="divsticky">
-					<!-- 頂部錨點標籤 -->
-					<!-- Foreach Product列表，經由Product查詢Category資料表中的CategoryName欄位 -->
-					<!-- 查詢後剃除重複項寫入標籤和超連結 -->
+						<!-- 頂部錨點標籤 -->
+						<!-- Foreach Product列表，經由Product查詢Category資料表中的CategoryName欄位 -->
+						<!-- 查詢後剃除重複項寫入標籤和超連結 -->
 						<c:set var="previousCategory" value="" />
 						<c:forEach items="${products}" var="product" varStatus="loop">
 							<c:if
@@ -187,8 +186,11 @@ a.button-like:active {
 						</c:forEach>
 					</div>
 					<div class="cardbody">
-					<!-- 查詢product中的categoryid(串接category查詢categoryname) productname picture productprice 剔除重複的categoryname-->
+						<!-- 查詢product中的categoryid(串接category查詢categoryname) productname picture productprice 剔除重複的categoryname-->
 						<c:set var="previousCategory" value="" />
+<!-- 						<div id="productName"></div> -->
+<!-- 						<div id="productPrice"></div> -->
+<!-- 						<img id="productImage" src="" alt="Product Image"> -->
 						<c:forEach items="${products}" var="product">
 							<c:if
 								test="${!product.category.categoryName.equals(previousCategory)}">
@@ -198,8 +200,9 @@ a.button-like:active {
 							</c:if>
 							<div class="productitem">
 								<div style="display: flex; align-items: center;">
-<!-- 								功能上線時將data:image/jpg;base64,刪除 -->
-									<img width='150' height='100' src='data:image/jpg;base64,${product.dataUri}'>
+									<!-- 								功能上線時將data:image/jpg;base64,刪除 -->
+									<img width='150' height='100'
+										src='data:image/jpg;base64,${product.dataUri}'>
 									<div style="margin-left: 10px;">
 										<h6>${product.productName}</h6>
 										<div>
@@ -265,6 +268,46 @@ a.button-like:active {
         // 關閉彈出窗口
         orderChoiceModal.style.display = 'none';
     });
+</script>
+
+	<script>
+	var historyOrderItem = localStorage.getItem('historyOrderItem');
+
+	if (historyOrderItem) {
+	    // 继续处理 historyOrderItem
+	} else {
+	    console.log("historyOrderItem is not defined in localStorage.");
+	}
+
+	
+	if (Array.isArray(historyOrderItem)) {
+		historyOrderItem.forEach(function(order) {
+	        if (order.productId) {
+	            // 向後端發送請求以獲取產品信息
+	            $.ajax({
+	                type: "GET",
+	                url: "/getProductInfo", 
+	                data: { productId: order.productId }, // 使用正确的属性名
+	                success: function(response) {
+	                	$("#productName").text(response.productName);
+	                	$("#productPrice").text(response.productPrice);
+	                	$("#productImage").attr("src", response.picture);
+
+	                	// 在控制台输出实际获取的值
+	                	console.log("Product Name: " + response.productName);
+	                	console.log("Product Price: " + response.productPrice);
+	                	console.log("Product Image URL: " + response.picture);
+	                },
+	                error: function() {
+	                    // 处理错误情况
+	                    console.log("Failed to fetch product information.");
+	                }
+	            });
+	        }
+	    });
+	}
+
+
 </script>
 
 </body>
