@@ -114,29 +114,4 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> searchProducts(String keyword) {
         return productRepository.findByKeywordContaining(keyword);
     }
-    
-//    @Override
-//    public List<Product> searchProducts(String keyword) {
-//        // 假資料示範，可以根據需要修改
-//        List<Product> fakeResults = new ArrayList<>();
-//        
-//        // 假資料 #1
-//        Product product1 = new Product();
-//        product1.setProductId("A001");
-//        product1.setProductName("Product 1");
-//        // 其他屬性設定...
-//
-//        // 假資料 #2
-//        Product product2 = new Product();
-//        product2.setProductId("A002");
-//        product2.setProductName("Product 2");
-//        // 其他屬性設定...
-//
-//        // 將假資料加入到列表中
-//        fakeResults.add(product1);
-//        fakeResults.add(product2);
-//
-//        return fakeResults;
-//    }
-
 }

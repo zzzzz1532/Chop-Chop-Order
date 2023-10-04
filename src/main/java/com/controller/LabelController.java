@@ -68,11 +68,11 @@ public class LabelController extends AbstractController{
 			log.warn("/labelsdjpa, -------------------------------------");
 			return "Label_insert";
 		}
-		if (labelService.existsByLabelId(label)) {
-			log.warn("/categorysdjpa, 提供的標籤編號已存在: " + label.getLabelId());
-			result.rejectValue("labelId", "label.labelId.exist.error", "標籤編號已存在，請更換新的標籤編號");
-			return "Label_insert";
-		}	
+//		if (labelService.existsByLabelId(label)) {
+//			log.warn("/categorysdjpa, 提供的標籤編號已存在: " + label.getLabelId());
+//			result.rejectValue("labelId", "label.labelId.exist.error", "標籤編號已存在，請更換新的標籤編號");
+//			return "Label_insert";
+//		}	
 		labelService.save(label);
 		
 		ra.addFlashAttribute("message", "<font color='blue'>資料新增成功</font>");

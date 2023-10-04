@@ -1,3 +1,4 @@
+
 package com.controller;
 	
 import java.io.File;
@@ -59,7 +60,7 @@ public class ProductController extends AbstractController{
 	public String findAll(@RequestParam(name = "page", defaultValue = "0") int page,Model model) {
 		List<Product>  products = productService.findAll();
 		model.addAttribute(products);   // 使用預設的識別字串 "employeeList"
-	    int pageSize = 5; // 每頁顯示的商品數量
+	    int pageSize = 8; // 每頁顯示的商品數量
 	    Page<Product> productPage = productService.findAll(PageRequest.of(page, pageSize));
 	    List<Product> nonEmptyProducts = productService.getNonEmptyProducts(products);
 	    model.addAttribute("productPage", productPage);

@@ -39,7 +39,7 @@ public class Product implements Serializable {
     
     /** 商品圖片 (3) */
     @JsonIgnore
-    private Clob picture;    
+    private Clob picture;
     @Transient
     private String image;
     @Transient

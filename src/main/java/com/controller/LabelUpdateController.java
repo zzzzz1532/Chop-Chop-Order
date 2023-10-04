@@ -64,17 +64,17 @@ public class LabelUpdateController extends AbstractController{
 			return "Label_update";
 		}
 		// 如果修改員工編號，需要檢查修改後的員工編號是否已經存在
-		if  (!previous_labelId.equals(label.getLabelId()) ) {
-			log.warn("/labelsdjpa, 使用者修改了標籤編號，原來標籤編號: " + previous_labelId + ", 新的標籤編號: " + label.getLabelId());
-			// employeeService.existsByEmployeeId(employee)需要先檢查 employee 物件是否為 
-			// persistent  entity。如果是，要先移除(detach)它，因為JPA在執行 JPQL (對應 HQL)
-			// 前會先進行 entityManager.flush(), 此舉會將含有重複的employeeId寫入表格中而造成錯誤
-			if (labelService.existsByLabelId(label)) {
-				log.warn("/labelsdjpa, 新的標籤編號已經存在，系統不接受");	
-				result.rejectValue("labelId", "label.labelId.exist.error", "標籤編號已存在，請更換新標籤編號");
-				return "Label_update";
-			}
-		}		
+//		if  (!previous_labelId.equals(label.getLabelId()) ) {
+//			log.warn("/labelsdjpa, 使用者修改了標籤編號，原來標籤編號: " + previous_labelId + ", 新的標籤編號: " + label.getLabelId());
+//			// employeeService.existsByEmployeeId(employee)需要先檢查 employee 物件是否為 
+//			// persistent  entity。如果是，要先移除(detach)它，因為JPA在執行 JPQL (對應 HQL)
+//			// 前會先進行 entityManager.flush(), 此舉會將含有重複的employeeId寫入表格中而造成錯誤
+//			if (labelService.existsByLabelId(label)) {
+//				log.warn("/labelsdjpa, 新的標籤編號已經存在，系統不接受");	
+//				result.rejectValue("labelId", "label.labelId.exist.error", "標籤編號已存在，請更換新標籤編號");
+//				return "Label_update";
+//			}
+//		}		
 		labelService.update(label);
 		ra.addFlashAttribute("message", "<font color='blue'>資料修改成功</font>");
 		return "redirect:/label";

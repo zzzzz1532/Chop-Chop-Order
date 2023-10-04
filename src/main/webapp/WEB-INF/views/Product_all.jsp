@@ -31,8 +31,8 @@
 		}		
 		fieldset {
 			font-weight: bold;
-			color: black;
-			background-color: #ffffcc;
+/* 			color: black; */
+/* 			background-color: #ffffcc; */
 			border: 1px solid #cccccc;
 			padding: 4px 2px;
 	</style>
@@ -120,7 +120,7 @@
 		<div class="row align-items-end">
 		    <div class="col-lg-4">
 		        <label for="searchKeyword" class="form-label">搜尋商品：</label>
-		        <form autocomplete="off">
+		        <form>
 		        	<input type="text" class="form-control" id="searchKeyword" placeholder="輸入商品編號、商品名稱、類別名稱">
 		        </form>		        
 		    </div>
@@ -165,11 +165,11 @@
 	                    <td>${product.productName}</td>
 	                    <td><img width='150' height='100' src='${product.dataUri}'></td>
 	                    <td>${product.category.categoryName}</td>
-	                    <td>${product.productDescription}</td>
+	                    <td style="width: 200px;">${product.productDescription}</td>
 	                    <td>${product.productPortion}</td>
 	                    <td>${product.productPrice}</td>
 	                    <td>${product.productStock}</td>
-	                    <td>${product.created_at}</td>
+	                    <td style="width: 150px;">${product.created_at}</td>
 	                    <td>
 	                        <c:choose>
 	                            <c:when test="${empty product.labels}">無</c:when>
