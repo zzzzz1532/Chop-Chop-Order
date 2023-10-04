@@ -17,7 +17,7 @@ public class OrderDto {
 	@Override
     public String toString() {
         return "OrderDto{" +
-                "orderNo=" + orderNo +
+                 + orderNo +
                 '}';
     }
 

@@ -112,7 +112,7 @@ html, body {
 					<div>感謝您的訂購，以下是您的單號</div>
 					<div style="margin: 20px; font-size: 48px;">
 						<span>${diningLocation}</span> &nbsp; <span>${updatedOrderNo}</span>
-						&nbsp; <span>總金額:${orderPrice}</span>
+						<br> <span>總金額:${orderPrice}</span>
 						<div>祝您用餐愉快！</div>
 					</div>
 				</div>

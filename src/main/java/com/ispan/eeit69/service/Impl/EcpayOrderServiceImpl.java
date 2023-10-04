@@ -20,10 +20,10 @@ public class EcpayOrderServiceImpl implements EcpayOrderService {
 
     @Override
     public String ecpayCheckout(OrderDto orderDto) {
-        // 直接从OrderDto中获取所需的值
+        // 從OrderDto中獲取所需的值
         Integer updatedOrderNo = orderDto.getOrderNo();
 
-        // 继续处理其他逻辑
+        // 繼續處理其他邏輯
         String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
 
         AllInOne all = new AllInOne("");
@@ -44,6 +44,6 @@ public class EcpayOrderServiceImpl implements EcpayOrderService {
         obj.setClientBackURL("http://localhost:8080/final?updatedOrderNo=" + updatedOrderNo);
         String form = all.aioCheckOut(obj, null);
 
-        return form; // 返回HTML表单字符串
+        return form; // 返回HTML表單字符串
     }
 }
