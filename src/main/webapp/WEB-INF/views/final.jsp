@@ -86,11 +86,30 @@ html, body {
 </style>
 </head>
 <script>
-	$(document).ready(function() {
-		$('.footer1').click(function() {
-			window.location.href = '/main';
-		});
-	});
+$(document).ready(function() {
+    // 获取更新后的订单号
+    var updatedOrderNo = "${updatedOrderNo}";
+    
+    // 如果存在更新后的订单号
+    if (updatedOrderNo) {
+        // 从 localStorage 中获取 OrderItem 数据
+        var orderItem = localStorage.getItem("orderItem");
+        
+        // 如果订单数据存在
+        if (orderItem) {
+            // 将 OrderItem 重新命名为 HistoryOrderItem
+            localStorage.setItem("historyOrderItem", orderItem);
+            
+            // 删除原始的 OrderItem
+            localStorage.removeItem("orderItem");
+        }
+    }
+    
+    // 绑定点击事件，跳转回首页
+    $('.footer1').click(function() {
+        window.location.href = '/main';
+    });
+});
 </script>
 
 <body>
