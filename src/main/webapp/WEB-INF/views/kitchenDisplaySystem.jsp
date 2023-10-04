@@ -74,7 +74,7 @@ td {
 <body>
 	<header>
         <div class="openButton"></div>
-        <h1>廚房刊版系統</h1>
+        <h1>廚房看版系統</h1>
         <ul class="menuBox" style=" padding-left: 0 ;">
             <div class="menu-top">
                 <div class="closeButton"></div>
@@ -110,27 +110,36 @@ td {
 	            console.log('Received Data TEST 2:', orders);
 	            var content = "<table>";
 				content += "<tr ><th>單號</th><th>內用外帶</th>"
-						+ "<th>品名</th><th>數量</th>"
+						+ "<th>品名</th><th>客製化</th><th>產品備註</th><th>數量</th>"
 						+ "<th>接單時間</th></tr>";
 				for (var i = 0; i < orders.length; i++) {
-
-					content += "<tr>"
-							+ "<td>"
-							+ orders[i].orderNo
-							+ "</td>"
-							+ "<td>"
-							+ orders[i].diningLocation
-							+ "</td>"
-							+ "<td>"
-							+ orders[i].productName
-							+ "</td>"
-							+ "<td>"
-							+ orders[i].foodQuantity
-							+ "</td>"
-							+ "<td>"
-							+ orders[i].created_at
-							+ "</td>"
-							+ "</tr>";
+					orders[i].labelName = orders[i].labelName || "無";
+					orders[i].foodNote = orders[i].foodNote || "無";
+					
+						content += "<tr>"
+								+ "<td>"
+								+ orders[i].orderNo
+								+ "</td>"
+								+ "<td>"
+								+ orders[i].diningLocation
+								+ "</td>"
+								+ "<td>"
+								+ orders[i].productName
+								+ "</td>"
+								+ "<td>"
+								+ orders[i].labelName
+								+ "</td>"
+								+ "<td>"
+								+ orders[i].foodNote
+								+ "</td>"
+								+ "<td>"
+								+ orders[i].foodQuantity
+								+ "</td>"
+								+ "<td>"
+								+ orders[i].created_at
+								+ "</td>"
+								+ "</tr>";
+					
 				}
 				content += "</table>";
 				var divs = document.getElementById("somedivS");
