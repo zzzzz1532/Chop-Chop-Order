@@ -13,7 +13,7 @@ public interface PendingOrderRepository extends JpaRepository<PendingOrder, Inte
 	Integer findLastOrderNo();
 	@Query("SELECT p FROM PendingOrder p WHERE p.orderNo = :updatedOrderNo")
 	List<PendingOrder> findByOrderNo(@Param("updatedOrderNo")Integer updatedOrderNo);
-    @Query("SELECT MAX(p.orderPrice) FROM PendingOrder p WHERE p.orderNo = :updatedOrderNo")
+    @Query("SELECT MAX(p.diningLocation) FROM PendingOrder p WHERE p.orderNo = :updatedOrderNo")
     String findDiningLocation(@Param("updatedOrderNo")Integer updatedOrderNo);
     @Query("SELECT SUM(p.orderPrice) FROM PendingOrder p WHERE p.orderNo = :updatedOrderNo")
     Integer findOrderPrice(@Param("updatedOrderNo")Integer updatedOrderNo);

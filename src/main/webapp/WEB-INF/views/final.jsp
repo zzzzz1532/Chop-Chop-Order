@@ -94,7 +94,7 @@ html, body {
 </script>
 
 <body>
-<h2 id="orderNoPlaceholder"></h2>
+	<h2 id="orderNoPlaceholder"></h2>
 
 	<div class="container">
 		<div class="row">
@@ -111,11 +111,9 @@ html, body {
 				<div class="orderinfo">
 					<div>感謝您的訂購，以下是您的單號</div>
 					<div style="margin: 20px; font-size: 48px;">
-						<span>${diningLocation}</span>
-						&nbsp;
-                        <span>${updatedOrderNo}</span>
-                        &nbsp;
-                        <span>${orderPrice}</span>
+						<span>${diningLocation}</span> &nbsp; <span>${updatedOrderNo}</span>
+						&nbsp; <span>總金額:${orderPrice}</span>
+						<div>祝您用餐愉快！</div>
 					</div>
 				</div>
 				<div class="footer1 footersticky">
@@ -138,7 +136,7 @@ html, body {
 		<script src="https://kit.fontawesome.com/ed6fd4cc97.js"
 			crossorigin="anonymous"></script>
 		<script>
-		
+			
 		</script>
 </body>
 

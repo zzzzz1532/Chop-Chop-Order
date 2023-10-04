@@ -22,6 +22,8 @@ public class FinalController {
 			Integer orderPrice = pendingOrderService.findOrderPrice(updatedOrderNo);
 
 			// 將訂單詳細資料添加到模型中，以便在 JSP 頁面中使用
+		    model.addAttribute("updatedOrderNo", updatedOrderNo);
+
 			model.addAttribute("diningLocation", diningLocation);
 			model.addAttribute("orderPrice", orderPrice);
 		}
