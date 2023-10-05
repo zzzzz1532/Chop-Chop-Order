@@ -50,16 +50,16 @@ public class SystemService {
 	        throw new IllegalStateException("could not read file " + file, e);
 	    }
 	}
-	public static Integer stringToInteger(String input, Integer defaultValue) {
-	    try {
-	        return Integer.parseInt(input);
-	    } catch (NumberFormatException e) {
-	        // 轉換失敗，返回默認值或拋出異常
-	        if (defaultValue != null) {
-	            return defaultValue;
-	        } else {
-	            throw new IllegalArgumentException("無法將字符串轉換為整數：" + input);
-	        }
-	    }
-	}	
+//	public static Integer stringToInteger(String input, Integer defaultValue) {
+//	    try {
+//	        return Integer.parseInt(input);
+//	    } catch (NumberFormatException e) {
+//	        // 轉換失敗，返回默認值或拋出異常
+//	        if (defaultValue != null) {
+//	            return defaultValue;
+//	        } else {
+//	            throw new IllegalArgumentException("無法將字符串轉換為整數：" + input);
+//	        }
+//	    }
+//	}	
 }

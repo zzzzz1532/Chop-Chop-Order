@@ -16,22 +16,21 @@ public class FindPendingOrderController {
 	@Autowired
 	PendingOrderService pendingOrderService;
 
-	// 查詢所有暫存訂單 - RESTful 風格
-	@GetMapping("/pendingOrder")
-	public @ResponseBody List<PendingOrder> findAllpendingOrder() {
-		return pendingOrderService.findAll();
-	}
-
-	
-	@GetMapping("/showPendingOrders")
-	public String pendingOrders() {
-		return "showPendingOrders";
-	}
-	
+	//WebSocket Version
 	@GetMapping("/kitchenDisplaySystem")
 	public String pendingOrdersWS() {
 		return "kitchenDisplaySystem";
 	}
 	
-
+//	// 查詢所有暫存訂單
+//	@GetMapping("/pendingOrder")
+//	public @ResponseBody List<PendingOrder> findAllpendingOrder() {
+//		return pendingOrderService.findAll();
+//	}
+//
+//	//AJAX Version
+//	@GetMapping("/showPendingOrders")
+//	public String pendingOrders() {
+//		return "showPendingOrders";
+//	}
 }

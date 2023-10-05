@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!-- 抄憲春+薏仁表格 -->
+<!-- KDS AJAX Version -->
 <!DOCTYPE html>
 <html>
 <head>
