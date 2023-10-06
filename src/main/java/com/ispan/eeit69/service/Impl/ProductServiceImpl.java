@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ispan.eeit69.model.Category;
+import com.ispan.eeit69.model.Label;
 import com.ispan.eeit69.model.Product;
 import com.ispan.eeit69.repository.CategoryRepository;
 import com.ispan.eeit69.repository.ProductRepository;
@@ -15,7 +16,9 @@ import java.math.BigDecimal;
 import java.sql.Clob;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -104,5 +107,19 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
     }
+    
+    public Set<Label> getLabelsByProductId(String productId) {
+    	Product product = productRepository.findByProductId(productId);
+
+    	if (product != null) {
+            return product.getLabels();
+        }
+
+        return Collections.emptySet();
+    }
+    public List<Category> getAllCategory() {
+        return categoryRepository.findAll();
+    }
+    
 }
 
