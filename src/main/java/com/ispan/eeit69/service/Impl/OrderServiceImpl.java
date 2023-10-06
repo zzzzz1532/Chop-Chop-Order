@@ -38,14 +38,14 @@ public class OrderServiceImpl implements OrderService {
     	
     	for (Map<String, Object> orderItem : orderItems) {
             // 提取其他属性的值，如 productId、foodQuantity、diningLocation 等
-            Integer productId = (Integer) orderItem.get("productId");
+            String productId = (String) orderItem.get("productId");
             Integer foodQuantity = (Integer) orderItem.get("foodQuantity");
             String diningLocation = (String) orderItem.get("diningLocation");
             String foodNote = (String) orderItem.get("foodNote");
             String orderNote = (String) orderItem.get("orderNote");
 
             // 提取 labelId 的值，如果是数组则转换为 List
-            Object labelIdObj = orderItem.get("labelId");
+            Object labelIdObj = orderItem.get("Id");
             List<Integer> labelIds = new ArrayList<>();
 
             if (labelIdObj instanceof Integer) {
@@ -73,16 +73,16 @@ public class OrderServiceImpl implements OrderService {
         return new OrderDto(cachedOrderNo);
     }
 
-    private boolean validateData(Integer productId, List<Integer> labelIds) {
+    private boolean validateData(String productId, List<Integer> labelIds) {
         // 在这里进行产品和标签的验证逻辑，检查它们是否存在于数据库中
-        Product product = productRepository.findById(productId).orElse(null);
+        Product product = productRepository.findByProductId(productId);
         if (product == null) {
             // 产品不存在于数据库中，返回 false 表示验证失败
             return false;
         }
 
         for (Integer labelId : labelIds) {
-            Label label = labelRepository.findById(labelId).orElse(null);
+        	Label label = labelRepository.findById(labelId).orElse(null);
             if (label == null) {
                 // 标签不存在于数据库中，返回 false 表示验证失败
                 return false;
@@ -107,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private BigDecimal calculateTotalPrice(Integer productId, List<Integer> labelIds, Integer foodQuantity) {
+    private BigDecimal calculateTotalPrice(String productId, List<Integer> labelIds, Integer foodQuantity) {
         // 在这里进行总价计算的逻辑，包括产品价格和标签价格的计算
         BigDecimal totalPrice = BigDecimal.ZERO;
 
@@ -123,7 +123,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         // 计算产品价格
-        Product product = productRepository.findById(productId).orElse(null);
+        Product product = productRepository.findByProductId(productId);
 
         if (product != null) {
             BigDecimal productPrice = product.getProductPrice();
@@ -133,7 +133,7 @@ public class OrderServiceImpl implements OrderService {
         return totalPrice;
     }
 
-    private void createPendingOrder(Integer orderNo, String diningLocation, Integer productId, Integer foodQuantity,
+    private void createPendingOrder(Integer orderNo, String diningLocation, String productId, Integer foodQuantity,
             BigDecimal totalPrice, String foodNote, String orderNote, List<Integer> labelIds) {
         // 在这里创建 PendingOrder 对象并保存到数据库中
         PendingOrder pendingOrder = new PendingOrder();
@@ -141,7 +141,7 @@ public class OrderServiceImpl implements OrderService {
         pendingOrder.setDiningLocation(diningLocation);
 
         // 查询产品名称
-        Product product = productRepository.findById(productId).orElse(null);
+        Product product = productRepository.findByProductId(productId);
         if (product != null) {
             pendingOrder.setProductName(product.getProductName());
             pendingOrder.setCategoryName(product.getCategory().getCategoryName());
@@ -161,6 +161,8 @@ public class OrderServiceImpl implements OrderService {
         }
         String labelNamesStr = String.join(", ", labelNames);
         pendingOrder.setLabelName(labelNamesStr);
+        System.out.println(labelNamesStr);
+        System.out.println(labelNames);
 
         pendingOrder.setFoodNote(foodNote);
         pendingOrder.setOrderNote(orderNote);

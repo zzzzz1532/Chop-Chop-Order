@@ -202,7 +202,7 @@ a.button-like:active {
 								<div style="display: flex; align-items: center;">
 									<!-- 								功能上線時將data:image/jpg;base64,刪除 -->
 									<img width='150' height='100'
-										src='data:image/jpg;base64,${product.dataUri}'>
+										src= "${product.dataUri}">
 									<div style="margin-left: 10px;">
 										<h6>${product.productName}</h6>
 										<div>
