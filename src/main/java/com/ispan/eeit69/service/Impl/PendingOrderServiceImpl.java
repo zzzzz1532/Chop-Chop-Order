@@ -23,7 +23,9 @@ public class PendingOrderServiceImpl implements PendingOrderService {
 
     @Override
     public void deleteById(Integer orderNo) {
-        pendingOrderRepository.deleteById(orderNo);
+    	PendingOrder pendingOrder = pendingOrderRepository.findByOrderNo(orderNo);
+    	pendingOrderRepository.delete(pendingOrder);
+        
     }
 
 	@Override
