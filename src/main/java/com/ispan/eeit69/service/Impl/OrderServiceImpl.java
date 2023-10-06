@@ -34,69 +34,88 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto updateOrderPriceAndReturnOrderNo(List<Map<String, Object>> orderItems) {
-    	cachedOrderNo = null;
-    	
-    	for (Map<String, Object> orderData : orderItems) {
+        cachedOrderNo = null;
+
+        for (Map<String, Object> orderData : orderItems) {
             // 提取其他属性的值，如 productId、foodQuantity、diningLocation 等
-            String productId = (String) orderData.get("productI");
-            Integer foodQuantity = (Integer) orderData.get("foodQuantity");
+            String productId = (String) orderData.get("productID");
+            Object itemCountObj = orderData.get("itemCount");
+            Integer foodQuantity = 0; // 初始化 foodQuantity 为 0，以便后续赋值
+
+            if (itemCountObj instanceof String) {
+                try {
+                    foodQuantity = Integer.parseInt((String) itemCountObj);
+                } catch (NumberFormatException e) {
+                    // 处理无效整数的情况，例如记录错误或抛出异常
+                    e.printStackTrace();
+                }
+            } else if (itemCountObj instanceof Integer) {
+                foodQuantity = (Integer) itemCountObj;
+            }
+
             String diningLocation = (String) orderData.get("diningLocation");
             String foodNote = (String) orderData.get("foodNote");
             String orderNote = (String) orderData.get("orderNote");
 
-            // 提取 labelId 的值，如果是數組則轉換為 List
+            // 提取 labelId 的值，如果是数组则转换为 List
             Object labelIdObj = orderData.get("labelid");
             List<Integer> labelIds = new ArrayList<>();
-
-            if (labelIdObj instanceof Integer) {
-                labelIds.add((Integer) labelIdObj);
-            } else if (labelIdObj instanceof List) {
-                // 如果是數組，將其轉換為 List
-                labelIds.addAll((List<Integer>) labelIdObj);
+            if (labelIdObj instanceof List<?>) {
+                for (Object id : (List<?>) labelIdObj) {
+                    if (id instanceof Integer) {
+                        labelIds.add((Integer) id);
+                    } else if (id instanceof String) {
+                        try {
+                            labelIds.add(Integer.parseInt((String) id));
+                        } catch (NumberFormatException e) {
+                            // 处理无效整数的情况，例如记录错误或抛出异常
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
 
-            // 驗證產品和標籤是否存在於資料庫中
+            // 验证产品和标签是否存在于数据库中
             if (validateData(productId, labelIds)) {
-                // 生成訂單號
+                // 生成订单号
                 generateOrderNumber();
 
-                // 計算總價等操作
+                // 计算总价等操作
                 BigDecimal totalPrice = calculateTotalPrice(productId, labelIds, foodQuantity);
 
-                // 創建 PendingOrder 對象並填入資料表
+                // 创建 PendingOrder 对象并填入数据库表
                 createPendingOrder(cachedOrderNo, diningLocation, productId, foodQuantity, totalPrice,
                         foodNote, orderNote, labelIds);
             }
         }
 
-        // 返回訂單號或其他需要的資訊
+        // 返回订单号或其他需要的信息
         return new OrderDto(cachedOrderNo);
     }
 
     private boolean validateData(String productId, List<Integer> labelIds) {
-        // 在這裡進行產品和標籤的驗證邏輯，檢查他們是否存在於資料表中
+        // 在这里进行产品和标签的验证逻辑，检查它们是否存在于数据库表中
         Product product = productRepository.findByProductId(productId);
         if (product == null) {
-            // 產品不存在於資料庫中，返回 false 表示驗證失敗
+            // 产品不存在于数据库中，返回 false 表示验证失败
             return false;
         }
 
         for (Integer labelId : labelIds) {
-        	Label label = labelRepository.findById(labelId).orElse(null);
+            Label label = labelRepository.findById(labelId).orElse(null);
             if (label == null) {
-                // 標籤不存在於資料庫中，返回 false 表示驗證失敗
+                // 标签不存在于数据库中，返回 false 表示验证失败
                 return false;
             }
         }
 
-        // 所有驗證通過，返回 true 表示驗證成功
+        // 所有验证通过，返回 true 表示验证成功
         return true;
     }
-    
 
     private void generateOrderNumber() {
-        // 生成訂單號
-        // 將生成的訂單號存入 cachedOrderNo
+        // 生成订单号
+        // 将生成的订单号存入 cachedOrderNo
         if (cachedOrderNo == null) {
             Integer lastOrderNo = pendingOrderRepository.findLastOrderNo();
             if (lastOrderNo == null) {
@@ -108,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private BigDecimal calculateTotalPrice(String productId, List<Integer> labelIds, Integer foodQuantity) {
-        // 在這裡進行單項總價計算的邏輯，包括產品價格和標籤價格的計算
+        // 在这里进行单项总价计算的逻辑，包括产品价格和标签价格的计算
         BigDecimal totalPrice = BigDecimal.ZERO;
 
         if (!labelIds.isEmpty()) {
@@ -122,7 +141,7 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        // 計算產品價格
+        // 计算产品价格
         Product product = productRepository.findByProductId(productId);
 
         if (product != null) {
@@ -135,12 +154,12 @@ public class OrderServiceImpl implements OrderService {
 
     private void createPendingOrder(Integer orderNo, String diningLocation, String productId, Integer foodQuantity,
             BigDecimal totalPrice, String foodNote, String orderNote, List<Integer> labelIds) {
-        // 在這裡創建 PendingOrder 對象並保存到數據庫中
+        // 在这里创建 PendingOrder 对象并保存到数据库中
         PendingOrder pendingOrder = new PendingOrder();
         pendingOrder.setOrderNo(orderNo); // 设置OrderNo
         pendingOrder.setDiningLocation(diningLocation);
 
-        // 查詢產品名稱
+        // 查询产品名称
         Product product = productRepository.findByProductId(productId);
         if (product != null) {
             pendingOrder.setProductName(product.getProductName());
@@ -148,10 +167,10 @@ public class OrderServiceImpl implements OrderService {
         }
 
         pendingOrder.setFoodQuantity(foodQuantity);
-        pendingOrder.setOrderPrice(totalPrice.intValue()); // 使用每個訂單的totalPrice
+        pendingOrder.setOrderPrice(totalPrice.intValue()); // 使用每个订单的totalPrice
         pendingOrder.setCreated_at(new Timestamp(System.currentTimeMillis()));
 
-        // 根據 labelIds 查詢對應的 labelName 並拼接成字符串
+        // 根据 labelIds 查询对应的 labelName 并拼接成字符串
         List<String> labelNames = new ArrayList<>();
         for (Integer labelId : labelIds) {
             Label label = labelRepository.findById(labelId).orElse(null);
@@ -167,7 +186,7 @@ public class OrderServiceImpl implements OrderService {
         pendingOrder.setFoodNote(foodNote);
         pendingOrder.setOrderNote(orderNote);
 
-        // 保存訂單
+        // 保存订单
         pendingOrderRepository.save(pendingOrder);
     }
 }
