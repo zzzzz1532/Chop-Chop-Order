@@ -31,6 +31,7 @@ table {
 	text-align: center;
 	width: 100%;
 	border-collapse: collapse;
+	
 }
 
 th {
@@ -38,11 +39,14 @@ th {
 	background-color: #f4f4f4;
 	padding: 10px;
 	border-bottom: 1px solid #ddd;
+	
 }
 
 td {
 	font-size: 20px;
 	padding-top: 2%;
+	
+	
 }
 
 
@@ -109,41 +113,54 @@ td {
 	        	var orders = JSON.parse(data.body);
 	            console.log('Received Data TEST 2:', orders);
 	            var content = "<table>";
-				content += "<tr ><th>單號</th><th>內用外帶</th>"
-						+ "<th>品名</th><th>客製化</th><th>產品備註</th><th>數量</th>"
-						+ "<th>接單時間</th></tr>";
-				for (var i = 0; i < orders.length; i++) {
-					orders[i].labelName = orders[i].labelName || "無";
-					orders[i].foodNote = orders[i].foodNote || "無";
-					
-						content += "<tr>"
-								+ "<td>"
-								+ orders[i].orderNo
-								+ "</td>"
-								+ "<td>"
-								+ orders[i].diningLocation
-								+ "</td>"
-								+ "<td>"
-								+ orders[i].productName
-								+ "</td>"
-								+ "<td>"
-								+ orders[i].labelName
-								+ "</td>"
-								+ "<td>"
-								+ orders[i].foodNote
-								+ "</td>"
-								+ "<td>"
-								+ orders[i].foodQuantity
-								+ "</td>"
-								+ "<td>"
-								+ orders[i].created_at
-								+ "</td>"
-								+ "</tr>";
-					
-				}
-				content += "</table>";
-				var divs = document.getElementById("somedivS");
-				divs.innerHTML = content;
+	            content += "<tr ><th>單號</th><th>內用外帶</th>"
+	                    + "<th>品名</th><th>客製化</th><th>產品備註</th><th>數量</th>"
+	                    + "<th>接單時間</th></tr>";
+
+	            var previousOrderNo = null;  // 確認上一筆訂單的 OrderNo
+	            var backgroundColor = "#12424d"; // 初始色
+	            var textColor = "#FFFFFF"
+
+	            for (var i = 0; i < orders.length; i++) {
+	                orders[i].labelName = orders[i].labelName || "無";
+	                orders[i].foodNote = orders[i].foodNote || "無";
+
+	                // OrderNo 與上一筆訂單不同，更改背景顏色
+	                if (orders[i].orderNo !== previousOrderNo) {
+	                    backgroundColor = (backgroundColor === "#f4f4f4") ? "#12424d" : "#f4f4f4";
+	                    textColor = (textColor === "#000000") ? "#FFFFFF" : "#000000";
+	                }
+
+	                content += "<tr style='background-color:" + backgroundColor + "; color:" + textColor + "'>"
+	                        + "<td>"
+	                        + orders[i].orderNo
+	                        + "</td>"
+	                        + "<td>"
+	                        + orders[i].diningLocation
+	                        + "</td>"
+	                        + "<td>"
+	                        + orders[i].productName
+	                        + "</td>"
+	                        + "<td>"
+	                        + orders[i].labelName
+	                        + "</td>"
+	                        + "<td>"
+	                        + orders[i].foodNote
+	                        + "</td>"
+	                        + "<td>"
+	                        + orders[i].foodQuantity
+	                        + "</td>"
+	                        + "<td>"
+	                        + orders[i].created_at
+	                        + "</td>"
+	                        + "</tr>";
+
+	                previousOrderNo = orders[i].orderNo;
+	            }
+
+	            content += "</table>";
+	            var divs = document.getElementById("somedivS");
+	            divs.innerHTML = content;
 	            console.log("DONE 123");
 	            
 	        });

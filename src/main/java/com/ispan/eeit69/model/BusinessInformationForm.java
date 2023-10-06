@@ -21,11 +21,12 @@ public class BusinessInformationForm {
     private String storeAddress;
     private String contactPerson;
     private String phoneNum;
+    private String email;
     
     public BusinessInformationForm(){}
-    
-    public BusinessInformationForm(Long id, String username, String password, String level, String storeName,
-			String storeAddress, String contactPerson, String phoneNum) {
+
+	public BusinessInformationForm(Long id, String username, String password, String level, String storeName,
+			String storeAddress, String contactPerson, String phoneNum, String email) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -35,6 +36,7 @@ public class BusinessInformationForm {
 		this.storeAddress = storeAddress;
 		this.contactPerson = contactPerson;
 		this.phoneNum = phoneNum;
+		this.email = email;
 	}
 
 	public Long getId() {
@@ -100,7 +102,12 @@ public class BusinessInformationForm {
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
 	}
-    
-    
-    
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }
