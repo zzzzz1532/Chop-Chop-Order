@@ -36,62 +36,62 @@ $(document).ready(function () {
     $('.fa-angle-left').click(function () {
         window.location.href = '/main';
     });
-    $('.footer1').click(function () {
-        var errorMessages = [];
-        // 檢查必填欄位是否有填寫
-        var takeoutChecked = $('input[name="takeout"]:checked').length > 0;
-        var payChecked = $('input[name="label"]:checked').length > 0;
-
-        // 如果有未選擇的必填欄位
-        if (!takeoutChecked) {
-            // 在下方插入一段div顯示提示信息
-            var messageDiv = document.createElement('div');
-            messageDiv.classList.add('takeouterrmsg');
-            messageDiv.textContent = '請選擇用餐方式';
-            var container = document.querySelector('.takeout');
-            $('.takeouterrmsg').remove();
-            container.appendChild(messageDiv);
-            // 將畫面滾動至錯誤訊息位置
-            $('html, body').animate({
-                scrollTop: $(container).offset().top
-            }, 100); // 1000為滾動的時間，以毫秒為單位
-        }
-        if (!payChecked) {
-            var messageDiv = document.createElement('div');
-            messageDiv.classList.add('payerrmsg');
-            messageDiv.textContent = '請選擇付款方式';
-            var container = document.querySelector('#payradio');
-            $('.payerrmsg').remove();
-            container.appendChild(messageDiv);
-            $('html, body').animate({
-                scrollTop: $(container).offset().top
-            }, 100);
-        }
-        if (takeoutChecked && payChecked) {
-            window.location.href = 'finish';
-        }
-    });
-    $('input[name="takeout"]').on('input', function () {
-        $('.takeouterrmsg').remove();
-    });
-
-    $('input[name="label"]').on('input', function () {
-        $('.payerrmsg').remove();
-    });
-
-    $('.payinfo').hide();
-    // 監聽選擇變化事件
-    $('input[name="label"]').change(function () {
-        if (this.value === '線上刷卡') {
-
-            $('.payinfo').show();
-        } else if (this.value === 'GooglePay') {
-            $('.payinfo').show();
-
-        } else {
-            $('.payinfo').hide();
-        }
-    });
+//    $('.footer1').click(function () {
+//        var errorMessages = [];
+//        // 檢查必填欄位是否有填寫
+//        var takeoutChecked = $('input[name="takeout"]:checked').length > 0;
+//        var payChecked = $('input[name="label"]:checked').length > 0;
+//
+//        // 如果有未選擇的必填欄位
+//        if (!takeoutChecked) {
+//            // 在下方插入一段div顯示提示信息
+//            var messageDiv = document.createElement('div');
+//            messageDiv.classList.add('takeouterrmsg');
+//            messageDiv.textContent = '請選擇用餐方式';
+//            var container = document.querySelector('.takeout');
+//            $('.takeouterrmsg').remove();
+//            container.appendChild(messageDiv);
+//            // 將畫面滾動至錯誤訊息位置
+//            $('html, body').animate({
+//                scrollTop: $(container).offset().top
+//            }, 100); // 1000為滾動的時間，以毫秒為單位
+//        }
+//        if (!payChecked) {
+//            var messageDiv = document.createElement('div');
+//            messageDiv.classList.add('payerrmsg');
+//            messageDiv.textContent = '請選擇付款方式';
+//            var container = document.querySelector('#payradio');
+//            $('.payerrmsg').remove();
+//            container.appendChild(messageDiv);
+//            $('html, body').animate({
+//                scrollTop: $(container).offset().top
+//            }, 100);
+//        }
+//        if (takeoutChecked && payChecked) {
+//            window.location.href = 'finish';
+//        }
+//    });
+//    $('input[name="takeout"]').on('input', function () {
+//        $('.takeouterrmsg').remove();
+//    });
+//
+//    $('input[name="label"]').on('input', function () {
+//        $('.payerrmsg').remove();
+//    });
+//
+//    $('.payinfo').hide();
+//    // 監聽選擇變化事件
+//    $('input[name="label"]').change(function () {
+//        if (this.value === '線上刷卡') {
+//
+//            $('.payinfo').show();
+//        } else if (this.value === 'GooglePay') {
+//            $('.payinfo').show();
+//
+//        } else {
+//            $('.payinfo').hide();
+//        }
+//    });
 
 
     const orderData = JSON.parse(localStorage.getItem('orderData')) || [];
