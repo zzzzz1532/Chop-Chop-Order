@@ -113,8 +113,8 @@ td {
 						+ "<th>品名</th><th>客製化</th><th>產品備註</th><th>數量</th>"
 						+ "<th>接單時間</th></tr>";
 				for (var i = 0; i < orders.length; i++) {
-// 					orders[i].labelName = orders[i].labelName || "無";
-// 					orders[i].foodNote = orders[i].foodNote || "無";
+					orders[i].labelName = orders[i].labelName || "無";
+					orders[i].foodNote = orders[i].foodNote || "無";
 					
 						content += "<tr>"
 								+ "<td>"
