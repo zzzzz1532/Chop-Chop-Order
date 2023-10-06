@@ -3,7 +3,6 @@ package com.ispan.eeit69.service;
 import java.util.List;
 
 import com.ispan.eeit69.model.PendingOrder;
-//import com.ispan.eeit69.model.PendingOrderSummary;
 
 public interface PendingOrderService {
     
@@ -11,7 +10,16 @@ public interface PendingOrderService {
 
 //    List<PendingOrderSummary> findOrderSummaryByOrderNo(Integer orderNo);
     
+	
+    
+		
     void deleteById(Integer orderNo);
+
+	
+
+	List<Object[]> findOrderDetailsForAllOrders();
+
+
     
 }
 

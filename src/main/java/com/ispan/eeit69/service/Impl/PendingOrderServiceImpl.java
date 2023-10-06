@@ -26,9 +26,23 @@ public class PendingOrderServiceImpl implements PendingOrderService {
         pendingOrderRepository.deleteById(orderNo);
     }
 
+	@Override
+	public List<Object[]> findOrderDetailsForAllOrders() {
+		return  pendingOrderRepository.findOrderDetailsForAllOrders();		
+	}
+
 //    @Override
 //    public List<PendingOrderSummary> findOrderSummaryByOrderNo(Integer orderNo) {
 //        return pendingOrderRepository.findOrderSummaryByOrderNo(orderNo);
 //    }
+
+    
+//     @Override
+//     public List<Object[]> findOrderNo(Integer orderNo) {
+//		
+//		return  pendingOrderRepository.findOrderSummaryByOrderNo(orderNo);
+//	}
+    
+    
 }
 

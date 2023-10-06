@@ -2,7 +2,7 @@ package com.ispan.eeit69.model;
 
 import java.util.List;
 
-public class PendingOrderSummary {
+public class pendingOrderRepository {
 
     private Integer orderNo;
     private String diningLocation;
@@ -52,9 +52,10 @@ public class PendingOrderSummary {
         return productName;
     }
 
-    public void setProductName(List<String> productName) {
-        this.productName = productName;
-    }
+//    public void setProductName(List<String> productName) {
+//        this.productName = productName;
+//    }
+
 
     public List<String> getCategoryName() {
         return categoryName;
