@@ -2,19 +2,20 @@ package com.ispan.eeit69.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name="PendingOrder")
-public class Order implements Serializable{
+@Table(name="Complete_Order")
+public class CompleteOrder implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	// Model 版本號 => 1
@@ -24,34 +25,40 @@ public class Order implements Serializable{
 	private Integer orderId; //編號
 	private Integer orderNo; // 訂單號
 	private String diningLocation; //內用外帶
-	private String ProductName; // 品名
-	private String categoryName; //類別名稱
+	
+	@ManyToOne // 建立與產品表的多對一關聯
+	@JoinColumn(name = "productName", referencedColumnName = "productName")
+    private Product product; // 關聯到 Product 實體
+	
 	private Integer foodQuantity; // 數量
 	private Integer orderPrice; //訂單總額
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Timestamp created_at; // 生成時間
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+	private Timestamp complete_at; // 完成時間
 	//上方屬性可能會再修改，依最終暫存訂單資料表為準
 	private String labelName;
 	private String foodNote;
 	private String orderNote;
 	
 	
-	public Order()  {
+	public CompleteOrder() {
 		
 	}
 
 
-	public Order(Integer orderId, Integer orderNo, String diningLocation, String ProductName, String categoryName, Integer foodQuantity,
-			Integer orderPrice, Timestamp created_at, String labelName, String foodNote, String orderNote) {
+	public CompleteOrder(Integer orderId, Integer orderNo, String diningLocation, Product product, Integer foodQuantity,
+			Integer orderPrice, Timestamp created_at, Timestamp complete_at, String labelName, String foodNote,
+			String orderNote) {
 		super();
 		this.orderId = orderId;
 		this.orderNo = orderNo;
 		this.diningLocation = diningLocation;
-		this.ProductName = ProductName;
-		this.categoryName = categoryName;
+		this.product = product;
 		this.foodQuantity = foodQuantity;
 		this.orderPrice = orderPrice;
 		this.created_at = created_at;
+		this.complete_at = complete_at;
 		this.labelName = labelName;
 		this.foodNote = foodNote;
 		this.orderNote = orderNote;
@@ -88,23 +95,13 @@ public class Order implements Serializable{
 	}
 
 
-	public String getFoodName() {
-		return ProductName;
+	public Product getProduct() {
+		return product;
 	}
 
 
-	public void setProductName(String ProductName) {
-		this.ProductName = ProductName;
-	}
-
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 
@@ -138,8 +135,13 @@ public class Order implements Serializable{
 	}
 
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Timestamp getComplete_at() {
+		return complete_at;
+	}
+
+
+	public void setComplete_at(Timestamp complete_at) {
+		this.complete_at = complete_at;
 	}
 
 
@@ -167,20 +169,16 @@ public class Order implements Serializable{
 		return orderNote;
 	}
 
+
 	public void setOrderNote(String orderNote) {
 		this.orderNote = orderNote;
 	}
 
 
-	public static List<Order> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-
-
-//	public static List<Order> findAll() {
-//		// TODO Auto-generated method stub
-//		return Order.findAll();
-//	}
+	
+	
 	
 }

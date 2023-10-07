@@ -3,6 +3,7 @@ package com.ispan.eeit69.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -19,9 +20,28 @@ public interface PendingOrderRepository extends JpaRepository<PendingOrder, Inte
 	        "FROM PendingOrder po " +
 	        "GROUP BY po.orderNo, po.diningLocation,po.diningLocation", nativeQuery = true)
 	List<Object[]> findOrderDetailsForAllOrders();
-
-    
-    @Query("DELETE FROM PendingOrder o WHERE o.orderNo = :orderNo")
+	
+	
+	@Query(value = "SELECT * FROM PendingOrder po WHERE po.orderNo = :orderNo", nativeQuery = true)
+	List<Object[]> findOrderDetailsByOrderNo(@Param("orderNo") Integer orderNo);
+	
+	
+	@Modifying
+  @Query(nativeQuery = true,
+          value = "INSERT INTO Complete_Order (\n"
+          		+ "    orderNo, diningLocation, productName, categoryName, foodQuantity, \n"
+          		+ "    orderPrice, created_at, complete_at, labelName, foodNote, orderNote\n"
+          		+ ") " +
+                  "SELECT \n"
+                  + "    p.orderNo, p.diningLocation, p.productName, p.categoryName, p.foodQuantity, \n"
+                  + "    p.orderPrice, p.created_at, CONVERT_TZ(NOW(), 'UTC', 'Asia/Taipei'), \n"
+                  + "    p.labelName, p.foodNote, p.orderNote  " +
+                  "FROM PendingOrder p " +
+                  "WHERE p.orderNo = :orderNo")
+  void copyFromPendingOrderToCompleteOrder(@Param("orderNo") Integer orderNo);	
+	
+    @Modifying
+    @Query("DELETE FROM PendingOrder p WHERE p.orderNo = :orderNo")
     void deleteById(@Param("orderNo") Integer orderNo);
 
 }

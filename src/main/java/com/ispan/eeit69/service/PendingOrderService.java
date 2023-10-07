@@ -10,16 +10,16 @@ public interface PendingOrderService {
 
 //    List<PendingOrderSummary> findOrderSummaryByOrderNo(Integer orderNo);
     
-	
+    List<Object[]> findOrderDetailsByOrderNo(Integer orderNo);
     
 		
     void deleteById(Integer orderNo);
 
-	
+    void copyPendingOrderToCompleteOrder(Integer orderNo);
 
 	List<Object[]> findOrderDetailsForAllOrders();
 
-
+	List<Object[]> findCompletedOrdeeForAllOrders();
     
 }
 

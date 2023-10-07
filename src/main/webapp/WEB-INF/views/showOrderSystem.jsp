@@ -16,14 +16,14 @@
             padding: 0;
             background-color: #f4f4f4;
         }
-    
+
         header {
             background-color: #35424a;
             color: white;
             padding: 10px;
             text-align: center;
         }
-    
+
         .container {
             max-width: 900px;
             margin: auto;
@@ -33,86 +33,29 @@
             border-radius: 5px;
             margin-top: 20px;
         }
-    
+
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
-        
-        .webpage2 {
-            display: none;
-        }
-    
+
         th,
         td {
             padding: 10px;
             text-align: center;
             border-bottom: 1px solid #ddd;
         }
-    
+
         th {
             background-color: #f4f4f4;
         }
-    
-        .accept-button {
-            text-align: center;
-        }
-    
-        .completed {
-            background-color: #d1ffd8;
-        }
-    
-        .pending {
-            background-color: white;
-        }
-    
-        /* 調整"待處理訂單"表格欄位大小 */
-        table.pending tbody td:nth-child(1),
-        table.pending tbody th:nth-child(1) {
-            width: 10%;
-        }
-    
-        table.pending tbody td:nth-child(2),
-        table.pending tbody th:nth-child(2) {
-            width: 20%; /* 调整總額的比例 */
-        }
-    
-        table.pending tbody td:nth-child(3),
-        table.pending tbody th:nth-child(3) {
-            width: 30%; /* 调整客戶送單時間的比例 */
-        }
-    
-        table.pending tbody td:nth-child(4),
-        table.pending tbody th:nth-child(4) {
-            width: 40%; /* 调整操作的比例 */
-        }
-    
-        /* 調整"已完成訂單"表格欄位大小 */
-        table.completed tbody td:nth-child(1),
-        table.completed tbody th:nth-child(1) {
-            width: 10%;
-        }
-    
-        table.completed tbody td:nth-child(2),
-        table.completed tbody th:nth-child(2) {
-            width: 20%; /* 调整總額的比例 */
-        }
-    
-        table.completed tbody td:nth-child(3),
-        table.completed tbody th:nth-child(3) {
-            width: 20%; /* 调整完成时间的比例 */
-        }
-    
-        table.completed tbody td:nth-child(4),
-        table.completed tbody th:nth-child(4) {
-            width: 50%; /* 调整操作的比例 */
-        }
-    
+
         .button-group {
             display: flex;
             justify-content: center;
         }
-    
+
         .button {
             background-color: #6dc26d;
             border: none;
@@ -124,128 +67,212 @@
             font-size: 14px;
             cursor: pointer;
             border-radius: 4px;
-            margin-right: 10px; /* 調整按鈕之間的右邊距 */
+            margin-right: 10px;
         }
-    
+
         .complete-button {
             background-color: #3498db;
         }
-    
+
         .delete-button {
             background-color: #e74c3c;
+        }
+
+        /* 調整"待處理訂單"表格欄位大小 */
+        table.pending tbody td:nth-child(1),
+        table.pending tbody th:nth-child(1) {
+            width: 10%;
+        }
+
+        table.pending tbody td:nth-child(2),
+        table.pending tbody th:nth-child(2) {
+            width: 20%;
+        }
+
+        table.pending tbody td:nth-child(3),
+        table.pending tbody th:nth-child(3) {
+            width: 30%;
+        }
+
+        table.pending tbody td:nth-child(4),
+        table.pending tbody th:nth-child(4) {
+            width: 40%;
+        }
+
+        /* 調整"已完成訂單"表格欄位大小 */
+        table.completed tbody td:nth-child(1),
+        table.completed tbody th:nth-child(1) {
+            width: 10%;
+        }
+
+        table.completed tbody td:nth-child(2),
+        table.completed tbody th:nth-child(2) {
+            width: 20%;
+        }
+
+        table.completed tbody td:nth-child(3),
+        table.completed tbody th:nth-child(3) {
+            width: 20%;
+        }
+
+        table.completed tbody td:nth-child(4),
+        table.completed tbody th:nth-child(4) {
+            width: 50%;
+        }
+
+        .details-row td {
+            background-color: #f4f4f4;
+            padding: 10px;
+            text-align: left;
         }
     </style>
 
     <script type="text/javascript" src="<c:url value='/webjars/jquery/3.5.1/jquery.js' />"></script>
-    
-    
-       <script>
-       function fetchData() {
-           var xhr = new XMLHttpRequest();
-           xhr.open("GET", "<c:url value='/findorder'/>", true);
-           xhr.send();
 
-           xhr.onreadystatechange = function () {
-               if (xhr.readyState == 4 && xhr.status == 200) {
-                   var orders = JSON.parse(xhr.responseText);
-                   var content = "";
-
-                   for (var i = 0; i < orders.length; i++) {
-                       content += "<tr>";
-                       content += "<td>" + (orders[i][0] || "") + "</td>";
-                       content += "<td>" + (orders[i][3] || "") + "</td>";
-                       content += "<td>" + (orders[i][2] || "") + "</td>";
-                       content += "<td>";
-                       content += "<button class='button' onclick='showDetails(" + orders[i][0] + ")'>查看品項</button>";
-                       content += "<button class='button complete-button' onclick='Completed()'>完成</button>";
-                       content += "<button class='button delete-button' onclick='deleteOrder(" + orders[i][0] + ")'>刪除</button>";
-                       content += "</td>";
-                       content += "</tr>";
-
-                       content += "<tr id='" + i + "' class='webpage2'>";
-                       content += "<td style='background-color: #f4f4f4;'>品項</td><td style='background-color: #f4f4f4;'>數量</td>";
-                       content += "<tr id='" + i + "' class='webpage2'>";
-                       content += "<td>" + (orders[i][2] || "") + "</td>" + "<td>" + (orders[i][7] || "") + "</td>";
-                       content += "</tr>";
-                       content += "</tr>";
-                   }
-
-                   var tableBody = document.getElementById("tableBody");
-                   tableBody.innerHTML = content;
-               }
-           };
-       }
-
-
-    function showDetails(orderNo) {
-        alert(); // Add an alert for testing purposes
-        const webpage2 = document.getElementById(orderNo); // Change getElementsByID to getElementById
-        console.log(webpage2);
-        console.log(webpage2.style);
-
-        if (webpage2.style === null || webpage2.style.display === 'none') { // Check if the display style is 'none'
-            webpage2.style.display = 'block';
-        } else {
-            webpage2.style.display = 'none';
-        }
-    }
-
-    function completed() {
-        // 使用 alert 函数确认是否要删除
-        var confirmComplete = confirm("此訂單是否完成")
-
-        if (confirmComplete) {
-            // 在这里执行删除操作
-            // 可以调用后端API来执行删除操作
-            // 例如：deleteData();
-        } else {
-            // 用户取消了删除操作，可以选择刷新数据
-            fetchData();
-        }
-    }
-
-    function deleteOrder(orderNo) {
-    	alert();
-        if (confirm('確定要刪除訂單: ' + orderNo + ' 這筆紀錄?')) {
-            var url = "<c:url value='/orderIDdelete' />" + "/" + orderNo;
-
+    <script>
+        function fetchData() {
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.open("GET", "<c:url value='/findorder'/>", true);
+            xhr.send();
 
             xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        console.log("Order deleted successfully");
-                        // You might want to update the UI or take additional actions here
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var orders = JSON.parse(xhr.responseText);
+                    var content = "";
 
-                        // Perform a synchronous redirect after the deletion is successful
-                        window.location.href = "/showOrderSystem";
+                    for (var i = 0; i < orders.length; i++) {
+                        content += "<tr>";
+                        content += "<td>" + (orders[i][0] || "") + "</td>";
+                        content += "<td>" + (orders[i][3] || "") + "</td>";
+                        content += "<td>" + (orders[i][2] || "") + "</td>";
+                        content += "<td>";
+                        content += "<button class='button' onclick='showDetails(" + orders[i][0] + ")'>查看品項</button>";
+                        content += "<button class='button complete-button' onclick='completed(" + orders[i][0] + ")'>完成</button>";
+                        content += "<button class='button delete-button' onclick='deleteOrder(" + orders[i][0] + ")'>刪除</button>";
+                        content += "</td>";
+                        content += "</tr>";
+
+                        // Add an empty row for details, you can toggle its display later
+                        content += "<tr id='details_" + orders[i][0] + "' class='details-row' style='display: none;'>";
+                        content += "<td colspan='4'></td>"; // Adjusted colspan to 4
+                        content += "</tr>";
+                    }
+
+                    var tableBody = document.getElementById("tableBody");
+                    tableBody.innerHTML = content;
+                }
+            };
+        }
+
+        function showDetails(orderNo) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "<c:url value='/findorderbyID/'/>" + orderNo, true);
+            xhr.send();
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var details = JSON.parse(xhr.responseText);
+                    var detailsRow = document.getElementById('details_' + orderNo);
+
+                    // Clear previous content
+                    detailsRow.innerHTML = "";
+
+                    // Assuming details is an array of details for the given orderNo
+                    var content =
+                        "<tr>" +
+                        "<td colspan='4' style='background-color: #f4f4f4;'>品名</td>" +
+                        "<td colspan='4' style='background-color: #f4f4f4;'>數量</td>" +
+                        "<td colspan='4' style='background-color: #f4f4f4;'>foodNote</td>" +
+                        "</tr>";
+
+                    for (var i = 0; i < details.length; i++) {
+                        content += "<tr>";
+                        content += "<td colspan='4'>" + (details[i].productName || "") + "</td>";
+                        content += "<td colspan='4'>" + (details[i].foodQuantity || "") + "</td>";
+                        content += "<td colspan='4'>" + (details[i].foodNote || "") + "</td>";
+                        content += "</tr>";
+                    }
+
+                    // Update the content of detailsRow
+                    detailsRow.innerHTML = content;
+
+                    // Toggle the display
+                    if (detailsRow.style.display === 'none') {
+                        detailsRow.style.display = 'table-row'; // Use 'table-row' for proper display
                     } else {
-                        console.error("Failed to delete order");
-                        // Regardless of success or failure, you might want to refresh the data
-                        fetchData();
+                        detailsRow.style.display = 'none';
                     }
                 }
             };
-
-            xhr.send("orderNo=" + orderNo + "&_method=DELETE");
-        } else {
-            fetchData();
         }
-    }
+        
+        function completed(orderNo) {
+            var confirmComplete = confirm("此訂單是否完成");
 
-    // <----------------------------------------------------------------------------------->
+            if (confirmComplete) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "<c:url value='/copy-from-pending'/>" + "/" + orderNo, true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    window.onload = function () {
-        fetchData();
-        setInterval(fetchData, 8000); // 每 8 秒更新一次資料
-    }
-</script>
-    
-    
-    
-    
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            console.log("Order completed successfully");
+                            // You might want to update the UI or take additional actions here
+                            fetchData();
+                        } else {
+                            console.error("Failed to complete order");
+                            // Regardless of success or failure, you might want to refresh the data
+                            fetchData();
+                        }
+                    }
+                };
+
+                xhr.send();
+            } else {
+                fetchData();
+            }
+        }
+
+
+        function deleteOrder(orderNo) {
+            alert();
+            if (confirm('確定要刪除訂單: ' + orderNo + ' 這筆紀錄?')) {
+                var url = "<c:url value='/orderIDdelete' />" + "/" + orderNo;
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            console.log("Order deleted successfully");
+                            // You might want to update the UI or take additional actions here
+
+                            // Perform a synchronous redirect after the deletion is successful
+                            window.location.href = "/showOrderSystem";
+                        } else {
+                            console.error("Failed to delete order");
+                            // Regardless of success or failure, you might want to refresh the data
+                            fetchData();
+                        }
+                    }
+                };
+
+                xhr.send("orderNo=" + orderNo + "&_method=DELETE");
+            } else {
+                fetchData();
+            }
+        }
+
+        // <----------------------------------------------------------------------------------->
+
+        window.onload = function () {
+            fetchData();
+            setInterval(fetchData, 8000); // 每 8 秒更新一次資料
+        }
+    </script>
 </head>
 
 <body>

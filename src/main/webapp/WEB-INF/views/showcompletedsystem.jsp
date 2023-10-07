@@ -1,9 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
+<%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>接單系統</title>
+    <title>歷史訂單查詢</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,6 +37,10 @@
         table {
             width: 100%;
             border-collapse: collapse;
+        }
+        
+        .webpage2 {
+            display: none;
         }
     
         th,
@@ -126,73 +135,91 @@
             background-color: #e74c3c;
         }
     </style>
+
+    <script type="text/javascript" src="<c:url value='/webjars/jquery/3.5.1/jquery.js' />"></script>
+    
+    
+       <script>
+       function fetchData() {
+           var xhr = new XMLHttpRequest();
+           xhr.open("GET", "<c:url value='/findCompletedOrder'/>", true);
+           xhr.send();
+
+           xhr.onreadystatechange = function () {
+               if (xhr.readyState == 4 && xhr.status == 200) {
+                   var orders = JSON.parse(xhr.responseText);
+                   var content = "";
+
+                   for (var i = 0; i < orders.length; i++) {
+                       content += "<tr>";
+                       content += "<td>" + (orders[i][0] || "") + "</td>";
+                       content += "<td>" + (orders[i][3] || "") + "</td>";
+                       content += "<td>" + (orders[i][2] || "") + "</td>";
+                       content += "<td>";
+                       content += "<button class='button' onclick='showDetails(" + orders[i][0] + ")'>查看品項</button>";
+                       content += "</td>";
+                       content += "</tr>";
+
+                       content += "<tr id='" + i + "' class='webpage2'>";
+                       content += "<td style='background-color: #f4f4f4;'>品項</td><td style='background-color: #f4f4f4;'>數量</td>";
+                       content += "<tr id='" + i + "' class='webpage2'>";
+                       content += "<td>" + (orders[i][2] || "") + "</td>" + "<td>" + (orders[i][7] || "") + "</td>";
+                       content += "</tr>";
+                       content += "</tr>";
+                   }
+
+                   var tableBody = document.getElementById("tableBody");
+                   tableBody.innerHTML = content;
+               }
+           };
+       }
+
+
+    function showDetails(orderNo) {
+        alert(); // Add an alert for testing purposes
+        const webpage2 = document.getElementById(orderNo); // Change getElementsByID to getElementById
+        console.log(webpage2);
+        console.log(webpage2.style);
+
+        if (webpage2.style === null || webpage2.style.display === 'none') { // Check if the display style is 'none'
+            webpage2.style.display = 'block';
+        } else {
+            webpage2.style.display = 'none';
+        }
+    }
+
+    
+    // <----------------------------------------------------------------------------------->
+
+    window.onload = function () {
+        fetchData();
+        setInterval(fetchData, 8000); // 每 8 秒更新一次資料
+    }
+</script>
+    
+    
+    
     
 </head>
+
 <body>
     <header>
         <h1>接單系統</h1>
     </header>
-    <div class="container">
-        <h2>待處理訂單</h2>
-        <table class="pending">
-            <thead>
-                <tr>
-                    <th>單號</th>
-                    <th>總額</th>
-                    <th>客戶送單時間</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td rowspan="3">001</td>
-                    <td rowspan="3">$100</td>
-                    <td rowspan="3">2023-09-05 13:30</td>
-                    <td rowspan="3">
-                        <button class="button" onclick="showBox()">查看品項</button>
-                        <button class="button">完成</button>
-                        <button class="button">刪除</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
 
-        <!-- 新增一个用于显示网页2内容的div，初始时设置为隐藏 -->
-        <div id="webpage2" style="display: none;">
-            <h2></h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>項目</th>
-                        <th>數量</th>
-                        <th>單價</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>商品A</td>
-                        <td>3</td>
-                        <td>$20</td>
-                    </tr>
-                    <tr>
-                        <td>商品B</td>
-                        <td>2</td>
-                        <td>$30</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <script>
-        function showBox() {
-            const webpage2 = document.getElementById('webpage2');
-            if (webpage2.style.display === 'none') {
-                webpage2.style.display = 'block';
-            } else {
-                webpage2.style.display = 'none';
-            }
-        }
-    </script>
+    <table class="container">
+        <thead>
+            <tr>
+                <th>單號</th>
+                <th>總額</th>
+                <th>客戶送單時間</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- 動態生成表格行 -->
+        </tbody>
+    </table>
 </body>
+
 </html>
