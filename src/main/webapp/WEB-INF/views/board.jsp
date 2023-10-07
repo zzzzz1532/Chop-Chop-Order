@@ -89,7 +89,7 @@ option {
 <script>
 $(() => {
     const announcementsPerPage = 5;
-    const totalAnnouncements = ${boardData.size()};
+    const totalAnnouncements = ${boardData.size()} || 1;
     const totalPages = Math.ceil(totalAnnouncements / announcementsPerPage);
     const pageSelector = document.getElementById('pageSelector');
     

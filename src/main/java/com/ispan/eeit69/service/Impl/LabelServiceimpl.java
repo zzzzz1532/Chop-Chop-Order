@@ -1,5 +1,6 @@
 package com.ispan.eeit69.service.Impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ public class LabelServiceimpl implements LabelService {
 		this.labelRepository = labelRepository;
 		this.labelRepositoryCustom = labelRepositoryCustom;
 	}
+	
 
 	@Override
 	public void resetLabelTable() {
@@ -81,4 +83,15 @@ public class LabelServiceimpl implements LabelService {
 		Label emp = labelRepository.findByLabelId(labelId);
 		return emp;
 	}
+	
+	@Override
+	public BigDecimal getLabelPriceById(Integer id) {
+        Label label = labelRepository.findById(id).orElse(null);
+        if (label != null) {
+            return label.getLabelPrice();
+        } else {
+            return null;
+        }
+    }
+	
 }

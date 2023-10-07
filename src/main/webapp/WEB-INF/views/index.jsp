@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="/js/back-end.js"></script>
 </head>
 <body>
+	待統整登祥網站
 	<div align='center'>
 		<h1>商品管理總覽</h1>
 		<h3>使用Spring Data JPA技術</h3>

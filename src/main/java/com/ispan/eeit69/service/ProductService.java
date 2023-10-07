@@ -1,7 +1,9 @@
 package com.ispan.eeit69.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,5 +36,22 @@ public interface ProductService {
 	List<Product> getNonEmptyProducts(List<Product> products);
 
 	List<Product> searchProducts(String keyword);
+	
+	List<Product> getAllProducts();
+
+	Product getProductById(Integer id);
+
+	void saveProduct(Product product);
+
+	void deleteProduct(Integer id);
+
+	List<Product> getAllProductsWithCategoryAndLabels();
+
+	List<Product> getAllProductsWithCategory();
+	//根據產品ID查詢產品價格
+	BigDecimal getProductPriceById(Integer id);
+	public List<Category> getAllCategory();
+	public Set<Label> getLabelsByProductId(String productId);
+	
 
 }

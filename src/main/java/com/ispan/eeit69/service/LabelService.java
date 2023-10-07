@@ -1,5 +1,6 @@
 package com.ispan.eeit69.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,5 +21,7 @@ public interface LabelService {
 	List<Label> findAll();
 	Optional<Label> findById(Integer id);	
 	Label findByLabelId(String labelId);
+	
+	BigDecimal getLabelPriceById(Integer id);
 	
 }

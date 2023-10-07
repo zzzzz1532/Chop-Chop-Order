@@ -42,5 +42,12 @@ public interface CompleteOrderRepository extends JpaRepository<CompleteOrder, In
 	@Query("SELECT DATE_FORMAT(c.complete_at, '%Y/%m/%d %H:00') AS formattedDate, SUM(c.orderPrice) AS revenue, COUNT(DISTINCT c.orderNo) AS orderQuan FROM CompleteOrder c WHERE c.complete_at BETWEEN :startDate AND :endDate GROUP BY formattedDate ORDER BY formattedDate")
 	List<Object[]> findHourData(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
-	
+	@Query(value = "SELECT " +
+	        "  po.orderNo as orderNo, " +
+	        "  po.diningLocation as diningLocation, " +
+	        "  MIN(po.created_at) as createdAt, " +
+	        "  SUM(CAST(po.orderPrice AS DECIMAL(10, 2))) as totalOrderPrice " +
+	        "FROM Complete_Order po " +
+	        "GROUP BY po.orderNo, po.diningLocation", nativeQuery = true)
+	List<Object[]> findCompletedOrdeeForAllOrders();
 }

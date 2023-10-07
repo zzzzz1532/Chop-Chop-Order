@@ -47,7 +47,6 @@ public class Product implements Serializable {
     
     /** 類別名稱  (4)*/
 //    Lazy（懶加載）：僅在需要時加載相關實體。當獲取主實體時，相關實體只有在需要訪問時才會被加載
-//    @ManyToOne
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     @JsonIgnoreProperties("hibernateLazyInitializer")

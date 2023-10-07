@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-//@EntityListeners(PendingOrderListener.class)
 @Entity
 @Table(name="PendingOrder")
 public class PendingOrder implements Serializable{
@@ -24,11 +23,6 @@ public class PendingOrder implements Serializable{
 	private Integer orderId; //編號
 	private Integer orderNo; // 訂單號
 	private String diningLocation; //內用外帶
-	
-//	@ManyToOne// 建立與產品表的多對一關聯
-//	@JoinColumn(name = "productName", referencedColumnName = "productName")
-//	private Product product; // 品名
-	
 	private String productName;
 	private String categoryName; //類別名稱
 	private Integer foodQuantity; // 數量
