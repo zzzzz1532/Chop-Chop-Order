@@ -1,5 +1,6 @@
 package com.ispan.eeit69.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,9 @@ import com.ispan.eeit69.model.Product;
 //Spring Data JPA將自動生成用於基本CRUD操作的方法，開發者還可以在接口中定義自己的查詢方法
 public interface ProductRepository extends JpaRepository<Product, Integer>{
 	Product findByProductId(String productId) ;
+	Product findByProductName(String productName);
+	Product findByProductPrice(BigDecimal productPrcie);
+	
 
 	@Override
 	boolean existsById(Integer id) ;
@@ -21,6 +25,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 //			+ "OR p.labels LIKE CONCAT('%', :keyword, '%')")
 	List<Product> findByKeywordContaining(@Param("keyword") String keyword);
 
+	@Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.labels")
+	List<Product> findAllWithCategoryAndLabels();
+
+	
+	
 }
 
 

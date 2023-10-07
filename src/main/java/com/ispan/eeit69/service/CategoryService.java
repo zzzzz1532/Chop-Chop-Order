@@ -21,4 +21,12 @@ public interface CategoryService {
 	Optional<Category> findById(Integer id);	
 	Category findByCategoryId(String categoryId);
 	
+	List<Category> getAllCategories();
+
+	Category getCategoryById(Integer id);
+
+	void saveCategory(Category Category);
+
+	void deleteCategory(Integer id);
+	
 }

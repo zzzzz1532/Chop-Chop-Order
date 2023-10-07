@@ -81,4 +81,25 @@ public class CategoryServiceimpl implements CategoryService {
 	public void detach(Category category) {
 		categoryRepositoryCustom.detach(category);		
 	}
+	
+	@Override
+	public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+	@Override
+	public Category getCategoryById(Integer id) {
+		return categoryRepository.findById(id).orElse(null);
+	}
+
+	@Override
+	public void saveCategory(Category Category) {
+		categoryRepository.save(Category);
+	}
+
+	@Override
+	public void deleteCategory(Integer id) {
+		categoryRepository.deleteById(id);
+	}
+	
 }

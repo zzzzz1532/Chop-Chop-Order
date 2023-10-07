@@ -1,4 +1,4 @@
-package com.ispan.eeit69.model;
+package com.ispan.eeit69.DTO;
 
 import java.util.List;
 import java.util.Map;
