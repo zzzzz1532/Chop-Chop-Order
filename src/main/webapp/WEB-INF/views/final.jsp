@@ -86,6 +86,8 @@ html, body {
 </style>
 </head>
 <script>
+
+
 $(document).ready(function() {
     // 获取更新后的订单号
     var updatedOrderNo = "${updatedOrderNo}";

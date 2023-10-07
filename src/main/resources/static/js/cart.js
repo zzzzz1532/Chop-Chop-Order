@@ -36,62 +36,62 @@ $(document).ready(function() {
 	$('.fa-angle-left').click(function() {
 		window.location.href = '/main';
 	});
-	$('.footer1').click(function() {
-		// 清除之前的错误消息
-		$('.takeouterrmsg').remove();
-		$('.payerrmsg').remove();
-
-		// 檢查必填欄位是否有填寫
-		var takeoutChecked = $('input[name="diningLocationTakeout"]:checked').length > 0;
-		var innerChecked = $('input[name="diningLocationInner"]:checked').length > 0;
-		var ecPayChecked = $('#ecPayRadioButton').is(':checked');
-		var googlePayChecked = $('#googlePayRadioButton').is(':checked');
-		var localPaymentChecked = $('#localPaymentRadioButton').is(':checked');
-
-		// 如果有未選擇的必填欄位
-		if (!takeoutChecked && !innerChecked) {
-			// 在下方插入一段div顯示提示信息
-			var messageDiv = document.createElement('div');
-			messageDiv.classList.add('takeouterrmsg');
-			messageDiv.textContent = '請選擇用餐方式';
-			var container = document.querySelector('.takeout');
-			container.appendChild(messageDiv);
-			// 將畫面滾動至錯誤訊息位置
-			$('html, body').animate({
-				scrollTop: $(container).offset().top
-			}, 100); // 1000為滾動的時間，以毫秒為單位
-		}
-		if (!ecPayChecked && !googlePayChecked && !localPaymentChecked) {
-			var messageDiv = document.createElement('div');
-			messageDiv.classList.add('payerrmsg');
-			messageDiv.textContent = '請選擇付款方式';
-			var container = document.querySelector('#payradio');
-			container.appendChild(messageDiv);
-			$('html, body').animate({
-				scrollTop: $(container).offset().top
-			}, 100);
-		}
-		if (takeoutChecked && (ecPayChecked || googlePayChecked || localPaymentChecked)) {
-			window.location.href = 'finish';
-		}
-	});
-
-	$('input[name="diningLocationTakeout"]').on('input', function() {
-		$('.takeouterrmsg').remove();
-	});
-
-	$('input[name="diningLocationInner"]').on('input', function() {
-		$('.takeouterrmsg').remove();
-	});
-
-	$('input[name="paymentMethod"]').change(function() {
-		$('.payerrmsg').remove();
-		if (this.value === '線上刷卡' || this.value === 'GooglePay') {
-			$('.payinfo').show();
-		} else {
-			$('.payinfo').hide();
-		}
-	});
+//	$('.footer1').click(function() {
+//		// 清除之前的错误消息
+//		$('.takeouterrmsg').remove();
+//		$('.payerrmsg').remove();
+//
+//		// 檢查必填欄位是否有填寫
+//		var takeoutChecked = $('input[name="diningLocationTakeout"]:checked').length > 0;
+//		var innerChecked = $('input[name="diningLocationInner"]:checked').length > 0;
+//		var ecPayChecked = $('#ecPayRadioButton').is(':checked');
+//		var googlePayChecked = $('#googlePayRadioButton').is(':checked');
+//		var localPaymentChecked = $('#localPaymentRadioButton').is(':checked');
+//
+//		// 如果有未選擇的必填欄位
+//		if (!takeoutChecked && !innerChecked) {
+//			// 在下方插入一段div顯示提示信息
+//			var messageDiv = document.createElement('div');
+//			messageDiv.classList.add('takeouterrmsg');
+//			messageDiv.textContent = '請選擇用餐方式';
+//			var container = document.querySelector('.takeout');
+//			container.appendChild(messageDiv);
+//			// 將畫面滾動至錯誤訊息位置
+//			$('html, body').animate({
+//				scrollTop: $(container).offset().top
+//			}, 100); // 1000為滾動的時間，以毫秒為單位
+//		}
+//		if (!ecPayChecked && !googlePayChecked && !localPaymentChecked) {
+//			var messageDiv = document.createElement('div');
+//			messageDiv.classList.add('payerrmsg');
+//			messageDiv.textContent = '請選擇付款方式';
+//			var container = document.querySelector('#payradio');
+//			container.appendChild(messageDiv);
+//			$('html, body').animate({
+//				scrollTop: $(container).offset().top
+//			}, 100);
+//		}
+//		if (takeoutChecked && (ecPayChecked || googlePayChecked || localPaymentChecked)) {
+//			window.location.href = 'finish';
+//		}
+//	});
+//
+//	$('input[name="diningLocationTakeout"]').on('input', function() {
+//		$('.takeouterrmsg').remove();
+//	});
+//
+//	$('input[name="diningLocationInner"]').on('input', function() {
+//		$('.takeouterrmsg').remove();
+//	});
+//
+//	$('input[name="paymentMethod"]').change(function() {
+//		$('.payerrmsg').remove();
+//		if (this.value === '線上刷卡' || this.value === 'GooglePay') {
+//			$('.payinfo').show();
+//		} else {
+//			$('.payinfo').hide();
+//		}
+//	});
 
 
 

@@ -28,7 +28,7 @@
             <h1>CCO早餐店</h1>
           </div>
 
-          <img src="<c:url value='/images/點餐頁面.jpeg' />" style="width: 100%;">
+          <img src="<c:url value='/img/點餐頁面.jpeg' />" style="width: 100%;">
           <div class="cardheader">
 
             <details open>
