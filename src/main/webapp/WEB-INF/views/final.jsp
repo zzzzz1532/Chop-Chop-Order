@@ -93,15 +93,15 @@ $(document).ready(function() {
     // 如果存在更新后的订单号
     if (updatedOrderNo) {
         // 从 localStorage 中获取 OrderItem 数据
-        var orderItem = localStorage.getItem("orderItem");
+        var orderItem = localStorage.getItem("orderData");
         
         // 如果订单数据存在
         if (orderItem) {
             // 将 OrderItem 重新命名为 HistoryOrderItem
-            localStorage.setItem("historyOrderItem", orderItem);
+            localStorage.setItem("historyOrderData", orderItem);
             
             // 删除原始的 OrderItem
-            localStorage.removeItem("orderItem");
+            localStorage.removeItem("orderData");
         }
     }
     
