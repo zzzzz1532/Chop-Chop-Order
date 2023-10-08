@@ -1,5 +1,4 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
@@ -9,12 +8,54 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
 <link rel='stylesheet' href="<c:url value='/bootstrap-3.4.1-dist/css/bootstrap.min.css' /> "type="text/css" />
-<%-- <link rel='stylesheet' href="<c:url value='/css/styles.css' /> "type="text/css" /> --%>
-<link rel="stylesheet" href="./css/style.css">
+<link rel='stylesheet' href="<c:url value='/css/page.css' /> "type="text/css" />
+<link rel='stylesheet' href="<c:url value='/css/styles.css' /> "type="text/css" />
 
 <meta charset="UTF-8">
-<title>Marlin</title>
+<title>Report</title>
 </head>
+<style>
+    body {
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+    .loginBox {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .loginContainer h2 {
+        text-align: center;
+        color: aliceblue;
+        margin-top: 80px;
+    }
+
+    .loginContainer p {
+        font-size: 20px;
+        color: white;
+        margin: 20px 0 5px 0;
+    }
+
+    .loginContainer input {
+        width: 100%;
+        height: 50px;
+        border-radius: 5px;
+        display: block;
+        font-size: 20px;
+        text-indent: 10px;
+        color: aliceblue;
+        background-color: rgba(240, 248, 255, 0.2);
+        border: 0;
+        margin-bottom: 20px;
+    }
+
+    .loginContainer .loginButton{
+        margin-top: 40px;
+    }
+</style>
+
 <body>
     <div class="headerBackground headerBackgroundCenter">
         <div class="pageBox">
@@ -57,35 +98,12 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="banner wrapper">
-            <h2>全台最知名的手機菜單支付系統</h2>
-            <a href="#no2">
-                <lord-icon class="icon" src="https://cdn.lordicon.com/rxufjlal.json" trigger="hover"
-                    colors="primary:#ffffff"></lord-icon>
-            </a>
-        </div>
-    </div>
-    <div id="no2" class="containerBackground">
-        <article>
-            <div class="containerBox">
-                <div class="container wrapper">
-                    <p>Hello 歡迎來到Marlin</p>
-                    <p>數位經營革命</p>
-                    <p>拉近顧客零距離</p>
-                </div>
-                <footer>
-                    <div class="footerBox">
-                        <a href="#"></a>
-                        <p><small>@2023_Starpensive</small></p>
-                    </div>
-
-                </footer>
+            <div class="loginContainer pageWrapper">
+                <h2>報表系統</h2>
+                <p>屬於經典方案內容可以使您更清楚目前客眾的喜好</p>
             </div>
-        </article>
-
+        </div>
     </div>
-
 </body>
 <script>
     $(() => {
@@ -113,7 +131,6 @@
         })
         //按鈕點擊
         $(".menuButtonClose").click(function () {
-            $("body").css("overflow-y", "scroll");
             $("lord-icon").stop().fadeIn(300);
             $(".menuBox").stop().slideUp(300);
         })

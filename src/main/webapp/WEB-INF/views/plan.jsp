@@ -1,5 +1,4 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
@@ -9,15 +8,16 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
 <link rel='stylesheet' href="<c:url value='/bootstrap-3.4.1-dist/css/bootstrap.min.css' /> "type="text/css" />
-<%-- <link rel='stylesheet' href="<c:url value='/css/styles.css' /> "type="text/css" /> --%>
-<link rel="stylesheet" href="./css/style.css">
+<link rel='stylesheet' href="<c:url value='/css/page.css' /> "type="text/css" />
+<link rel='stylesheet' href="<c:url value='/css/styles.css' /> "type="text/css" />]
+<link rel='stylesheet' href="<c:url value='/css/plan.css' /> "type="text/css" />
 
 <meta charset="UTF-8">
-<title>Marlin</title>
+<title>plan</title>
 </head>
 <body>
     <div class="headerBackground headerBackgroundCenter">
-        <div class="pageBox">
+        <div class="black-cover">
             <div class="header">
                 <div class="menuButton"></div>
                 <div class="menuBox">
@@ -57,35 +57,63 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="banner wrapper">
-            <h2>全台最知名的手機菜單支付系統</h2>
-            <a href="#no2">
-                <lord-icon class="icon" src="https://cdn.lordicon.com/rxufjlal.json" trigger="hover"
-                    colors="primary:#ffffff"></lord-icon>
-            </a>
-        </div>
-    </div>
-    <div id="no2" class="containerBackground">
-        <article>
-            <div class="containerBox">
-                <div class="container wrapper">
-                    <p>Hello 歡迎來到Marlin</p>
-                    <p>數位經營革命</p>
-                    <p>拉近顧客零距離</p>
+            <div class="page-container wrapper">
+                <div class="plan-list">
+                    <ul>
+                        <li>
+                            <h1>入門方案</h1>
+                            <div class="plan-introduction">
+                                <p>小型單店想要開始嘗試經營忠誠度，輕鬆快速上線</p>
+                            </div>
+                            <div class="price-plan">
+                                <p>$1,0000</p>
+                                <span>/單店每年</span>
+                            </div>
+                            <div class="plan-contact">
+                                <a href="./contact">立即諮詢</a>
+                            </div>
+                            <div class="plan-container">
+                                <p >POS系統</p>
+                                <p>手機線上支付</p>
+                                <p>基礎線上菜單介面</p>
+                            </div>
+                        </li>
+                        <li>
+                            <h1>入門方案</h1>
+                            <div class="plan-introduction">
+                                <p>想擁有更全套完整的經營及行銷工具，智能行銷幫你節省時間與人力，自動有效地刺激客人一再回流</p>
+                            </div>
+                            <div class="price-plan">
+                                <p>$1,0000</p>
+                                <span>/單店每年</span>
+                            </div>
+                            <div class="plan-contact">
+                                <a href="./contact">立即諮詢</a>
+                            </div>
+                            <div class="plan-container">
+                                <p>POS系統</p>
+                                <p>手機線上支付</p>
+                                <p>基礎線上菜單介面</p>
+                            </div>
+                        </li>
+                        <li>
+                            <h1>菜單客製</h1>
+                            <div class="plan-introduction">
+                                <p>專屬於自己店面的菜單從現在開始</p>
+                            </div>
+                            <div class="price-plan">
+                                <p>$1,0000</p>
+                                <span>/單次</span>
+                            </div>
+                            <div class="plan-contact">
+                                <a href="./contact">立即諮詢</a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <footer>
-                    <div class="footerBox">
-                        <a href="#"></a>
-                        <p><small>@2023_Starpensive</small></p>
-                    </div>
-
-                </footer>
             </div>
-        </article>
-
+        </div>
     </div>
-
 </body>
 <script>
     $(() => {
@@ -113,7 +141,7 @@
         })
         //按鈕點擊
         $(".menuButtonClose").click(function () {
-            $("body").css("overflow-y", "scroll");
+            $("body").css("overflow-y", "");
             $("lord-icon").stop().fadeIn(300);
             $(".menuBox").stop().slideUp(300);
         })
