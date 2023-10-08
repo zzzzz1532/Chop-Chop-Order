@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -123,7 +124,7 @@ $(document).ready(function() {
 					<h2>CCO早餐資展店</h2>
 				</div>
 				<!-- 店頭圖片 -->
-				<img src="">
+				<img src="<c:url value='/img/點餐頁面.jpg' />">
 				<div class="ordercmp">
 					<i class="fa-regular fa-circle-check fa-bounce">訂單完成</i>
 				</div>

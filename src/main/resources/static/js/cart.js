@@ -76,7 +76,7 @@ $(document).ready(function () {
             }, 100);
         }
         if (takeoutChecked && payChecked) {
-            window.location.href = 'finish';
+            window.location.href = 'final';
         }
     });
     $('input[name="takeout"]').on('input', function () {
