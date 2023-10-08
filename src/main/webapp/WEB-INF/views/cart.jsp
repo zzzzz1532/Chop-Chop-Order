@@ -128,10 +128,10 @@
 	    var selectedPaymentMethod = 'localPayment';
 
 	    $('.remarkinput').on('input', function() {
-	        var orderNote = $(this).val(); // 获取输入字段的值
+	        var orderNote = $(this).val(); // 獲取輸入字段的值
 	        var orderData = JSON.parse(localStorage.getItem('orderData'));
 
-	        // 遍历 orderData 并为每个项目更新 orderNote
+	        // 遍歷 orderData 並為每個項目更新 orderNote
 	        for (var i = 0; i < orderData.length; i++) {
 	            orderData[i].orderNote = orderNote;
 	        }
@@ -179,7 +179,14 @@
 
 	        // 如果所有必填欄位都已選擇，根據所選支付方式進行提交
 	        if ((takeoutChecked || innerChecked) && (ecPayChecked || googlePayChecked || localPaymentChecked)) {
-	            if (selectedPaymentMethod === 'ecPay') {
+	        	if (ecPayChecked) {
+	                selectedPaymentMethod = 'ecPay';
+	            } else if (googlePayChecked) {
+	                selectedPaymentMethod = 'googlePay';
+	            } else if (localPaymentChecked) {
+	                selectedPaymentMethod = 'localPayment';
+	            }
+	        	if (selectedPaymentMethod === 'ecPay') {
 	                // 使用AJAX發送到/ecpayCheckout
 	                $.ajax({
 	                    url: '/ecpayCheckout',
