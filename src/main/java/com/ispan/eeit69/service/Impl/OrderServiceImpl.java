@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
             }
 
             String diningLocation = (String) orderData.get("diningLocation");
-            String foodNote = (String) orderData.get("foodNote");
+            String foodNote = (String) orderData.get("remark");
             String orderNote = (String) orderData.get("orderNote");
 
             // 提取 labelId 的值，如果是数组则转换为 List

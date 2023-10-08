@@ -126,6 +126,18 @@
 	$(document).ready(function() {
 	    // 定義一個變量來記錄當前選中的支付方式，默認為現金支付
 	    var selectedPaymentMethod = 'localPayment';
+	    
+	    $('.remarkinput').on('input', function() {
+	        var orderNote = $(this).val(); // 获取输入字段的值
+	        var orderData = JSON.parse(localStorage.getItem('orderData'));
+	        
+	        // 遍历 orderData 并为每个项目更新 orderNote
+	        for (var i = 0; i < orderData.length; i++) {
+	            orderData[i].orderNote = orderNote;
+	        }
+	        
+	        localStorage.setItem('orderData', JSON.stringify(orderData));
+	    });
 
 	    // 更新提交訂單按鈕的行為和路徑
 	    $('#submitOrderButton').click(function() {
