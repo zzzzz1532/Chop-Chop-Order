@@ -126,16 +126,16 @@
 	$(document).ready(function() {
 	    // 定義一個變量來記錄當前選中的支付方式，默認為現金支付
 	    var selectedPaymentMethod = 'localPayment';
-	    
+
 	    $('.remarkinput').on('input', function() {
 	        var orderNote = $(this).val(); // 获取输入字段的值
 	        var orderData = JSON.parse(localStorage.getItem('orderData'));
-	        
+
 	        // 遍历 orderData 并为每个项目更新 orderNote
 	        for (var i = 0; i < orderData.length; i++) {
 	            orderData[i].orderNote = orderNote;
 	        }
-	        
+
 	        localStorage.setItem('orderData', JSON.stringify(orderData));
 	    });
 
@@ -144,14 +144,18 @@
 	        console.log('提交訂單按鈕被點擊');
 	        var data = localStorage.getItem('orderData');
 	        var parsedData = JSON.parse(data);
-	        
+
 	        // 檢查必填欄位是否有填寫
 	        var takeoutChecked = $('input[name="diningLocationTakeout"]:checked').length > 0;
 	        var innerChecked = $('input[name="diningLocationInner"]:checked').length > 0;
 	        var ecPayChecked = $('#ecPayRadioButton').is(':checked');
 	        var googlePayChecked = $('#googlePayRadioButton').is(':checked');
 	        var localPaymentChecked = $('#localPaymentRadioButton').is(':checked');
-	        
+
+	        // 清除之前的錯誤訊息
+	        $('.takeouterrmsg').remove();
+	        $('.payerrmsg').remove();
+
 	        // 如果有未選擇的必填欄位，顯示錯誤訊息
 	        if (!takeoutChecked && !innerChecked) {
 	            var messageDiv = document.createElement('div');
@@ -162,7 +166,7 @@
 	            // 阻止表單提交
 	            return false;
 	        }
-	        
+
 	        if (!ecPayChecked && !googlePayChecked && !localPaymentChecked) {
 	            var messageDiv = document.createElement('div');
 	            messageDiv.classList.add('payerrmsg');
@@ -214,6 +218,8 @@
 	    // 內用選項點擊事件
 	    $('input[name="diningLocationInner"]').click(function() {
 	        console.log('內用選項被點擊');
+	        // 清除用餐方式的錯誤訊息
+	        $('.takeouterrmsg').remove();
 	        // 將外帶選項取消選擇
 	        $('input[name="diningLocationTakeout"]').prop('checked', false);
 	        // 更新localStorage中的orderData，將"diningLocation"字段設置為"內用"
@@ -227,6 +233,8 @@
 	    // 外帶選項點擊事件
 	    $('input[name="diningLocationTakeout"]').click(function() {
 	        console.log('外帶選項被點擊');
+	        // 清除用餐方式的錯誤訊息
+	        $('.takeouterrmsg').remove();
 	        // 將內用選項取消選擇
 	        $('input[name="diningLocationInner"]').prop('checked', false);
 	        // 更新localStorage中的orderData，將"diningLocation"字段設置為"外帶"
@@ -237,6 +245,7 @@
 	        localStorage.setItem('orderData', JSON.stringify(orderData));
 	    });
 	});
+
 
 	</script>
 </body>
