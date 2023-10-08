@@ -93,7 +93,7 @@ input.form__input {
 								<li><a href="./Report.html">報表分析</a></li>
 							</ul></li>
 						<li><a href="./plan.html">價格方案</a></li>
-						<li><a class="click2" href="/contact.html">立刻諮詢</a></li>
+						<li><a class="click2" href="/contact">立刻諮詢</a></li>
 						<li><a class="click3" href="./login.html">登入</a></li>
 					</ul>
 				</div>
@@ -111,7 +111,7 @@ input.form__input {
 								<li><a href="./Report.html">營業報表分析</a></li>
 							</ul></li>
 						<li><a href="./plan.html">價格方案</a></li>
-						<li><a href="/contact.html">立刻諮詢</a></li>
+						<li><a href="/contact">立刻諮詢</a></li>
 					</ul>
 				</div>
 			</div>
