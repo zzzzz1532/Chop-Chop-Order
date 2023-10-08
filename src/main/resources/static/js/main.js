@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('.productitem').click(function () {
 	  var productID = $(this).data('productid');
-      window.location.href = '/opProduct/'+productID;
+      window.location.href = 'opProduct/'+productID;
     });
     $('.footer1').click(function () {
       window.location.href = 'cart';
@@ -22,5 +22,7 @@ $(document).ready(function () {
     } else {
       $('.footersticky span').hide();
     }
-
+    if ($(".footersticky span").text().trim() == '') {
+      $(".footersticky").hide();
+    }
   });

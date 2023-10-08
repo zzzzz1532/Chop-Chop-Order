@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +35,8 @@
                     <div>
                         <h4>${ProductDetails.productName }</h4>
                     </div>
-                    <div>NT$<span>${ProductDetails.productPrice }</span></div>
+                    <c:set var="price" value="${fn:split(ProductDetails.productPrice, '.')[0]}" />
+                    <div>NT$<span>${price }</span></div>
                 </div>
 
                 <div>
@@ -45,32 +47,35 @@
                 <hr>
                 <form>
                     <div id="radio">
-                        <div style="margin: 10px 0px;">
+                        <div style="margin: 10px 0px;" class="customizedbox">
                             <h4>客製化</h4>
                         </div>
+                        
                         <c:forEach var="ProductLabels" items="${ProductLabels}">
-                        	<c:if test="${ProductLabels.labelPrice == 0}">
+                        	<c:set var="labelsprice" value="${fn:split(ProductLabels.labelPrice, '.')[0]}" />
+                        	<c:if test="${labelsprice == 0}">
 	                        <label><input type="radio" name="customized" value="${ProductLabels.labelName}" ><span
 	                                class="round button">${ProductLabels.labelName}</span></label>
 							 </c:if>
 						</c:forEach>
-                        <div style="margin: 10px 0px;">
+                        <div style="margin: 10px 0px;" class="toppingsbox">
                             <h4>加料區</h4>
                         </div>
                         <c:forEach var="ProductLabels" items="${ProductLabels}">
-                        	<c:if test="${ProductLabels.labelPrice != 0}">
+                        	<c:set var="labelsprice" value="${fn:split(ProductLabels.labelPrice, '.')[0]}" />
+                        	<c:if test="${labelsprice != 0}">
 	                        <label>
 	                            <input type="checkbox" name="toppings" value="${ProductLabels.labelName}"  data-Labelsid="${ProductLabels.id}">
 	                            <span class="round button">
 	                                ${ProductLabels.labelName}<span class="price">+NT$</span>
-	                                <span>${ProductLabels.labelPrice}</span>
+	                                <span>${labelsprice}</span>
 	                            </span>
 	                        </label>
                         	</c:if>
 						</c:forEach>
-          
+          			<hr>
                     </div>
-                    <hr>
+                    
                     <div style="margin: 10px 0px;">
                         <h4>備註：</h4>
                         <div id="remark">
