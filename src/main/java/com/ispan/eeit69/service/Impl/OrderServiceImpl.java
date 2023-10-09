@@ -135,6 +135,7 @@ public class OrderServiceImpl implements OrderService {
         // 在这里进行单项总价计算的逻辑，包括产品价格和标签价格的计算
         BigDecimal totalPrice = BigDecimal.ZERO;
 
+        // 计算标签价格
         if (!labelIds.isEmpty()) {
             for (Integer labelId : labelIds) {
                 Label label = labelRepository.findById(labelId).orElse(null);
@@ -151,8 +152,11 @@ public class OrderServiceImpl implements OrderService {
 
         if (product != null) {
             BigDecimal productPrice = product.getProductPrice();
-            totalPrice = totalPrice.add(productPrice.multiply(new BigDecimal(foodQuantity)));
+            totalPrice = totalPrice.add(productPrice);
         }
+
+        // 将总价乘以产品数量
+        totalPrice = totalPrice.multiply(new BigDecimal(foodQuantity));
 
         return totalPrice;
     }

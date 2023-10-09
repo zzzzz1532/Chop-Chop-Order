@@ -1,68 +1,124 @@
 $(document).ready(function () {
 	const cartdata = JSON.parse(localStorage.getItem('cartdata'));
 	if (cartdata) {
-        // 存在 cartdata，说明用户是从购物车页面点击“修改”按钮跳转过来的
-        // 在这里执行更新购物车的操作
-        
-        // 更新完购物车后，记得将 cartdata 从 localStorage 中移除
-        localStorage.removeItem('cartdata');
-    }
+        $('.footer1.footersticky div').text('更新購物車');
+        $("#itemcount span").text(cartdata.itemCount);
+        // 選取相應的單選按鈕
+		var customizedRadio = document.querySelector('input[type="radio"][value="' + cartdata.customized + '"]');
+		if (customizedRadio) {
+		    customizedRadio.checked = true;
+		}
+        var toppingsCheckboxes = document.querySelectorAll('input[name="toppings"]');
+			cartdata.toppings.forEach(function(topping) {
+			    var checkbox = Array.from(toppingsCheckboxes).find(function(cb) {
+			        return cb.value === topping;
+			    });
+			    if (checkbox) {
+			        checkbox.checked = true;
+			    }
+			});
+		var remarkInput = document.querySelector('#remark input');
+		if (remarkInput) {
+		    remarkInput.value = cartdata.remark;
+		}
+		$('.footer1').click(function () {
+			const orderData = JSON.parse(localStorage.getItem('orderData')) || [];
+			var orderItemToUpdate = orderData.find(function(item) {
+			    return item.cartId == cartdata.cartID; // 注意這裡可能需要轉換為字串進行比較
+			});
+			if (orderItemToUpdate) {
+				orderItemToUpdate.name = document.querySelector('.divflex h4').textContent;		
+				orderItemToUpdate.price = document.querySelector('.divflex span').textContent;
+				const customizedInput = document.querySelector('input[name="customized"]:checked');
+				const customized = customizedInput ? customizedInput.value : '';
+				orderItemToUpdate.customized = customized;
+				let labels = document.querySelectorAll('input[name="toppings"]:checked');
+		        let labelsData = [];
+		        labels.forEach(function(label) {
+				    let labelID = label.dataset.labelsid;
+				    labelsData.push(labelID);
+				});
+				orderItemToUpdate.labelid = labelsData;
+			    orderItemToUpdate.toppings = Array.from(document.querySelectorAll('input[name="toppings"]:checked'))
+            								.map(checkbox => checkbox.value);
+			    
+			    orderItemToUpdate.remark = document.querySelector('#remark input').value;
+			    orderItemToUpdate.itemCount = document.querySelector('#itemcount span').textContent;
+			    orderItemToUpdate.toppingsPrices = {};
+			    orderItemToUpdate.toppings.forEach(topping => {
+		            const toppingName = topping;
+		            const toppingPriceText = parseInt(document.querySelector(`input[value="${topping}"]`).nextElementSibling.querySelector('span:last-child').textContent, 10);
+		            const toppingPrice = parseInt(toppingPriceText) || 0;
+		            orderItemToUpdate.toppingsPrices[toppingName] = toppingPrice;
+		        });
+			    localStorage.setItem('orderData', JSON.stringify(orderData));
+			    localStorage.removeItem('cartdata');
+			    window.location.href = '/cart';
+			} else {
+			    console.log("未找到相應的購物車項目");
+			    
+			}
+	        
+		});
+    }else{
+		$('.footer1').click(function () {
+		        // 获取已有的订单数据（如果有）
+		        const existingData = JSON.parse(localStorage.getItem('orderData')) || [];
+		        // 获取产品名称和价格
+		        const productName = document.querySelector('.divflex h4').textContent;
+		        const productPrice = document.querySelector('.divflex span').textContent;
+		        // 获取选中的客製化选项
+		        const customizedInput  = document.querySelector('input[name="customized"]:checked');
+		        const customized = customizedInput ? customizedInput.value : '';
+		        let labels = document.querySelectorAll('input[name="toppings"]:checked');
+		        let labelsData = [];
+		        labels.forEach(function(label) {
+				    let labelID = label.dataset.labelsid;
+				    labelsData.push(labelID);
+				});
+		        // 获取选中的加料选项
+		        const toppings = Array.from(document.querySelectorAll('input[name="toppings"]:checked'))
+		            .map(checkbox => checkbox.value);
+		        // 获取備註
+		        const remark = document.querySelector('#remark input').value;
+		        // 获取数量
+		        const itemCount = document.querySelector('#itemcount span').textContent;
+		        let productID = window.location.pathname.split('/').pop();
+		        const singlePrice = finaltotalPrice / itemCount;
+		        const cartId = Date.now();
+		        // 将数据存储到 LocalStorage
+		        const newData = {
+		            cartId: cartId,
+		            productID:productID,
+		            name: productName,
+		            price: productPrice,
+		            labelid:labelsData,
+		            customized: customized,
+		            toppings: toppings,
+		            remark: remark,
+		            itemCount: itemCount,
+		            finaltotalPrice: finaltotalPrice,
+		            toppingsPrices: {},
+		            singlePrice: singlePrice
+		        };
+		        //更新 toppingsPrices
+		        toppings.forEach(topping => {
+		            const toppingName = topping;
+		            const toppingPriceText = parseInt(document.querySelector(`input[value="${topping}"]`).nextElementSibling.querySelector('span:last-child').textContent, 10);
+		            const toppingPrice = parseInt(toppingPriceText) || 0;
+		            newData.toppingsPrices[toppingName] = toppingPrice;
+		        });
+		        // 将新的订单数据添加到已有的订单数据中
+		        existingData.push(newData);
+		        localStorage.setItem('orderData', JSON.stringify(existingData));
+		        window.location.href = '/main';
+		    });
+	}
     $('.fa-angle-left').click(function () {
 		localStorage.removeItem('cartdata');
         window.history.back();
     });
-    $('.footer1').click(function () {
-        // 获取已有的订单数据（如果有）
-        const existingData = JSON.parse(localStorage.getItem('orderData')) || [];
-        // 获取产品名称和价格
-        const productName = document.querySelector('.divflex h4').textContent;
-        const productPrice = document.querySelector('.divflex span').textContent;
-        // 获取选中的客製化选项
-        const customizedInput  = document.querySelector('input[name="customized"]:checked');
-        const customized = customizedInput ? customizedInput.value : '';
-        let labels = document.querySelectorAll('input[name="toppings"]:checked');
-        let labelsData = [];
-        labels.forEach(function(label) {
-		    let labelID = label.dataset.labelsid;
-		    labelsData.push(labelID);
-		});
-        // 获取选中的加料选项
-        const toppings = Array.from(document.querySelectorAll('input[name="toppings"]:checked'))
-            .map(checkbox => checkbox.value);
-        // 获取備註
-        const remark = document.querySelector('#remark input').value;
-        // 获取数量
-        const itemCount = document.querySelector('#itemcount span').textContent;
-        let productID = window.location.pathname.split('/').pop();
-        const singlePrice = finaltotalPrice / itemCount;
-        const cartId = Date.now();
-        // 将数据存储到 LocalStorage
-        const newData = {
-            cartId: cartId,
-            productID:productID,
-            name: productName,
-            price: productPrice,
-            labelid:labelsData,
-            customized: customized,
-            toppings: toppings,
-            remark: remark,
-            itemCount: itemCount,
-            finaltotalPrice: finaltotalPrice,
-            toppingsPrices: {},
-            singlePrice: singlePrice
-        };
-        //更新 toppingsPrices
-        toppings.forEach(topping => {
-            const toppingName = topping;
-            const toppingPriceText = parseInt(document.querySelector(`input[value="${topping}"]`).nextElementSibling.querySelector('span:last-child').textContent, 10);
-            const toppingPrice = parseInt(toppingPriceText) || 0;
-            newData.toppingsPrices[toppingName] = toppingPrice;
-        });
-        // 将新的订单数据添加到已有的订单数据中
-        existingData.push(newData);
-        localStorage.setItem('orderData', JSON.stringify(existingData));
-        window.location.href = '/main';
-    });
+    
     var spanElement = $("#itemcount span");
     var interval;
 
@@ -151,5 +207,20 @@ $(document).ready(function () {
             priceElement.style.display = 'none';
         }
     });
+    const customizedExists = $('#radio').find('input[name="customized"]').length > 0;
+    const toppingsExists = $('#radio').find('input[name="toppings"]').length > 0;
+
+    if (!customizedExists) {
+        
+        $('.customizedbox').hide();
+    }
+    if (!toppingsExists) {
+        
+        $('.toppingsbox').hide();
+    }
+    if (!toppingsExists && !customizedExists) {
+    
+        $('#radio').hide();
+    }
 
 });
