@@ -161,6 +161,10 @@ h4 {
     color: blue;
     cursor: pointer;
 }
+.neworder{
+	color: blue;
+    cursor: pointer;
+}
 
 .requiredfield {
     font-size: 14px;
@@ -189,4 +193,23 @@ h4 {
     color: red;
     font-size: 14px;
     margin-top: 5px;
+}
+.nocarttext {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.nocartdiv {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    
+}
+.viewmeun{
+	color: rgb(131, 131, 247);
+	cursor: pointer;
 }

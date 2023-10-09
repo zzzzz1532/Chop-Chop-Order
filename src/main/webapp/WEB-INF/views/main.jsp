@@ -61,10 +61,11 @@
 			                    <img style="height: 60px;width: 60px;" src="${product.dataUri}">
 			                    <div style="margin-left: 10px;">
 			                        <h6>${product.productName}</h6>
-			                        <div>NT$<span>${product.productPrice}</span></div>
+			                        <c:set var="price" value="${fn:split(product.productPrice, '.')[0]}" />
+			                        <div>NT$<span>${price}</span></div>
 			                    </div>
 			                </div>
-			                <span>1</span>
+			                <span></span>
 			            </div>
 			            <hr>
 			            </c:if>

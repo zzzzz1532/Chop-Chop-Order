@@ -1,47 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
-<%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-	crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<link rel="stylesheet" href="<c:url value='/css/cart.css' />">
-<script src="<c:url value='/js/cart.js' />"></script>
-<title>CCO</title>
-<style>
-</style>
-<title>CCO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" href="<c:url value='/css/cart.css' />">
+    <script src="<c:url value='/js/cart.js' />"></script>
+    <title>CCO</title>
 </head>
 <body>
 	<div id="responseContent"></div>
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-10 col-lg-8 col-xl-7 mx-auto">
-				<nav class="divsticky">
-					<i class="fa-solid fa-angle-left fa-xl" style="cursor: pointer;"></i>
-					<div>您的購物車</div>
-				</nav>
-				<div style="text-align: center;">
-					<h2>CCO早餐資展店</h2>
-				</div>
-				<div class="divflex">
-					<div>
-						<h4>訂單內容</h4>
-					</div>
-					<div>
-						<span>新增餐點</span>
-					</div>
-				</div>
-				<div id="cartContainer"></div>
+        <div class="row">
+            <div class="col-sm-10 col-lg-8 col-xl-7 mx-auto">
+            	<div class="nocartdiv">
+                    <i class="fa-solid fa-cart-shopping" style="font-size: 100px;"></i>
+                    <div class="nocarttext">您的購物車中沒有任何餐點</div>
+                    <div class="nocarttext viewmeun">瀏覽餐點</div>
+                </div>
+                <div id="allcartpage">
+	                <nav class="divsticky">
+	                    <i class="fa-solid fa-angle-left fa-xl" style="cursor: pointer;"></i>
+	                    <div>您的購物車</div>
+	                </nav>
+	                <div style="text-align: center;">
+	                    <h2>CCO早餐資展店</h2>
+	                </div>
+	                <div class="divflex">
+	                    <div>
+	                        <h4>訂單內容</h4>
+	                    </div>
+	                    <div class="neworder">
+	                        <span>新增餐點</span>
+	                    </div>
+	                </div>
+	                <div id="cartContainer">
+	
+	                </div>
 
 				<div style="margin: 20px 0;">
 					<h4>訂單備註：</h4>
@@ -71,14 +72,16 @@
 						<span class="payment-method-button" id="ecPayButton">綠界支付</span>
 						<p>接受國內信用卡與簽帳金融卡</p>
 					</div>
-				</label> <label class="payradioflex"> <input type="radio"
-					name="paymentMethod" value="googlePay" id="googlePayRadioButton">
-					<div>
-						<span class="payment-method-button" id="googlePayButton">Google
-							Pay</span>
-						<p>將於送出訂單後才會進行扣款</p>
-					</div>
-				</label> <label class="payradioflex"> <input type="radio"
+				</label> 
+<!-- 				<label class="payradioflex"> <input type="radio" -->
+<!-- 							name="paymentMethod" value="googlePay" id="googlePayRadioButton"> -->
+<!-- 							<div> -->
+<!-- 								<span class="payment-method-button" id="googlePayButton">Google -->
+<!-- 									Pay</span> -->
+<!-- 								<p>將於送出訂單後才會進行扣款</p> -->
+<!-- 							</div> -->
+<!-- 						</label>  -->
+						<label class="payradioflex"> <input type="radio"
 					name="paymentMethod" value="localPayment"
 					id="localPaymentRadioButton">
 					<div>
@@ -88,14 +91,14 @@
 				</label>
 
 				</div>
-				<div class="payinfo">
-					<h4>付款人資訊*</h4>
-					<div>刷卡通知將發送到此信箱</div>
-					<div>
-						<input type="text" placeholder="Email" class="remarkinput">
-					</div>
+<!-- 				<div class="payinfo"> -->
+<!-- 					<h4>付款人資訊*</h4> -->
+<!-- 					<div>刷卡通知將發送到此信箱</div> -->
+<!-- 					<div> -->
+<!-- 						<input type="text" placeholder="Email" class="remarkinput"> -->
+<!-- 					</div> -->
 
-				</div>
+<!-- 				</div> -->
 				<div id="allPrice" class=" divflex">
 					<h4>總計金額</h4>
 					<h4>
@@ -164,6 +167,9 @@
 	            var container = document.querySelector('.takeout');
 	            container.appendChild(messageDiv);
 	            // 阻止表單提交
+	            $('html, body').animate({
+               scrollTop: $(container).offset().top
+           }, 100); // 1000為滾動的時間，以毫秒為單位
 	            return false;
 	        }
 
@@ -174,6 +180,9 @@
 	            var container = document.querySelector('#payradio');
 	            container.appendChild(messageDiv);
 	            // 阻止表單提交
+	            $('html, body').animate({
+               scrollTop: $(container).offset().top
+           }, 100); // 1000為滾動的時間，以毫秒為單位
 	            return false;
 	        }
 
