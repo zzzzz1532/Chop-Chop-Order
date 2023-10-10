@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	const cartdata = JSON.parse(localStorage.getItem('cartdata'));
+	
 	if (cartdata) {
         $('.footer1.footersticky div').text('更新購物車');
         $("#itemcount span").text(cartdata.itemCount);
@@ -43,7 +44,8 @@ $(document).ready(function () {
             								.map(checkbox => checkbox.value);
 			    
 			    orderItemToUpdate.remark = document.querySelector('#remark input').value;
-			    orderItemToUpdate.itemCount = document.querySelector('#itemcount span').textContent;
+			    const itemCount = document.querySelector('#itemcount span').textContent;
+			    orderItemToUpdate.itemCount = itemCount;
 			    orderItemToUpdate.toppingsPrices = {};
 			    orderItemToUpdate.toppings.forEach(topping => {
 		            const toppingName = topping;
@@ -51,6 +53,9 @@ $(document).ready(function () {
 		            const toppingPrice = parseInt(toppingPriceText) || 0;
 		            orderItemToUpdate.toppingsPrices[toppingName] = toppingPrice;
 		        });
+			    orderItemToUpdate.finaltotalPrice = finaltotalPrice;
+			    const singlePrice1 = finaltotalPrice / itemCount;
+			    orderItemToUpdate.singlePrice = singlePrice1;
 			    localStorage.setItem('orderData', JSON.stringify(orderData));
 			    localStorage.removeItem('cartdata');
 			    window.location.href = '/cart';
