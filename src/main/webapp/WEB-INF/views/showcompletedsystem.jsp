@@ -183,8 +183,7 @@ div label, div input, div button {
 		}
 		
 		
-		
-		
+				
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", "<c:url value='/findCompletedOrder'/>?page=" + page
 				+ "&orderNo=" + orderNo + "&startDate=" + startDate

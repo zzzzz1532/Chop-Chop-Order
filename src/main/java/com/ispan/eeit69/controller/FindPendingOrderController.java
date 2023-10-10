@@ -90,6 +90,7 @@ public class FindPendingOrderController {
          return "showcompletedsystem";
      }
      
+     
      @PostMapping("/copy-from-pending/{orderNo}")
      @Transactional  // Add this annotation
      public void copyPendingOrderToCompleteOrder(@PathVariable Integer orderNo) {
@@ -112,6 +113,7 @@ public class FindPendingOrderController {
              e.printStackTrace();
          }
          return "redirect:/showOrderSystem";
+        // wsmh.sendPendingOrders();
      }
 
 }
