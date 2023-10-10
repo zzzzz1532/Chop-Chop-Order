@@ -48,12 +48,36 @@ public class FindPendingOrderController {
     }
     
     
+    @GetMapping("/findOrderDetailsForAllBasicOrders/{orderNo}")
+    public @ResponseBody List<Object[]> findOrderDetailsForAllBasicOrders(@PathVariable Integer orderNo) {
+        return pendingOrderService.findOrderDetailsForAllBasicOrders(orderNo);
+        
+    }
+    
+    
     @GetMapping("/findCompletedOrder")
     public @ResponseBody List<Object[]> findCompletedOrder() {
     	
         return pendingOrderService.findCompletedOrdeeForAllOrders();
         
     }
+    
+    
+    
+    @GetMapping("/findCompletedDetailsByOrderNo/{orderNo}")
+    public @ResponseBody List<Object[]>findCompletedDetailsByOrderNo(@PathVariable Integer orderNo) {
+        return pendingOrderService.findCompletedDetailsByOrderNo(orderNo);
+    }
+    
+    
+    @GetMapping("/findCompletedDetailsForAllBasicOrders/{orderNo}")
+    public @ResponseBody List<Object[]>findCompletedDetailsForAllBasicOrders(@PathVariable Integer orderNo) {
+        return pendingOrderService.findCompletedDetailsForAllBasicOrders(orderNo);
+        
+    }
+    
+    
+    
     
     
      @GetMapping("/showOrderSystem")

@@ -50,7 +50,10 @@ public class PendingOrderServiceImpl implements PendingOrderService {
 		return  pendingOrderRepository.findOrderDetailsByOrderNo(orderNo);		
 	}
 	
-	
+	@Override
+	public List<Object[]> findOrderDetailsForAllBasicOrders(Integer orderNo){
+		return  pendingOrderRepository.findOrderDetailsForAllBasicOrders(orderNo);
+	}
 //    @Override
 //    public List<PendingOrderSummary> findOrderSummaryByOrderNo(Integer orderNo) {
 //        return pendingOrderRepository.findOrderSummaryByOrderNo(orderNo);
@@ -63,6 +66,16 @@ public class PendingOrderServiceImpl implements PendingOrderService {
 //		return  pendingOrderRepository.findOrderSummaryByOrderNo(orderNo);
 //	}
     
-    
+	@Override
+	public List<Object[]> findCompletedDetailsForAllBasicOrders(Integer orderNo){
+		return  completeOrderRepository.findCompletedDetailsForAllBasicOrders(orderNo);
+	}
+	
+	
+	@Override
+	public List<Object[]> findCompletedDetailsByOrderNo(Integer orderNo){
+		return  completeOrderRepository.findCompletedDetailsByOrderNo(orderNo);
+	}
+	
 }
 
