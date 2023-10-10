@@ -19,7 +19,8 @@ public interface CompleteOrderRepository extends JpaRepository<CompleteOrder, In
 	        "  MIN(po.complete_at) as completeAt, " +
 	        "  SUM(CAST(po.orderPrice AS DECIMAL(10, 2))) as totalOrderPrice " +
 	        "FROM Complete_Order po " +
-	        "GROUP BY po.orderNo, po.diningLocation", nativeQuery = true)
+	        "GROUP BY po.orderNo, po.diningLocation " +
+	        "ORDER BY MIN(po.complete_at) DESC", nativeQuery = true)
 	List<Object[]> findCompletedOrdeeForAllOrders();
 
 	@Query(value = "SELECT " +

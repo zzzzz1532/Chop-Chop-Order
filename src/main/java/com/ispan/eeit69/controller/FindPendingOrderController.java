@@ -96,6 +96,7 @@ public class FindPendingOrderController {
      public void copyPendingOrderToCompleteOrder(@PathVariable Integer orderNo) {
     	 pendingOrderService.copyPendingOrderToCompleteOrder(orderNo);
     	 pendingOrderService.deleteById(orderNo);
+    	
      }
      
      

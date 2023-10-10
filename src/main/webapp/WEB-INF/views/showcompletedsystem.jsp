@@ -174,16 +174,15 @@ div label, div input, div button {
 		var lastPageButton = document.getElementById('lastpage');
 		var nextPageButton = document.getElementById('nextpage');
 
-		if (lastPageButton.style.display === 'none' && nextPageButton.style.display === 'none') {
-		    lastPageButton.style.display = '';
-		    nextPageButton.style.display = '';
+		if (lastPageButton.style.display === 'none'
+				&& nextPageButton.style.display === 'none') {
+			lastPageButton.style.display = '';
+			nextPageButton.style.display = '';
 		} else {
-		    lastPageButton.style.display = '';
-		    nextPageButton.style.display = '';
+			lastPageButton.style.display = '';
+			nextPageButton.style.display = '';
 		}
-		
-		
-				
+
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", "<c:url value='/findCompletedOrder'/>?page=" + page
 				+ "&orderNo=" + orderNo + "&startDate=" + startDate
@@ -296,19 +295,18 @@ div label, div input, div button {
 		} else {
 			detailsRow1.style.display = 'none';
 		}
-		
-		
+
 		var lastPageButton = document.getElementById('lastpage');
 		var nextPageButton = document.getElementById('nextpage');
 
-		if (lastPageButton.style.display === '' && nextPageButton.style.display === '') {
-		    lastPageButton.style.display = 'none';
-		    nextPageButton.style.display = 'none';
+		if (lastPageButton.style.display === ''
+				&& nextPageButton.style.display === '') {
+			lastPageButton.style.display = 'none';
+			nextPageButton.style.display = 'none';
 		} else {
-		    lastPageButton.style.display = '';
-		    nextPageButton.style.display = '';
+			lastPageButton.style.display = '';
+			nextPageButton.style.display = '';
 		}
-		
 
 	}
 
@@ -326,10 +324,11 @@ div label, div input, div button {
 	}
 
 	// <----------------------------------------------------------------------------------->
+	var i = 100;
 
 	window.onload = function() {
 		fetchData();
-		setInterval(fetchData, 30000); // 每 8 秒更新一次資料
+		setInterval(fetchData, i); // 每 8 秒更新一次資料
 	}
 </script>
 
@@ -380,8 +379,10 @@ div label, div input, div button {
 		</tbody>
 	</table>
 	<div class="button-group">
-		<button id="lastpage" class="button" onclick="fetchData(1)" style='display: ;'>上一頁</button>
-		<button id="nextpage" class="button" onclick="fetchData(2)" style='display: ;'>下一頁</button>
+		<button id="lastpage" class="button" onclick="fetchData(1)"
+			style='display:;'>上一頁</button>
+		<button id="nextpage" class="button" onclick="fetchData(2)"
+			style='display:;'>下一頁</button>
 	</div>
 </body>
 
