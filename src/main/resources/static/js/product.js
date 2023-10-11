@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	const cartdata = JSON.parse(localStorage.getItem('cartdata'));
+	
 	if (cartdata) {
 		$('.footer1.footersticky div').text('更新購物車');
 		$("#itemcount span").text(cartdata.itemCount);
@@ -39,24 +40,27 @@ $(document).ready(function() {
 					labelsData.push(labelID);
 				});
 				orderItemToUpdate.labelid = labelsData;
-				orderItemToUpdate.toppings = Array.from(document.querySelectorAll('input[name="toppings"]:checked'))
-					.map(checkbox => checkbox.value);
 
-				orderItemToUpdate.remark = document.querySelector('#remark input').value;
-				orderItemToUpdate.itemCount = document.querySelector('#itemcount span').textContent;
-				orderItemToUpdate.toppingsPrices = {};
-				orderItemToUpdate.toppings.forEach(topping => {
-					const toppingName = topping;
-					const toppingPriceText = parseInt(document.querySelector(`input[value="${topping}"]`).nextElementSibling.querySelector('span:last-child').textContent, 10);
-					const toppingPrice = parseInt(toppingPriceText) || 0;
-					orderItemToUpdate.toppingsPrices[toppingName] = toppingPrice;
-				});
-				orderItemToUpdate.finaltotalPrice = finaltotalPrice;
-				const singlePrice1 = finaltotalPrice / itemCount;
-				orderItemToUpdate.singlePrice = singlePrice1;
-				localStorage.setItem('orderData', JSON.stringify(orderData));
-				localStorage.removeItem('cartdata');
-				window.location.href = '/cart';
+			    orderItemToUpdate.toppings = Array.from(document.querySelectorAll('input[name="toppings"]:checked'))
+            								.map(checkbox => checkbox.value);
+			    
+			    orderItemToUpdate.remark = document.querySelector('#remark input').value;
+			    const itemCount = document.querySelector('#itemcount span').textContent;
+			    orderItemToUpdate.itemCount = itemCount;
+			    orderItemToUpdate.toppingsPrices = {};
+			    orderItemToUpdate.toppings.forEach(topping => {
+		            const toppingName = topping;
+		            const toppingPriceText = parseInt(document.querySelector(`input[value="${topping}"]`).nextElementSibling.querySelector('span:last-child').textContent, 10);
+		            const toppingPrice = parseInt(toppingPriceText) || 0;
+		            orderItemToUpdate.toppingsPrices[toppingName] = toppingPrice;
+		        });
+			    orderItemToUpdate.finaltotalPrice = finaltotalPrice;
+			    const singlePrice1 = finaltotalPrice / itemCount;
+			    orderItemToUpdate.singlePrice = singlePrice1;
+			    localStorage.setItem('orderData', JSON.stringify(orderData));
+			    localStorage.removeItem('cartdata');
+			    window.location.href = '/cart';
+
 			} else {
 				console.log("未找到相應的購物車項目");
 
