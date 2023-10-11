@@ -30,7 +30,7 @@
             <div class="col-sm-10 col-lg-8 col-xl-7 mx-auto">
                 <nav class="divsticky" style="margin: 10px 2px;"><i class="fa-solid fa-angle-left fa-xl"
                         style="cursor: pointer;"></i></nav>
-                <img src="${ProductDetails.dataUri }" style="width: 100%;height: 350px;">
+                <img src="${ProductDetails.dataUri }" style="width: 100%;height: 450px;">
                 <div class="divflex" style="justify-content: space-between;margin: 20px 0px;">
                     <div>
                         <h4>${ProductDetails.productName }</h4>
