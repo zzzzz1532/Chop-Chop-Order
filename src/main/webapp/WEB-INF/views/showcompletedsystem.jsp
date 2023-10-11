@@ -7,9 +7,14 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>歷史訂單查詢</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<link rel='stylesheet' href="<c:url value='/css/back-end.css' />" />
+	<script type="text/javascript" src="/js/back-end.js"></script>
+    <title>歷史訂單查詢</title>
 <style>
 body {
 	font-family: Arial, sans-serif;
@@ -333,17 +338,59 @@ div label, div input, div button {
 		fetchDataIntervalId = setInterval(fetchData, 80000);
 
 	}
+
 </script>
-
-
-
 
 </head>
 
 <body>
-	<header>
-		<h1>訂單查詢</h1>
-	</header>
+
+     <header>
+        <div class="back-end-header">
+            <div class="back-end-openButton"></div>
+            <h1 style=" margin: 0;">店家基本資料</h1>
+            <ul class="back-end-menuBox" style=" padding-left: 0 ;">
+                <div class="back-end-menu-top">
+                    <div class="back-end-closeButton"></div>
+                </div>
+                <li>
+                    <a href="/BusinessInformation">基本資料</a>
+                </li>
+                <li>
+                    <a class="click1" href="#">商品管理
+                        <img id="click1-buutton" class="click1-buutton0" src="./img/icon/angle-double-small-down.png" alt="" style=" float: right;
+                        width: 20px;
+                        height: 20px;
+                        margin: 6% 5% 0 0;">
+                    </a>
+                    <ul style="padding: 0;">
+                        <li><a href="/Product_all">商品總覽</a></li>
+                        <li><a href="/Category_all">商品類別管理</a></li>
+                        <li><a href="/Label_all">商品客製標籤管理</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="click2" href="#">接單系統
+                        <img id="click2-buutton" class="click2-buutton0" src="./img/icon/angle-double-small-down.png" alt=""style=" float: right;
+                        width: 20px;
+                        height: 20px;
+                        margin: 5% 5% 0 0;">
+                    </a>
+                    <ul style="padding: 0;">
+                        <li><a href="/showOrderSystem">待完成訂單</a></li>
+                        <li><a href="/kitchenDisplaySystem">廚房刊版系統</a></li>
+                        <li><a href="/showcompletedsystem">歷史訂單</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="click3" href="/chart">報表分析</a>
+                </li>
+                <li>
+                    <a class="click3" href="/board">系統公告</a>
+                </li>
+            </ul>
+        </div>
+    </header>
 	<div>
 		<label for="orderNo">訂單號碼:</label> <input type="text" id="orderNo"
 			name="orderNo"> <label for="startDate">起始日:</label> <input
@@ -387,6 +434,7 @@ div label, div input, div button {
 		<button id="nextpage" class="button" onclick="fetchData(2)"
 			style='display:;'>下一頁</button>
 	</div>
+
 </body>
 
 </html>
