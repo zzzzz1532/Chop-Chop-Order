@@ -42,12 +42,33 @@ public interface CompleteOrderRepository extends JpaRepository<CompleteOrder, In
 	@Query("SELECT DATE_FORMAT(c.complete_at, '%Y/%m/%d %H:00') AS formattedDate, SUM(c.orderPrice) AS revenue, COUNT(DISTINCT c.orderNo) AS orderQuan FROM CompleteOrder c WHERE c.complete_at BETWEEN :startDate AND :endDate GROUP BY formattedDate ORDER BY formattedDate")
 	List<Object[]> findHourData(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
+	
+	//------------------------------------------------------------------------------Ray 2023/10/11
+	
 	@Query(value = "SELECT " +
 	        "  po.orderNo as orderNo, " +
 	        "  po.diningLocation as diningLocation, " +
 	        "  MIN(po.created_at) as createdAt, " +
+	        "  MIN(po.complete_at) as completeAt, " +
 	        "  SUM(CAST(po.orderPrice AS DECIMAL(10, 2))) as totalOrderPrice " +
 	        "FROM Complete_Order po " +
-	        "GROUP BY po.orderNo, po.diningLocation", nativeQuery = true)
+	        "GROUP BY po.orderNo, po.diningLocation " +
+	        "ORDER BY MIN(po.complete_at) DESC", nativeQuery = true)
 	List<Object[]> findCompletedOrdeeForAllOrders();
+
+	@Query(value = "SELECT " +
+	        "  po.orderNo as orderNo, " +
+	        "  po.diningLocation as diningLocation, " +
+	        "  MIN(po.created_at) as createdAt, " +
+	        "  MIN(po.complete_at) as completeAt, " +
+	        "  SUM(CAST(po.orderPrice AS DECIMAL(10, 2))) as totalOrderPrice " +
+	        "FROM Complete_Order po WHERE po.orderNo = :orderNo " +  // 添加這個空格
+	        "GROUP BY po.orderNo, po.diningLocation,po.diningLocation", nativeQuery = true)
+	List<Object[]> findCompletedDetailsForAllBasicOrders(@Param("orderNo") Integer orderNo);
+	
+	@Query(value = "SELECT * FROM Complete_Order po WHERE po.orderNo = :orderNo", nativeQuery = true)
+	List<Object[]> findCompletedDetailsByOrderNo(@Param("orderNo") Integer orderNo);
+	
+	
+	
 }
