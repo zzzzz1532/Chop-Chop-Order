@@ -95,6 +95,34 @@ public class FindPendingOrderController {
          return "redirect:/showOrderSystem";
      }
 
+     
+     
+//---------------------------------------------------------------------------------------Ray 2023/10/11
+     
+
+     
+     @GetMapping("/findOrderDetailsForAllBasicOrders/{orderNo}")
+     public @ResponseBody List<Object[]> findOrderDetailsForAllBasicOrders(@PathVariable Integer orderNo) {
+         return pendingOrderService.findOrderDetailsForAllBasicOrders(orderNo);       
+     }
+     
+     
+     
+     
+     @GetMapping("/findCompletedDetailsByOrderNo/{orderNo}")
+     public @ResponseBody List<Object[]>findCompletedDetailsByOrderNo(@PathVariable Integer orderNo) {
+         return pendingOrderService.findCompletedDetailsByOrderNo(orderNo);
+     }
+     
+     
+     @GetMapping("/findCompletedDetailsForAllBasicOrders/{orderNo}")
+     public @ResponseBody List<Object[]>findCompletedDetailsForAllBasicOrders(@PathVariable Integer orderNo) {
+         return pendingOrderService.findCompletedDetailsForAllBasicOrders(orderNo);
+         
+     }
+             
+     
+     
 }
 
 

@@ -67,4 +67,25 @@ public class PendingOrderServiceImpl implements PendingOrderService {
 		return  pendingOrder.findOrderDetailsByOrderNo(orderNo);		
 	}
 
+	
+	//----------------------------------------------------------------------------Ray 2023/10/11
+	
+		
+		@Override
+		public List<Object[]> findOrderDetailsForAllBasicOrders(Integer orderNo){
+			return  pendingOrder.findOrderDetailsForAllBasicOrders(orderNo);
+		}
+
+		@Override
+		public List<Object[]> findCompletedDetailsForAllBasicOrders(Integer orderNo){
+			return  completeOrderRepository.findCompletedDetailsForAllBasicOrders(orderNo);
+		}
+		
+		
+		@Override
+		public List<Object[]> findCompletedDetailsByOrderNo(Integer orderNo){
+			return  completeOrderRepository.findCompletedDetailsByOrderNo(orderNo);
+		}
+	
+	
 }
