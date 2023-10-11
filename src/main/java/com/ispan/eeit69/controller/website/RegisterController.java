@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ispan.eeit69.DTO.AjaxObj;
 import com.ispan.eeit69.model.InvitationCodeForm;
 import com.ispan.eeit69.service.BusinessUserService;
+import com.ispan.eeit69.service.Impl.BusinessUserServiceImpl;
 import com.ispan.eeit69.utils.BCrypt;
 
 @RestController
 public class RegisterController {
 
 	@Autowired
-	private BusinessUserService businessUserService;
+	private BusinessUserServiceImpl businessUserService;
 
 	@PostMapping(value = "/checkUsername", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> checkUsername(@RequestBody AjaxObj registrationForm) {
@@ -36,6 +37,7 @@ public class RegisterController {
 		if (invitationCodeForm != null) {
 			if (password.equals(password2)) {
 				String usernameString = businessUserService.findByUsername(username);
+				System.out.println("使用者名稱: " +usernameString);
 				if (usernameString != null) {
 					String errorMessage = "使用者名稱已存在，請選擇其他使用者名稱";
 					response.put("exists", true);
@@ -44,9 +46,11 @@ public class RegisterController {
 				} else {
 					InvitationCodeForm level =  businessUserService.findByInvitationCode(invitationCode);
 					String levelString = level.getLevel();
-					 businessUserService.deleteByInvitationCodeAndLevel(invitationCode,levelString);
+					System.out.println("等級為: " + levelString);
+//					 businessUserService.deleteByInvitationCodeAndLevel(invitationCode,levelString);
 					String bcryptHashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-					 businessUserService.addUsernameAndPassword(username, bcryptHashPassword);
+//					 businessUserService.addUsernameAndPassword(username, bcryptHashPassword);
+					businessUserService.addUsernameAndPassword(username, bcryptHashPassword);
 					businessUserService.updateLevelByUsername(username, levelString);
 					response.put("exists", false);
 					response.put("redirect", "/registerOk"); // 指定跳轉頁面的路徑

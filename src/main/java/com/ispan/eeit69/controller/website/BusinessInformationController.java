@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ispan.eeit69.service.BusinessUserService;
+import com.ispan.eeit69.service.Impl.BusinessUserServiceImpl;
 import com.ispan.eeit69.utils.BCrypt;
 
 @RestController
 public class BusinessInformationController {
 
 	@Autowired
-	private BusinessUserService businessUserService;
+	private BusinessUserServiceImpl businessUserService;
 
 	@GetMapping("/getBusinessInfo")
 	public ResponseEntity<?> getBusinessInfo(HttpSession httpSession) {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ispan.eeit69.DTO.AjaxObj;
 import com.ispan.eeit69.service.BusinessUserService;
+import com.ispan.eeit69.service.Impl.BusinessUserServiceImpl;
 import com.ispan.eeit69.utils.BCrypt;
 
 @RestController
@@ -22,7 +23,7 @@ public class LoginController {
 //    @Autowired
 //    private BusinessUsersRepository businessUsersRepository;
 	@Autowired
-	private BusinessUserService businessUserService;
+	private BusinessUserServiceImpl businessUserService;
 
     @PostMapping(value = "/checkUsernameAndPassword", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> checkUsernameAndpassword(@RequestBody AjaxObj loginForm, HttpSession session) { // 注入HttpSession
