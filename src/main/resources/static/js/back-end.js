@@ -1,11 +1,11 @@
 $(() => {
-    $(".openButton").click(function () {
-        if (($(".menuBox").mouseover) != 0) {
-            $(".menuBox").stop().slideDown(300);
+    $(".back-end-openButton").click(function () {
+        if (($(".back-end-menuBox").mouseover) != 0) {
+            $(".back-end-menuBox").stop().slideDown(300);
         }
     })
-    $(".closeButton").click(function () {
-        $(".menuBox").stop().slideUp(300);
+    $(".back-end-closeButton").click(function () {
+        $(".back-end-menuBox").stop().slideUp(300);
     })
 
     let click1 = false
@@ -52,4 +52,25 @@ $(() => {
             click3 = true
         }
     });
+    // let rotated1 = false;
+    // let rotated2 = false;
+    // $("#click1-buutton").click(function () {
+    //     if (rotated1) {
+    //         $(this).removeClass("click1-buutton180").addClass("click1-buutton0");
+    //     } else {
+    //         $(this).removeClass("click1-buutton0").addClass("click1-buutton180");
+    //     }
+
+    //     rotated1 = !rotated1;
+    // });
+    
+    // $("#click2-buutton").click(function () {
+    //     if (rotated1) {
+    //         $(this).removeClass("click2-buutton180").addClass("click2-buutton0");
+    //     } else {
+    //         $(this).removeClass("click2-buutton0").addClass("click2-buutton180");
+    //     }
+
+    //     rotated2 = !rotated2;
+    // });
 })
