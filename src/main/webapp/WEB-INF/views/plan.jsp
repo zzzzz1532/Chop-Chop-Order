@@ -9,7 +9,7 @@
 
 <link rel='stylesheet' href="<c:url value='/bootstrap-3.4.1-dist/css/bootstrap.min.css' /> "type="text/css" />
 <link rel='stylesheet' href="<c:url value='/css/page.css' /> "type="text/css" />
-<link rel='stylesheet' href="<c:url value='/css/styles.css' /> "type="text/css" />]
+<link rel='stylesheet' href="<c:url value='/css/style.css' /> "type="text/css" />]
 <link rel='stylesheet' href="<c:url value='/css/plan.css' /> "type="text/css" />
 
 <meta charset="UTF-8">
@@ -22,7 +22,6 @@
                 <div class="menuButton"></div>
                 <div class="menuBox">
                     <ul>
-                        <h1><a href="./index.html">marlinLogo</a></h1>
                         <div class="user">
                             <div class="menuButtonClose"></div>
                         </div>
@@ -36,7 +35,7 @@
                             </ul>
                         </li>
                         <li><a href="./plan.html">價格方案</a></li>
-                        <li><a class="click2" href="/contact">立刻諮詢</a></li>
+                        <li><a class="click2" href="/contact.html">立刻諮詢</a></li>
                         <li><a class="click3" href="./login.html">登入</a></li>
                     </ul>
                 </div>
@@ -53,7 +52,7 @@
                             </ul>
                         </li>
                         <li><a href="./plan.html">價格方案</a></li>
-                        <li><a href="/contact">立刻諮詢</a></li>
+                        <li><a href="/contact.html">立刻諮詢</a></li>
                     </ul>
                 </div>
             </div>
@@ -66,11 +65,11 @@
                                 <p>小型單店想要開始嘗試經營忠誠度，輕鬆快速上線</p>
                             </div>
                             <div class="price-plan">
-                                <p>$1,0000</p>
+                                <p>$10,000</p>
                                 <span>/單店每年</span>
                             </div>
                             <div class="plan-contact">
-                                <a href="./contact">立即諮詢</a>
+                                <a href="./contact.html">立即諮詢</a>
                             </div>
                             <div class="plan-container">
                                 <p >POS系統</p>
@@ -79,21 +78,22 @@
                             </div>
                         </li>
                         <li>
-                            <h1>入門方案</h1>
+                            <h1>高級方案</h1>
                             <div class="plan-introduction">
                                 <p>想擁有更全套完整的經營及行銷工具，智能行銷幫你節省時間與人力，自動有效地刺激客人一再回流</p>
                             </div>
                             <div class="price-plan">
-                                <p>$1,0000</p>
+                                <p>$50,000</p>
                                 <span>/單店每年</span>
                             </div>
                             <div class="plan-contact">
-                                <a href="./contact">立即諮詢</a>
+                                <a href="./contact.html">立即諮詢</a>
                             </div>
                             <div class="plan-container">
                                 <p>POS系統</p>
                                 <p>手機線上支付</p>
                                 <p>基礎線上菜單介面</p>
+                                <p>報表分析系統</p>
                             </div>
                         </li>
                         <li>
@@ -102,11 +102,11 @@
                                 <p>專屬於自己店面的菜單從現在開始</p>
                             </div>
                             <div class="price-plan">
-                                <p>$1,0000</p>
+                                <p>$10,000</p>
                                 <span>/單次</span>
                             </div>
                             <div class="plan-contact">
-                                <a href="./contact">立即諮詢</a>
+                                <a href="./contact.html">立即諮詢</a>
                             </div>
                         </li>
                     </ul>

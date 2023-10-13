@@ -1,6 +1,7 @@
 body {
     overflow-x: hidden;
     overflow-y:hidden;
+    height: 100%;
 }
 
 .black-cover {
@@ -16,7 +17,7 @@ body {
 }
 
 .plan-list li{
-    height: 550px;
+    height: 80vh;
     width: 38vh;
     display: inline-block;
     padding: 20px;
@@ -104,8 +105,8 @@ body {
     }
 
     .plan-list li{
-        height: 480px;
-        width: 50vh;
+        height: 550px;
+        width: 40vh;
         margin-top: 20px;
     }
 

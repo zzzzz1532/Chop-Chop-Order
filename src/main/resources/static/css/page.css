@@ -1,5 +1,5 @@
 .pageWrapper {
-    width: 450px;
+    width: 50vh;
     margin: 0 auto;
 }
 
@@ -19,6 +19,8 @@
     background-repeat: no-repeat;
     background-position: top;
 }
+
+/* Contact */
 
 .checkbox__list{
     display: flex;
@@ -43,3 +45,4 @@ input.form__input{
     border-radius: 6px;
     display: inline-block;
 }
+

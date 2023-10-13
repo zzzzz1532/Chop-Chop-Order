@@ -9,7 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
 <link rel='stylesheet' href="<c:url value='/bootstrap-3.4.1-dist/css/bootstrap.min.css' /> "type="text/css" />
-<link rel='stylesheet' href="<c:url value='/css/styles.css' /> "type="text/css" />
+<link rel='stylesheet' href="<c:url value='/css/style.css' /> "type="text/css" />
 <link rel='stylesheet' href="<c:url value='/css/page.css' /> "type="text/css" />
 
 <meta charset="UTF-8">
