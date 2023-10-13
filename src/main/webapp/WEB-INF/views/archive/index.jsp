@@ -87,7 +87,7 @@
     </div>
 </body>
 <script>
-  let imageIndex = 0;
+ /*  let imageIndex = 0;
 const images = [
   '../img/cat.jpg',
   '../img/1.jpg',
@@ -127,6 +127,6 @@ function changeBackground() {
   }
 
   setTimeout(changeBackground, 10000); // 每3秒切換一次
-}
+} */
 </script>
 </html>
