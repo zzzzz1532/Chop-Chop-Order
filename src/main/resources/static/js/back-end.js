@@ -27,7 +27,7 @@ $(document).ready(function() {
 
     $(".click2").click(function() {
         // 切换样式类
-        $("#click2-buutton").toggleClass("click2-buutton0 click2-buutton180");
+        $("#click2-buutton").toggleClass("click-buutton0 click-buutton180");
         // 切换click1的状态
         if (click2) {
             $(this).siblings("ul").stop().hide(300);

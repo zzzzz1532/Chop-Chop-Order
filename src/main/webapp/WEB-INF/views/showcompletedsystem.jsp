@@ -37,7 +37,7 @@ header {
 	background-color: white;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 	border-radius: 5px;
-	margin-top: 20px;
+	margin-top: 30px;
 }
 
 table {
@@ -142,7 +142,6 @@ table.completed tbody td:nth-child(4), table.completed tbody th:nth-child(4)
 
 div {
 	/* text-align: center; */
-	margin-top: 10px;
 }
 
 div label, div input, div button {
@@ -346,8 +345,8 @@ div label, div input, div button {
 <body>
  <header>
         <div class="back-end-header" style="margin-top: 0;">
-            <div class="back-end-openButton"></div>
-            <h1 style=" margin: 0;">店家基本資料</h1>
+            <div class="back-end-openButton" style="margin-top: 0;"></div>
+            <h1 style=" margin: 0;">歷史訂單查詢</h1>
             <ul class="back-end-menuBox" style=" padding-left: 0 ; display: none;">
                 <div  class="back-end-menu-top"  style="margin-top: 0;" >
                     <div class="back-end-closeButton"></div>

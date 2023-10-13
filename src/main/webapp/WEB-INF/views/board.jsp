@@ -9,9 +9,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>系統公告</title>
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-	
-    <script type="text/javascript" src="./js/back-end.js"></script>
-	<link rel="stylesheet" href="./css/back-end.css">
 	<link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -154,7 +151,7 @@ $(() => {
 	<header>
         <div class="back-end-header" style="margin-top: 0;">
             <div class="back-end-openButton"></div>
-            <h1 style=" margin: 0;">店家基本資料</h1>
+            <h1 style=" margin: 0;">廚房刊版系統</h1>
             <ul class="back-end-menuBox" style=" padding-left: 0 ; display: none;">
                 <div  class="back-end-menu-top"  style="margin-top: 0;" >
                     <div class="back-end-closeButton"></div>
@@ -164,23 +161,17 @@ $(() => {
                 </li>
                 <li>
                     <a class="click1" href="#">商品管理
-                        <img id="click1-buutton" class="click1-buutton0" src="./img/icon/angle-double-small-down2.png" alt="" style=" float: right;
-                        width: 20px;
-                        height: 20px;
-                        margin: 6% 5% 0 0;">
+                        <img id="click1-buutton" class="click-buutton0" src="./img/icon/angle-double-small-down2.png" alt="" >
                     </a>
                     <ul style="padding: 0;">
-                        <li><a href="/Product">商品總覽</a></li>
-                        <li><a href="/Category">商品類別管理</a></li>
-                        <li><a href="/Label">商品客製標籤管理</a></li>
+                        <li><a href="/product">商品總覽</a></li>
+                        <li><a href="/category">商品類別管理</a></li>
+                        <li><a href="/label">商品客製標籤管理</a></li>
                     </ul>
                 </li>
                 <li>
                     <a class="click2" href="#">接單系統
-                        <img id="click2-buutton" class="click2-buutton0" src="./img/icon/angle-double-small-down2.png" alt=""style=" float: right;
-                        width: 20px;
-                        height: 20px;
-                        margin: 5% 5% 0 0;">
+                        <img id="click2-buutton" class="click-buutton0" src="./img/icon/angle-double-small-down2.png" alt="">
                     </a>
                     <ul style="padding: 0;">
                         <li><a href="/showOrderSystem">待完成訂單</a></li>

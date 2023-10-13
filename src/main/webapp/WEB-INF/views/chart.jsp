@@ -161,7 +161,7 @@ td {
 	<header>
         <div class="back-end-header" style="margin-top: 0;">
             <div class="back-end-openButton"></div>
-            <h1 style=" margin: 0;">店家基本資料</h1>
+            <h1 style=" margin: 0;">報表分析</h1>
             <ul class="back-end-menuBox" style=" padding-left: 0 ; display: none;">
                 <div  class="back-end-menu-top"  style="margin-top: 0;" >
                     <div class="back-end-closeButton"></div>

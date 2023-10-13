@@ -8,7 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>看版系統</title>
+    <title>廚房刊版系統</title>
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 	
     <script type="text/javascript" src="./js/back-end.js"></script>
@@ -79,7 +79,7 @@ td {
 	 <header>
         <div class="back-end-header" style="margin-top: 0;">
             <div class="back-end-openButton"></div>
-            <h1 style=" margin: 0;">店家基本資料</h1>
+            <h1 style=" margin: 0;">廚房刊版系統</h1>
             <ul class="back-end-menuBox" style=" padding-left: 0 ; display: none;">
                 <div  class="back-end-menu-top"  style="margin-top: 0;" >
                     <div class="back-end-closeButton"></div>
