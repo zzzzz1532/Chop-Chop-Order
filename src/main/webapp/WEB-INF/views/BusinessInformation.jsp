@@ -96,11 +96,11 @@ table span {
 </head>
 <body>
 	 <header>
-        <div class="back-end-header">
+        <div class="back-end-header" style="margin-top: 0;">
             <div class="back-end-openButton"></div>
             <h1 style=" margin: 0;">店家基本資料</h1>
-            <ul class="back-end-menuBox" style=" padding-left: 0 ;">
-                <div class="back-end-menu-top">
+            <ul class="back-end-menuBox" style=" padding-left: 0 ; display: none;">
+                <div  class="back-end-menu-top"  style="margin-top: 0;" >
                     <div class="back-end-closeButton"></div>
                 </div>
                 <li>
@@ -108,23 +108,17 @@ table span {
                 </li>
                 <li>
                     <a class="click1" href="#">商品管理
-                        <img id="click1-buutton" class="click1-buutton0" src="./img/icon/angle-double-small-down.png" alt="" style=" float: right;
-                        width: 20px;
-                        height: 20px;
-                        margin: 6% 5% 0 0;">
+                        <img id="click1-buutton" class="click-buutton0" src="./img/icon/angle-double-small-down2.png" alt="" >
                     </a>
                     <ul style="padding: 0;">
-                        <li><a href="/Product_all">商品總覽</a></li>
-                        <li><a href="/Category_all">商品類別管理</a></li>
-                        <li><a href="/Label_all">商品客製標籤管理</a></li>
+                        <li><a href="/product">商品總覽</a></li>
+                        <li><a href="/category">商品類別管理</a></li>
+                        <li><a href="/label">商品客製標籤管理</a></li>
                     </ul>
                 </li>
                 <li>
                     <a class="click2" href="#">接單系統
-                        <img id="click2-buutton" class="click2-buutton0" src="./img/icon/angle-double-small-down.png" alt=""style=" float: right;
-                        width: 20px;
-                        height: 20px;
-                        margin: 5% 5% 0 0;">
+                        <img id="click2-buutton" class="click-buutton0" src="./img/icon/angle-double-small-down2.png" alt="">
                     </a>
                     <ul style="padding: 0;">
                         <li><a href="/showOrderSystem">待完成訂單</a></li>

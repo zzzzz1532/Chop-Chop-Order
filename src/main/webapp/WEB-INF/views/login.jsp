@@ -13,7 +13,7 @@
 	type="text/css" />
 <link rel='stylesheet' href="<c:url value='/css/page.css' /> "
 	type="text/css" />
-<link rel='stylesheet' href="<c:url value='/css/styles.css' /> "
+<link rel='stylesheet' href="<c:url value='/css/style.css' /> "
 	type="text/css" />
 
 <meta charset="UTF-8">

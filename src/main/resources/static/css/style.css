@@ -36,9 +36,10 @@ body {
     height: 100vh;
     width: 100%;
     position: relative;
-    background-image: url(../img/cat.jpg);
+    background-image: url(../img/cat.jpg);  /* 預設的背景圖 */
     background-size: cover;
     background-repeat: no-repeat;
+    transition: background-image 2s ease-in-out;  /* 淡入淡出效果 */
 }
 
 
@@ -54,7 +55,7 @@ body {
     height: 50px;
     margin: 10px 0 0 10px;
     /* background-color: aliceblue; */
-    background-image: url(../img/icon/menu-burger\ \(1\).png);
+    background-image: url(../img/icon/menu-burger.png);
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -69,28 +70,28 @@ body {
 }
 
 .menuBox>ul {
-    width: 250px;
+    width: 300px;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.menuBox>ul>h1 {
-    width: 100px;
-    height: 50px;
-    margin: 15px auto 0 auto;
-    padding: 0;
+/* .menuBox>ul>h1 {
+    width: 250px;
+    height: 70px;
+    margin: 0 auto;
+    padding-top: 10px;
 
 }
 
 .menuBox>ul>h1>a {
     display: block;
-    width: 100px;
+    width: 250px;
     height: 50px;
     background-image: url(../img/logo.png);
     background-size: contain;
     background-repeat: no-repeat;
     font-size: 0;
-}
+} */
 
 .user {
     height: 50px;
@@ -170,14 +171,14 @@ body {
 
 .logo {
     height: 70px;
-    width: 170px;
+    width: 250px;
     padding-top: 8px;
     margin: 0 auto;
 }
 
 .logo h1 {
     height: 70px;
-    width: 170px;
+    width: 250px;
     margin: 0;
 
 }
@@ -185,7 +186,7 @@ body {
 .logo h1 a {
     display: block;
     height: 60px;
-    width: 170px;
+    width: 250px;
     background-image: url(../img/logo.png);
     background-size: contain;
     background-repeat: no-repeat;
@@ -217,13 +218,13 @@ body {
     float: left;
     height: 100vh;
     width: 100%;
-    background-image: url(../img/pexels-ketut-subiyanto-4350099.jpg);
+    background-image: url(../img/pexels-maria-orlova.png);
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 .containerBox {
-    width: 500px;
+    width: 100%;
     height: 100vh;
     background-color: rgb(0, 0, 0, 0.5);
     overflow: hidden;
@@ -252,6 +253,9 @@ body {
     margin-top: 42%;
     position: absolute;
     bottom: 0;
+    display: flex;
+    justify-content: start;
+    align-items: flex-end;
 }
 
 .footerBox a {
@@ -265,8 +269,6 @@ body {
 
 
 .footerBox p {
-    margin-top: 30%;
-    margin-left: 10px;
     color: white;
 }
 
@@ -304,7 +306,7 @@ body {
     .logo h1 a {
         display: block;
         height: 60px;
-        width: 170px;
+        width: 250px;
         background-image: url(../img/logo.png);
         background-size: contain;
         background-repeat: no-repeat;
@@ -365,6 +367,9 @@ body {
 
     .nav ul li ul a {
         color: black;
+    }
+    .containerBox {
+        width: 500px;
     }
 /* 
     .banner h2 {
