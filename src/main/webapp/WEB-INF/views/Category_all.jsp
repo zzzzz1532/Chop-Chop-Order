@@ -134,7 +134,7 @@
 		    </table>
 		    <p>      
 			<div align='center'>
-				<a class='btn btn-outline-primary' href="<c:url value='/' />" role='button'>回首頁</a>
+				<a class='btn btn-outline-primary' href="<c:url value='/product' />" role='button'>回首頁</a>
 			</div>
 	 </div>
     <form action="#" method='POST'>
