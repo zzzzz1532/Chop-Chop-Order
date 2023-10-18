@@ -7,7 +7,7 @@ EEIT69 JAVA 全端班期末專題
 
 組員：林冠宇、王梓軒、張登翔、徐昱瑋、黃煜仁
 
-簡報檔下載：https://reurl.cc/l7zzzY
+簡報檔下載：https://reurl.cc/K38DMR
 
 分工表：
 
